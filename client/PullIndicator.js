@@ -1,0 +1,8 @@
+import React from 'react';
+import { Icon } from './Icon';
+
+export const PullIndicator = ({ref}) => (
+	<div className="pull-indicator" ref={ref}>
+		<Icon icon="refresh"/>
+	</div>
+);

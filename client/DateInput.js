@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from 'react';
+import { Button } from './Button.js';
+import { c } from './util';
+
+const toDateInputValue = (date) => {
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, '0');
+	const day = String(date.getDate()).padStart(2, '0');
+	return `${year}-${month}-${day}`;
+};
+
+const toMonthInputValue = date => {
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, '0');
+	return `${year}-${month}`;
+};
+
+const parseDateInputValue = (value) => {
+	if (!value) return new Date();
+	const [year, month, day = 1] = value.split('-').map(Number);
+	if (!year || !month || !day) return new Date();
+	return new Date(year, month - 1, day);
+};
+
+const sameDay = (a, b) => (
+	a.getFullYear() === b.getFullYear() &&
+	a.getMonth() === b.getMonth() &&
+	a.getDate() === b.getDate()
+);
+
+const sameWeek = (a, b) => {
+	const start = new Date(a);
+	start.setDate(start.getDate() - start.getDay());
+	start.setHours(0, 0, 0, 0);
+	const end = new Date(start);
+	end.setDate(end.getDate() + 6);
+	return b >= start && b <= end;
+};
+
+export const DateInput = ({
+	value = '',
+	onChangeText = () => null,
+	onChageVisibleMonth = () => null,
+	highlightWeek,
+	dots = [],
+	onlyShowPast,
+}) => {
+	const selectedDate = parseDateInputValue(value);
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+	const dotDateIds = new Set(dots);
+	const [visibleMonth, setVisibleMonth] = useState(
+		new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1),
+	);
+
+	const monthLabel = visibleMonth.toLocaleDateString(undefined, {
+		'month': 'long',
+		'year': 'numeric',
+	});
+
+	const firstDay = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1);
+	const startOffset = firstDay.getDay();
+	const cells = Array.from({length: 42}, (_, index) => (
+		new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), index - startOffset + 1)
+	));
+	const visibleMonthId = toMonthInputValue(visibleMonth);
+
+	useEffect(() => {
+		const date = parseDateInputValue(value);
+		setVisibleMonth(new Date(date.getFullYear(), date.getMonth(), 1));
+	}, [value]);
+
+	useEffect(() => {
+		onChageVisibleMonth(visibleMonthId);
+	}, [visibleMonthId]);
+
+	const changeMonth = (offset) => {
+		setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + offset, 1));
+	};
+	const isNextMonthFuture = onlyShowPast && visibleMonth >= currentMonth;
+
+	return (
+		<div className="date-input">
+			<div className="date-input-top">
+				<Button
+					icon="chevron_left"
+					onClick={() => changeMonth(-1)}
+				/>
+				<div className="date-input-title">{monthLabel}</div>
+				<Button
+					icon="chevron_right"
+					onClick={() => changeMonth(1)}
+					disabled={isNextMonthFuture}
+				/>
+			</div>
+			<div className="date-input-grid">
+				{['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((label, i) => (
+					<div key={label + i} className="meta date-input-weekday">{label}</div>
+				))}
+				{cells.map(date => {
+					const dateId = toDateInputValue(date);
+					const isCurrentMonth = date.getMonth() === visibleMonth.getMonth();
+					const isSelected = sameDay(date, selectedDate);
+					const isHighlighted = highlightWeek && sameWeek(selectedDate, date);
+					const isFuture = onlyShowPast && date > today;
+
+					return (
+						<Button
+							key={dateId}
+							active={isSelected || isHighlighted}
+							className={c('date-input-day', dotDateIds.has(dateId) && 'has-dot')}
+							onClick={() => {
+								setVisibleMonth(new Date(date.getFullYear(), date.getMonth(), 1));
+								onChangeText(dateId);
+							}}
+							title={date.getDate()}
+							muted={!isCurrentMonth}
+							disabled={isFuture}
+						/>
+					);
+				})}
+			</div>
+		</div>
+	);
+};

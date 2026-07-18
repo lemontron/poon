@@ -30,6 +30,9 @@ input:-webkit-autofill::first-line, input:-webkit-autofill {font-family:inherit 
     --progress-bar-radius:999px;
     --input-color:#aaa;
     --error:#f33;
+}
+
+:root {
     --safe-area-inset-bottom:env(safe-area-inset-bottom);
 }
 

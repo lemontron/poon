@@ -16,6 +16,7 @@ export const Reveal = ({
 	animateIn,
 	className,
 	SearchComponent,
+	BackgroundComponent,
 	ref,
 }) => {
 	const layerEl = useRef();
@@ -66,10 +67,10 @@ export const Reveal = ({
 	}, [pan]);
 
 	return (
-		<Layer isActive={isVisible} className="reveal" ref={layerEl}>
+		<Layer isActive={isVisible} className={c('reveal', className)} ref={layerEl}>
 			<Pan
 				direction="x"
-				className={c('card reveal-content', className)}
+				className="card reveal-content"
 				ref={innerEl}
 				onCapture={(e) => {
 					return (e.direction === 'x' && e.distance > 0);
@@ -82,6 +83,7 @@ export const Reveal = ({
 					pan.spring(1);
 				}}
 			>
+				{BackgroundComponent}
 				<ScreenHeader
 					backIcon="apps"
 					title={title}

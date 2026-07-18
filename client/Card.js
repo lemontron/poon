@@ -117,11 +117,11 @@ export const Card = ({
 	};
 
 	return (
-		<Layer isActive={isVisible}>
+		<Layer isActive={isVisible} className={className}>
 			{ShadeComponent ? <ShadeComponent ref={shadeEl}/> : null}
 			<Pan
 				direction="x"
-				className={c('card', animateIn && 'animate', className)}
+				className={c('card', animateIn && 'animate')}
 				ref={el}
 				onDragOver={onDrop && dragOver}
 				onDragEnter={onDrop && startDrag}

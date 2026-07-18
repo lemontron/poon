@@ -6,6 +6,7 @@ import { ScreenHeader } from './ScreenHeader';
 import { Pan } from './Pan';
 import { c } from './util';
 import { Layer } from './Layer';
+import { ErrorBoundary } from './ErrorBoundary';
 
 export const Window = ({
 	children,
@@ -49,7 +50,7 @@ export const Window = ({
 	useEffect(() => {
 		// const cards = document.querySelectorAll('.card, .window');
 		return pan.on(value => {
-			const percent = (value / height);
+			// const percent = (value / height);
 			if (el.current) el.current.style.transform = `translateY(-${value}px)`;
 			if (shadeEl.current) {
 				shadeEl.current.style.display = value ? 'block' : 'none';
@@ -64,8 +65,8 @@ export const Window = ({
 	}, [height]);
 
 	return (
-		<Layer isActive={isVisible}>
-			<div className={`shade shade-${presentation}`} ref={shadeEl}/>
+		<Layer isActive={isVisible} className={`layer-${presentation}`}>
+			<div className="shade" ref={shadeEl}/>
 			<Pan
 				direction="y"
 				className={c(`window window-${presentation}`, className)}
@@ -91,7 +92,11 @@ export const Window = ({
 						SearchComponent={SearchComponent}
 					/>
 				) : null}
-				<div className="card-body" children={children}/>
+				<div className="card-body">
+					<ErrorBoundary>
+						{children}
+					</ErrorBoundary>
+				</div>
 			</Pan>
 		</Layer>
 	);

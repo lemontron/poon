@@ -5,6 +5,7 @@ import { c } from '../util';
 import { Button } from '../Button';
 import { TextInput } from '../TextInput';
 import { HStack, VStack } from '../Stack';
+import { ScrollView } from '../../client';
 
 export const ALERT = 'alert';
 export const PROMPT = 'prompt';
@@ -48,8 +49,9 @@ const SingleAlert = ({alert, isLast}) => {
 	const renderButtons = () => {
 		// Handler for no options & also prompts because they also have no options
 		if (!alert.options) return (
-			<HStack padding className="alert-buttons">
+			<HStack padding className="alert-bottom alert-buttons">
 				<Button
+					active
 					color="white"
 					fullWidth
 					title="Done"
@@ -57,21 +59,26 @@ const SingleAlert = ({alert, isLast}) => {
 				/>
 			</HStack>
 		);
+
+		// Display two side by side buttons
 		const longOptions = alert.options.some(r => r.name.length > 16);
 		if (alert.options.length > 0 && alert.options.length <= 2 && !longOptions) return (
 			<HStack
-				className="alert-buttons"
+				className="alert-bottom alert-buttons"
 				padding spacing
 				children={alert.options.map(renderButton)}
 			/>
 		);
+
 		if (alert.options.length > 0) return (
-			<VStack
-				padding
-				spacing
-				className="alert-buttons"
-				children={alert.options.map(renderButton)}
-			/>
+			<ScrollView className="alert-bottom" frame>
+				<VStack
+					padding
+					spacing
+					className="alert-buttons"
+					children={alert.options.map(renderButton)}
+				/>
+			</ScrollView>
 		);
 		return null;
 	};

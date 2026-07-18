@@ -7,6 +7,13 @@ import { ListReorderContext } from './useReorder.js';
 import { Pan } from './Pan';
 import { useAnimatedValue } from './util/animated';
 
+let nextTouchableRowId = 1;
+const touchableRowSwipeListeners = new Set();
+
+const collapseOtherTouchableRows = sourceId => {
+	touchableRowSwipeListeners.forEach(listener => listener(sourceId));
+};
+
 export const TouchableRow = ({
 	LeftButton,
 	onPressMore,
@@ -24,11 +31,14 @@ export const TouchableRow = ({
 	...props
 }) => {
 	const reorder = useContext(ListReorderContext);
+	const id = useRef();
 	const bodyEl = useRef();
 	const actionsEl = useRef();
 	const actionsInnerEl = useRef();
 	const refs = useRef({}).current;
 	const pan = useAnimatedValue(0);
+
+	if (!id.current) id.current = nextTouchableRowId++;
 
 	useEffect(() => {
 		return pan.on(val => {
@@ -36,6 +46,16 @@ export const TouchableRow = ({
 			if (actionsEl.current) actionsEl.current.style.width = `${val}px`;
 		});
 	}, []);
+
+	useEffect(() => {
+		if (!SwipeComponent) return;
+		const listener = sourceId => {
+			if (sourceId === id.current || !pan.value) return;
+			pan.spring(0);
+		};
+		touchableRowSwipeListeners.add(listener);
+		return () => touchableRowSwipeListeners.delete(listener);
+	}, [SwipeComponent]);
 
 	useEffect(() => {
 		if (!SwipeComponent) pan.setValue(0);
@@ -76,6 +96,7 @@ export const TouchableRow = ({
 					pan.end();
 					refs.width = actionsInnerEl.current.offsetWidth;
 					refs.initial = pan.value;
+					refs.notifiedSwipe = pan.value > 0;
 				}}
 				onCapture={e => {
 					if (!SwipeComponent || !refs.width) return;
@@ -85,7 +106,12 @@ export const TouchableRow = ({
 				}}
 				onMove={e => {
 					refs.ignoreClick = true;
-					pan.setValue(Math.max(0, Math.min(refs.width, refs.initial - e.distance)));
+					const nextValue = Math.max(0, Math.min(refs.width, refs.initial - e.distance));
+					if (nextValue > 0 && !refs.notifiedSwipe) {
+						refs.notifiedSwipe = true;
+						collapseOtherTouchableRows(id.current);
+					}
+					pan.setValue(nextValue);
 				}}
 				onUp={e => {
 					setTimeout(() => refs.ignoreClick = false, 400);

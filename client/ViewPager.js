@@ -5,6 +5,7 @@ import { Pan } from './Pan';
 import { Touchable } from './Touchable';
 import { List } from './List';
 import { TouchableRow } from './TouchableRow';
+import { ViewPagerContext } from './ViewPagerContext';
 
 const PagerDot = ({pan, i}) => {
 	const el = useRef();
@@ -244,9 +245,12 @@ export const ViewPager = ({
 				<div
 					key={keyExtractor(item) || i}
 					className="pager-page"
-					children={renderPageContent(item, i)}
-					style={gap ? (vertical ? {marginBottom: gap} : {marginRight: gap}) : undefined}
-				/>
+					style={gap && i < lastIndex ? (vertical ? {marginBottom: gap} : {marginRight: gap}) : undefined}
+				>
+					<ViewPagerContext.Provider value={{'pageIndex': i, 'currentPage': internalPage}}>
+						{renderPageContent(item, i)}
+					</ViewPagerContext.Provider>
+				</div>
 			))}
 		/>
 	);

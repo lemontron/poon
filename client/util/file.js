@@ -1,4 +1,4 @@
-export const showOpenFilePicker = (accept = {}) => new Promise((resolve) => {
+export const showOpenFilePicker = (accept = {}, capture, multiple) => new Promise((resolve) => {
 	const input = document.createElement('input');
 	let focusTimeout;
 	const cleanup = () => {
@@ -15,12 +15,14 @@ export const showOpenFilePicker = (accept = {}) => new Promise((resolve) => {
 		}, 500);
 	};
 	input.type = 'file';
+	input.multiple = Boolean(multiple);
 	input.style.display = 'none';
 	if (accept) input.accept = Array.isArray(accept) ? accept.join(',') : accept;
+	if (capture) input.capture = capture;
 	input.onchange = () => {
-		const file = input.files[0];
+		const file = multiple ? [...input.files] : (input.files[0] || null);
 		cleanup();
-		resolve(file || null);
+		resolve(Array.isArray(file) && file.length === 0 ? null : file);
 	};
 	window.addEventListener('focus', handleFocus);
 	document.body.appendChild(input);
@@ -40,7 +42,8 @@ export const convertFileAsync = (file, returnFormat = 'base64') => new Promise((
 	reader.readAsDataURL(file);
 });
 
-export const selectFileAsync = async ({accept, returnFormat = 'base64'}) => {
-	const file = await showOpenFilePicker(accept);
+export const selectFileAsync = async ({accept, capture, multiple, returnFormat = 'base64'}) => {
+	const file = await showOpenFilePicker(accept, capture, multiple);
+	if (Array.isArray(file)) return Promise.all(file.map(item => convertFileAsync(item, returnFormat)));
 	if (file) return convertFileAsync(file, returnFormat);
 };

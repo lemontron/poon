@@ -20,6 +20,7 @@ import { ActivityIndicator } from './ActivityIndicator';
  * @property {boolean} [loading]
  * @property {boolean} [submit]
  * @property {boolean} [fullWidth]
+ * @property {boolean} [active]
  * @property {string} [target]
  * @property {number} [autoTrigger]
  */
@@ -65,7 +66,7 @@ export const Button = ({
 		<Touchable
 			styles={styles}
 			type={submit ? 'submit' : 'button'}
-			className={c('btn', className, disabled && 'disabled', loading && 'loading', borderless && 'borderless', presentation && `btn-${presentation}`, fullWidth && 'full-width', active && 'active', color && `btn-${color}`, muted && 'muted', square && 'square', round && 'round')}
+			className={c('btn', active ? 'solid' : 'outline', className, disabled && 'disabled', loading && 'loading', borderless && 'borderless', presentation && `btn-${presentation}`, fullWidth && 'full-width', color && `btn-${color}`, muted && 'muted', square && 'square', round && 'round')}
 			onClick={e => {
 				if (download) e.stopPropagation();
 				if (onClick) onClick(e);

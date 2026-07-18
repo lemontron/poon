@@ -47,16 +47,22 @@ export const Pan = ({
 	};
 
 	const down = (e) => {
-		if (e.touches.length === 2) {
-			const t0 = getXY(e, 0), t1 = getXY(e, 1);
-			const dx = (t0.x - t1.x), dy = (t0.y - t1.y);
-			refs.pinch = {'d0': Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2))};
-			return;
-		}
-
 		// Clear previous values
 		responderEl = null;
 		for (let key in refs) delete refs[key];
+
+		if (e.touches.length === 2) {
+			const t0 = getXY(e, 0), t1 = getXY(e, 1);
+			const dx = (t0.x - t1.x), dy = (t0.y - t1.y);
+			refs.pinch = {
+				'd0': Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)),
+				'center0': {'x': (t0.x + t1.x) / 2, 'y': (t0.y + t1.y) / 2},
+			};
+			refs.locked = false;
+			refs.touch = false;
+			if (onDown) onDown(refs); // Consider if this needs to stay
+			return;
+		}
 
 		const {x, y} = getXY(e);
 		const {width, height} = el.current.getBoundingClientRect();
@@ -88,11 +94,27 @@ export const Pan = ({
 				const dx = (t0.x - t1.x), dy = (t0.y - t1.y);
 				refs.pinch.d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 
-				if (onPinch) onPinch({
+				if (!refs.touch) {
+					refs.touch = onCapture ? onCapture({
+						'direction': refs.locked,
+						'distance': 0,
+						'pinch': refs.pinch,
+						'overscrolling': false,
+					}) : !!onPinch;
+				}
+
+				if (refs.touch) {
+					e.stopPropagation();
+					responderEl = el.current;
+				}
+
+				if (refs.touch && onPinch) onPinch({
+					'initialCenter': refs.pinch.center0,
 					'center': {'x': (t0.x + t1.x) / 2, 'y': (t0.y + t1.y) / 2},
 					'scale': (refs.pinch.d / refs.pinch.d0),
 				});
 			}
+			return;
 		} else { // Single touch mode
 			const {x, y} = getXY(e);
 
@@ -126,7 +148,7 @@ export const Pan = ({
 			return false;
 		};
 
-		if (refs.locked === direction) {
+		if (refs.locked && (!direction || refs.locked === direction)) {
 			refs.distance = refs.d[refs.locked]; // Reduce information
 			refs.overscrolling = checkOverscroll();
 
@@ -136,13 +158,13 @@ export const Pan = ({
 			}
 
 			if (!refs.touch) {
-				refs.touch = onCapture({
+				refs.touch = onCapture ? onCapture({
 					'direction': refs.locked,
 					'distance': refs.d[refs.locked],
 					'size': refs.size[refs.locked],
 					'pinch': refs.pinch,
 					'overscrolling': refs.overscrolling,
-				});
+				}) : !!onMove;
 			}
 
 			if (refs.overscrolling && onOverscroll && overscrollEl === el.current) {
@@ -163,38 +185,47 @@ export const Pan = ({
 				});
 			}
 		}
-	};
+		};
 
-	const up = (e) => {
-		if (e.touches.length > 0) return; // Still touching, not actually up
+		const up = (e) => {
+			if (e.touches.length > 0) return; // Still touching, not actually up
 
-		overscrollEl = null; // Reset overscroll element
-		if (onOverscroll) onOverscroll(null);
+			overscrollEl = null; // Reset overscroll element
+			if (onOverscroll) onOverscroll(null);
 
-		if (responderEl && responderEl !== el.current) return;
-		if (!refs.touch) return;
+			if (responderEl && responderEl !== el.current) return;
+			if (!refs.touch) return;
 
-		logVelocity(e);
+			if (refs.pinch) {
+				if (onUp) onUp({
+					'direction': refs.locked,
+					'pinch': refs.pinch,
+					'scale': refs.pinch.d ? (refs.pinch.d / refs.pinch.d0) : 1,
+				});
+				return;
+			}
 
-		const velocity = refs.v[refs.locked];
-		const speed = Math.abs(velocity);
-		const distance = refs.d[refs.locked];
-		const size = refs.size[refs.locked];
+			logVelocity(e);
 
-		if (refs.locked) {
-			const flick = (speed >= FLICK_SPEED && Math.sign(velocity)) ||
-				(Math.abs(distance) > (size / 2) && Math.sign(distance));
+			const velocity = refs.v[refs.locked];
+			const speed = Math.abs(velocity);
+			const distance = refs.d[refs.locked];
+			const size = refs.size[refs.locked];
 
-			if (onUp) onUp({
-				'distance': distance,
-				'flick': flick * -1, // Invert direction for use with pagers
-				'flickMs': speed ? Math.min((size - Math.abs(distance)) / speed, 300) : 300,
-				'direction': refs.locked,
-				'velocity': velocity,
-				'size': size,
-			});
-		}
-	};
+			if (refs.locked) {
+				const flick = (speed >= FLICK_SPEED && Math.sign(velocity)) ||
+					(Math.abs(distance) > (size / 2) && Math.sign(distance));
+
+				if (onUp) onUp({
+					'distance': distance,
+					'flick': flick * -1, // Invert direction for use with pagers
+					'flickMs': speed ? Math.min((size - Math.abs(distance)) / speed, 300) : 300,
+					'direction': refs.locked,
+					'velocity': velocity,
+					'size': size,
+				});
+			}
+		};
 
 	const wheel = (e) => {
 		el.current.scrollTop += e.deltaY;

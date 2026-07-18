@@ -9,6 +9,7 @@ import { Shade } from './Shade';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
 import { HeaderButton } from './HeaderButton';
+import { ErrorBoundary } from './ErrorBoundary';
 
 export const Card = ({
 	title,
@@ -151,8 +152,11 @@ export const Card = ({
 						className="card-body"
 						onPointerDownCapture={sidebarVisible ? e => e.stopPropagation() : undefined}
 						onClickCapture={sidebarVisible ? dismissSidebar : undefined}
-						children={children}
-					/>
+					>
+						<ErrorBoundary>
+							{children}
+						</ErrorBoundary>
+					</div>
 				</div>
 				{footer}
 				{dropping ? (

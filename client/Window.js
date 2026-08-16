@@ -17,6 +17,7 @@ export const Window = ({
 	isVisible,
 	presentation = 'modal',
 	className,
+	theme,
 	SearchComponent,
 	ref,
 }) => {
@@ -65,7 +66,7 @@ export const Window = ({
 	}, [height]);
 
 	return (
-		<Layer isActive={isVisible} className={`layer-${presentation}`}>
+		<Layer isActive={isVisible} className={c(`layer-${presentation}`, theme && `theme-${theme}`)}>
 			<div className="shade" ref={shadeEl}/>
 			<Pan
 				direction="y"

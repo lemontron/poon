@@ -26,8 +26,10 @@ export const Card = ({
 	isVisible,
 	animateIn = true,
 	ShadeComponent = Shade,
+	BackgroundComponent,
 	HeaderComponent,
 	className,
+	theme,
 	onBeforeClose,
 	ref: el,
 }) => {
@@ -117,7 +119,7 @@ export const Card = ({
 	};
 
 	return (
-		<Layer isActive={isVisible} className={className}>
+		<Layer isActive={isVisible} className={c(className, theme && `theme-${theme}`)}>
 			{ShadeComponent ? <ShadeComponent ref={shadeEl}/> : null}
 			<Pan
 				direction="x"
@@ -140,6 +142,7 @@ export const Card = ({
 					pan.spring(0); // Return to start
 				}}
 			>
+				{BackgroundComponent}
 				{renderHeader()}
 				<div className="card-content">
 					{SidebarComponent ? (

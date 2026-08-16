@@ -127,7 +127,7 @@ export const ScrollView = ({
 						} else if (e.velocity) { // Coast scrolling
 							scroll.spring(scroll.value - (e.velocity * 1000), 1000);
 						}
-					} else if (e.direction === 'h') {
+					} else if (e.direction === 'x') {
 						if (e.velocity) scroll.spring(scroll.value - (e.velocity * 1000), 1000); // Coast scrolling
 					}
 				}}

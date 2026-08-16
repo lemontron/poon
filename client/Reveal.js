@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { c, lerp } from './util';
@@ -6,7 +6,7 @@ import { ScreenHeader } from './ScreenHeader';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
 
-let origin = {};
+let pendingConfig = {};
 
 export const Reveal = ({
 	children,
@@ -22,6 +22,7 @@ export const Reveal = ({
 	const layerEl = useRef();
 	const innerEl = useRef();
 	const pan = useAnimatedValue(animateIn ? 0 : 1);
+	const config = useMemo(() => pendingConfig, []);
 
 	const close = () => navigation.goBack(1);
 
@@ -46,10 +47,10 @@ export const Reveal = ({
 			if (val > 1) val = 1;
 			if (val < 0) val = 0;
 
-			const originLeft = origin.left || 0;
-			const originTop = origin.top || 0;
-			const originWidth = origin.width || 48;
-			const originHeight = origin.height || 48;
+			const originLeft = config.left || 0;
+			const originTop = config.top || 0;
+			const originWidth = config.width || 48;
+			const originHeight = config.height || 48;
 			const top = lerp(val, originTop, 0);
 			const right = lerp(val, vw - originLeft - originWidth, 0);
 			const bottom = lerp(val, vh - originTop - originHeight, 0);
@@ -59,12 +60,13 @@ export const Reveal = ({
 
 			layerEl.current.style.clipPath = clipPath;
 			layerEl.current.style.webkitClipPath = clipPath;
+			layerEl.current.style.backgroundColor = config.color || '';
 			// layerEl.current.style.opacity = val;
 			layerEl.current.style.display = val ? 'flex' : 'none';
 
 			innerEl.current.style.opacity = val;
 		});
-	}, [pan]);
+	}, [config, pan]);
 
 	return (
 		<Layer isActive={isVisible} className={c('reveal', className)} ref={layerEl}>
@@ -98,4 +100,12 @@ export const Reveal = ({
 	);
 };
 
-export const setRevealOrigin = (rect) => origin = rect;
+export const setRevealOrigin = (rect, color) => {
+	pendingConfig = {
+		left: rect.left,
+		top: rect.top,
+		width: rect.width,
+		height: rect.height,
+		color,
+	};
+};

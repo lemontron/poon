@@ -208,7 +208,7 @@ button.touchable, a.touchable {cursor:pointer;}
 .touchable-row.caret .touchable-row-body {padding-right:calc(var(--gutter-width) / 2);}
 .touchable-row-body {display:flex; align-items:center; justify-content:space-between; padding:0 var(--gutter-width); gap:10px; position:relative; will-change:transform; min-height:44px;}
 .touchable-row-swipe-actions {position:absolute; top:0; right:0; bottom:0; width:0; overflow:hidden; display:flex; justify-content:flex-end; align-items:stretch; -webkit-mask-image:linear-gradient(to right, transparent, #000 10px); mask-image:linear-gradient(to right, transparent, #000 10px);}
-.touchable-row-swipe-actions-inner {display:flex; align-items:stretch; flex:0 0 auto;}
+.touchable-row-swipe-actions-inner {display:flex; align-items:stretch; flex:0 0 auto; padding:5px;}
 .touchable-row-swipe-actions .btn {height:100%; border:none; color:var(--primary);}
 
 .touchable-row-button {flex:1; min-width:0; padding:10px 0; text-align:left; color:inherit; display:flex; align-items:center;}
@@ -241,7 +241,8 @@ button.touchable, a.touchable {cursor:pointer;}
 .btn.solid {background:var(--color); color:var(--bg-secondary);}
 .btn.loading, .btn.disabled {opacity:.3; pointer-events:none;}
 .btn.square {width:var(--input-height); padding:0; flex:0 0 var(--input-height);}
-.btn.round {height:24px; width:24px; border-radius:50%; padding:0;}
+.btn.round {height:26px; width:26px; border-radius:50%; padding:0;}
+.btn.round .material-symbols {font-size:20px;}
 .btn.muted {opacity:.3;}
 .btn i {color:inherit;}
 .btn-inner {flex:1; text-align:center; display:flex; align-items:center; justify-content:center;}
@@ -334,7 +335,7 @@ button.touchable, a.touchable {cursor:pointer;}
 .handle {position:absolute; top:5px; left:50%; margin-left:-20px; width:40px; height:4px; border-radius:5px; background:#999;}
 
 /* DIFFERENT STACK TYPES */
-.layer {position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden;}
+.layer {position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; color:var(--primary);}
 .layer-inactive {pointer-events:none;}
 
 /* BLACK OUT */
@@ -469,11 +470,12 @@ button.touchable, a.touchable {cursor:pointer;}
 .sheet-container {max-width:420px; margin:0 auto; position:absolute; top:100%; left:0; right:0;}
 
 /* SEGMENTED CONTROLLER */
-.segmented {padding:2px; background:var(--muted); display:inline-flex; align-items:center; border-radius:var(--radius); white-space:nowrap; position:relative;}
-.segmented .touchable {flex:1; color:var(--accent); padding:2px 15px; position:relative; text-align:center;}
+.segmented {padding:2px; height:30px; flex:0 0 auto; background:var(--muted); display:inline-flex; align-items:center; border-radius:var(--radius); white-space:nowrap; position:relative; font-family:var(--font), sans-serif;}
+.segmented .touchable {flex:1; height:100%; color:var(--accent); padding:2px 15px; position:relative; text-align:center; display:flex; align-items:center; justify-content:center; gap:4px;}
 .segmented .touchable.active {color:var(--bg-primary); opacity:1;}
 .segmented .separator {width:1px; height:12px; background:var(--subtle);}
 .segmented-indicator {height:calc(100% - 4px); border-radius:calc(var(--radius) - 2px); background:var(--primary); position:absolute; left:0; top:2px; outline:2px solid transparent;}
+.segmented-badge {background:var(--error); color:#fff; padding:0 4px; min-width:14px; height:14px; border-radius:7px; font-size:calc(var(--font-size) - 5px); line-height:14px;}
 
 /* BREADCRUMBS */
 .breadcrumbs {white-space:nowrap; background:#323; height:36px;}
@@ -658,7 +660,7 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 }
 
 @media (min-width:800px) {
-    .card-sidebar {display:flex; flex-direction:column; width:280px; overflow:hidden; margin:10px var(--gutter-width); background:var(--subtle); border-radius:var(--radius);}
+    .card-sidebar {display:flex; flex-direction:column; width:280px; overflow:hidden; margin:0 var(--gutter-width); background:var(--subtle); border-radius:var(--radius);}
 
     .pager .sidebar {width:170px;}
 

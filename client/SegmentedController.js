@@ -1,11 +1,17 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import { Touchable } from './Touchable';
 import { useAnimatedValue } from './util/animated';
+import { c } from './util';
 
 const SegmentedItem = ({item, isLast, active, onChange, index, ref}) => (
 	<Fragment>
 		<Touchable
-			children={item.name}
+			children={(
+				<Fragment>
+					<span>{item.name}</span>
+					{item.badge === undefined ? null : <span className="segmented-badge">{item.badge}</span>}
+				</Fragment>
+			)}
 			onClick={() => onChange(item._id)}
 			active={active}
 			index={index}
@@ -15,10 +21,11 @@ const SegmentedItem = ({item, isLast, active, onChange, index, ref}) => (
 	</Fragment>
 );
 
-export const SegmentedController = ({options, value, onChange}) => {
+export const SegmentedController = ({options, value, onChange, fullWidth}) => {
 	const refs = useRef([]);
 	const indicator = useRef();
 	const index = options.findIndex(item => item._id === value);
+	const layoutKey = options.map(item => `${item.name}:${item.badge}`).join('|');
 	const left = useAnimatedValue(0);
 	const width = useAnimatedValue(0);
 
@@ -37,10 +44,10 @@ export const SegmentedController = ({options, value, onChange}) => {
 			left.spring(el.offsetLeft);
 			width.spring(el.offsetWidth);
 		}
-	}, [index]);
+	}, [index, layoutKey]);
 
 	return (
-		<div className="segmented">
+		<div className={c('segmented', fullWidth && 'full-width')}>
 			<div className="segmented-indicator" ref={indicator}/>
 			{options.map((item, i) => (
 				<SegmentedItem

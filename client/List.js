@@ -49,7 +49,8 @@ export const List = ({
 	);
 
 	return (
-		<div className={c('list', className, safePadding && 'safe-padding', well && 'well', grid && 'grid', frame && 'frame')}>
+		<div
+			className={c('list', className, safePadding && 'safe-padding', well && 'well', grid && 'grid', frame && 'frame')}>
 			{(title || TitleRightComponent) ? (
 				<div className="list-header">
 					<div className="list-title">{title}</div>

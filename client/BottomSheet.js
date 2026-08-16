@@ -3,8 +3,10 @@ import { c } from './util';
 import { useSize } from './util/size';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
+import { Button, HStack } from 'meteor/poon';
 
 export const BottomSheet = ({
+	title,
 	className,
 	visible,
 	pan,
@@ -13,6 +15,7 @@ export const BottomSheet = ({
 	onPress,
 	showShade = true,
 	showHandle,
+	showCloseButton,
 }) => {
 	const shadeEl = useRef();
 	const sheetEl = useRef();
@@ -37,6 +40,8 @@ export const BottomSheet = ({
 		}
 	}, [visible, !!height, onClose]);
 
+	const hasHeader = showCloseButton || title;
+
 	return (
 		<Layer isActive={false}>
 			{visible && showShade ? <div className="shade shade-bottom-sheet" ref={shadeEl} onClick={close}/> : null}
@@ -58,6 +63,12 @@ export const BottomSheet = ({
 					}}
 				>
 					{showHandle ? <div className="handle"/> : null}
+					{hasHeader ? (
+						<HStack className="sheet-header" align="center" justify="between" padding>
+							<div>{title}</div>
+							{showCloseButton ? <Button icon="close" round color="glass" onClick={close}/> : null}
+						</HStack>
+					) : null}
 					{children}
 				</Pan>
 			</div>

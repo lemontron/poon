@@ -46,7 +46,9 @@ export { PageTitle } from './client/PageTitle.js';
 export { Pan } from './client/Pan.js';
 export { PercentBar, PercentBarSegment } from './client/PercentBar.js';
 export { PhoneInput } from './client/PhoneInput.js';
-export { DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission } from './client/permissions.js';
+export {
+	DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission,
+} from './client/permissions.js';
 export { Bus, createBus, useBus } from './client/permissions/location.js';
 export { StoredValue } from './client/permissions/storage.js';
 export { PermissionDef } from './client/permissions/util.js';
@@ -88,7 +90,9 @@ export { decodeBuffer, simpleHash } from './client/util/decode.js';
 export { convertFileAsync, selectFileAsync, showOpenFilePicker } from './client/util/file.js';
 export { useFilterState } from './client/util/filter-state.js';
 export { relativeDate } from './client/util/format.js';
-export { bounce, c, clamp, clone, createClamp, easeOutCubic, isIOS, lerp, noop, sameObject, toPercent, useMobile } from './client/util/index.js';
+export {
+	bounce, c, clamp, clone, createClamp, easeOutCubic, isIOS, lerp, noop, sameObject, toPercent, useMobile,
+} from './client/util/index.js';
 export { loadCss, loadScript, memoize } from './client/util/loader.js';
 export { colorHash } from './client/util/oklab.js';
 export { normalizeOptions, Options } from './client/util/options.js';
@@ -97,3 +101,4 @@ export { useVirtualKeyboard } from './client/util/viewport.js';
 export { ValidIcon } from './client/ValidIcon.js';
 export { ViewPager } from './client/ViewPager.js';
 export { Window } from './client/Window.js';
+export { useConnection } from './client/util/connection.js';

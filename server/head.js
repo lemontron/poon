@@ -1,6 +1,6 @@
 import { WebAppInternals } from 'meteor/webapp';
 
-const materialSymbolsLink = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols&display=block">';
+const materialSymbolsLink = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols:FILL@1&display=block">';
 
 WebAppInternals.registerBoilerplateDataCallback('poon-material-symbols', (request, data) => {
 	const head = data.head || '';

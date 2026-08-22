@@ -80,6 +80,7 @@ img, svg {display:block; max-width:100%;}
 p {margin:0;}
 .material-symbols {
     font-family:"Material Symbols";
+    font-variation-settings:"FILL" 1;
     font-weight:normal;
     font-style:normal;
     font-size:24px;

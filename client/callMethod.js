@@ -3,7 +3,7 @@ import { toast } from './overlays/Toast';
 import { showAlert } from './overlays/Alert';
 import { globalLoading } from './overlays/GlobalLoading';
 
-export const callMethod = async (methodName, opts = {}) => {
+export const callMethod = async (methodName, opts = {}, connection = Meteor) => {
 	if (opts.confirm) {
 		const ok = await showAlert({'title': opts.confirm}, [
 			{_id: 'cancel', name: 'Cancel'},
@@ -15,9 +15,10 @@ export const callMethod = async (methodName, opts = {}) => {
 	if (opts.onLoading) opts.onLoading(true);
 	if (opts.statusMessage) globalLoading(opts.statusMessage, true);
 	try {
-		const promise = Meteor.applyAsync(methodName, [opts.data], {
+		const promise = connection.applyAsync(methodName, [opts.data], {
 			returnServerResultPromise: true,
 			throwStubExceptions: true,
+			noRetry: opts.noRetry,
 		});
 		if (opts.onStub) opts.onStub(await promise.stubPromise);
 

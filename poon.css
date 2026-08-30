@@ -59,7 +59,7 @@ input:-webkit-autofill::first-line, input:-webkit-autofill {font-family:inherit 
     100% {transform:translateX(0);}
 }
 
-html, body {overscroll-behavior:none; height:100svh; overflow:hidden; position:relative; width:100%;}
+html, body {overscroll-behavior:none; height:100%; overflow:hidden; position:relative; width:100%;}
 body {
     margin:0;
     background:var(--bg-primary);
@@ -246,7 +246,7 @@ button.touchable, a.touchable {cursor:pointer;}
 .btn.round .material-symbols {font-size:20px;}
 .btn.muted {opacity:.3;}
 .btn i {color:inherit;}
-.btn-inner {flex:1; text-align:center; display:flex; align-items:center; justify-content:center;}
+.btn-inner {flex:1; text-align:center; display:flex; align-items:center; justify-content:center; height:100%;}
 .btn.loading .btn-inner {opacity:0;}
 .btn-layer {display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0; right:0; bottom:0; gap:10px;}
 .btn-progress {background:var(--color); opacity:.2; transform:translateX(0); transform-origin:left; animation:btnProgress linear forwards;}

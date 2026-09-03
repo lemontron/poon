@@ -23,6 +23,7 @@ export const PhoneInput = ({value, onChangeText, autoFocus}) => {
 				onChangeText={text => onChangeText(digitsOnly(text))}
 				type="text"
 				autoFocus={autoFocus}
+				virtualKeyboard="none"
 			/>
 			<div className="phone-input-keypad">
 				{['1', '2', '3', '4', '5', '6', '7', '8', '9'].map(digit => (

@@ -138,6 +138,18 @@ i.text-input-clear {font-size:18px;}
 .text-input .text-input-country.touched {background:#222; opacity:1;}
 .text-input .text-input-country .emoji {font-size:18px;}
 
+/* CUSTOM KEYBOARD */
+.custom-keyboard {position:fixed; left:0; right:0; bottom:0; padding:8px max(8px, env(safe-area-inset-left)) calc(8px + var(--safe-area-inset-bottom)) max(8px, env(safe-area-inset-right)); background:var(--bg-primary);}
+.custom-keyboard-row {display:grid; gap:6px; max-width:900px; margin:0 auto 6px;}
+.custom-keyboard-row.top {grid-template-columns:repeat(10, minmax(0, 1fr));}
+.custom-keyboard-row.middle {grid-template-columns:repeat(9, minmax(0, 1fr)); max-width:810px;}
+.custom-keyboard-row.bottom {grid-template-columns:1.5fr repeat(7, minmax(0, 1fr)) 1.5fr;}
+.custom-keyboard-actions {display:flex; max-width:500px; margin:auto;}
+.custom-keyboard-actions .space {flex:1;}
+.touchable.custom-keyboard-key {height:clamp(38px, 6vw, 52px); border-radius:calc(var(--radius) / 2); color:var(--primary); font-weight:bold;}
+.touchable.custom-keyboard-key.letter, .touchable.custom-keyboard-key.space {background:var(--subtle);}
+.custom-keyboard-key.shift.active {color:var(--accent);}
+
 /* NUMBER INPUT */
 .number-input {display:flex; align-items:center;}
 .number-input-value {width:30px; text-align:center;}
@@ -662,7 +674,7 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 }
 
 @media (min-width:800px) {
-    .card-sidebar {display:flex; flex-direction:column; width:280px; overflow:hidden; margin:0 var(--gutter-width); background:var(--subtle); border-radius:var(--radius);}
+    .card-sidebar {display:flex; flex-direction:column; width:280px; overflow:hidden; margin:0 var(--gutter-width) 10px; background:var(--subtle); border-radius:var(--radius);}
 
     .pager .sidebar {width:170px;}
 

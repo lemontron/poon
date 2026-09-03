@@ -12,6 +12,7 @@ export const Touchable = ({
 	style,
 	disabled,
 	disableMenu,
+	onPointerDown,
 	type = 'button',
 	replaceState,
 	mobileOnly,
@@ -41,6 +42,7 @@ export const Touchable = ({
 	const touch = (e) => {
 		if (e.button && e.button !== 0) return; // If mouse, only process left clicks
 		setTouched(true);
+		if (onPointerDown) onPointerDown(e);
 	};
 
 	const leave = () => {

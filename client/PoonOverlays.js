@@ -6,6 +6,7 @@ import { Alert } from './overlays/Alert';
 import { Toast } from './overlays/Toast';
 import { Notifications } from './overlays/Notifications';
 import { GlobalLoading } from './overlays/GlobalLoading';
+import { CustomKeyboard } from './overlays/CustomKeyboard';
 
 export const PoonOverlays = () => {
 	useVirtualKeyboard();
@@ -15,6 +16,7 @@ export const PoonOverlays = () => {
 			<Modal/>
 			<ActionSheet/>
 			<Alert/>
+			<CustomKeyboard/>
 			<Toast/>
 			<GlobalLoading/>
 		</Fragment>

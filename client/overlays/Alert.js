@@ -93,7 +93,7 @@ const SingleAlert = ({alert, isLast}) => {
 					{alert.title ? <div className="alert-title">{alert.title}</div> : null}
 					{alert.message ? <div className="alert-message">{alert.message}</div> : null}
 					{alert.type === PROMPT ? (
-						<TextInput className="alert-input" value={input} onChangeText={setInput}/>
+						<TextInput className="alert-input" value={input} onChangeText={setInput} autoFocus/>
 					) : null}
 				</div>
 				{renderButtons()}

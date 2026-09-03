@@ -101,7 +101,7 @@ export const DateInput = ({
 				{cells.map(date => {
 					const dateId = toDateInputValue(date);
 					const isCurrentMonth = date.getMonth() === visibleMonth.getMonth();
-					const isSelected = sameDay(date, selectedDate);
+					const isSelected = value && sameDay(date, selectedDate);
 					const isHighlighted = highlightWeek && sameWeek(selectedDate, date);
 					const isFuture = onlyShowPast && date > today;
 

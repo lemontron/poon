@@ -7,6 +7,7 @@ import { c } from './util';
 const autoCompleteMap = {code: 'one-time-code', password: 'current-password'};
 const typeMap = {phone: 'tel', code: 'tel', price: 'numeric'};
 const placeholderMap = {search: 'Search'};
+const inputModeMap = {custom: 'none', none: 'none'};
 
 const applyTitleCase = (value) => {
 	if (!value) return '';
@@ -43,6 +44,7 @@ export const TextInput = ({
 	units,
 	autoExpand,
 	fullWidth,
+	virtualKeyboard,
 	ref,
 }) => {
 	const isTextarea = (type === 'textarea' || rows);
@@ -150,6 +152,8 @@ export const TextInput = ({
 			'onWheel': isTextarea ? e => {
 				if (canScroll(e.currentTarget, e.deltaY)) e.stopPropagation();
 			} : undefined,
+			'inputMode': inputModeMap[virtualKeyboard],
+			'data-virtual-keyboard': !disabled && virtualKeyboard,
 		});
 	};
 

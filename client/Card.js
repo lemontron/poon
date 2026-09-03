@@ -119,7 +119,11 @@ export const Card = ({
 	};
 
 	return (
-		<Layer isActive={isVisible} className={c(className, theme && `theme-${theme}`)}>
+		<Layer
+			isActive={isVisible}
+			className={c(className, theme && `theme-${theme}`)}
+			label={typeof title === 'string' && title}
+		>
 			{ShadeComponent ? <ShadeComponent ref={shadeEl}/> : null}
 			<Pan
 				direction="x"

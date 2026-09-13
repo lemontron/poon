@@ -1,3 +1,5 @@
+export { EventEmitter } from '../EventEmitter';
+
 import { WebAppInternals } from 'meteor/webapp';
 
 const materialSymbolsLink = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols:FILL@1&display=block">';

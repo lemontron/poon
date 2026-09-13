@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 
 export const c = (...rest) => rest.filter(Boolean).join(' ');
 
+export const defaultKeyExtractor = (item) => {
+	if (typeof item === 'string') return item;
+	return item._id;
+};
+
 export const toPercent = val => `${val * 100}%`;
 
 export const clamp = (num, min, max) => Math.min(Math.max(num, min), max);

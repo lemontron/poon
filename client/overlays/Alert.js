@@ -4,6 +4,7 @@ import { Random } from 'meteor/random';
 import { c } from '../util';
 import { Button } from '../Button';
 import { TextInput } from '../TextInput';
+import { PhoneInput } from '../PhoneInput';
 import { HStack, VStack } from '../Stack';
 import { ScrollView } from '../../client';
 
@@ -93,7 +94,11 @@ const SingleAlert = ({alert, isLast}) => {
 					{alert.title ? <div className="alert-title">{alert.title}</div> : null}
 					{alert.message ? <div className="alert-message">{alert.message}</div> : null}
 					{alert.type === PROMPT ? (
-						<TextInput className="alert-input" value={input} onChangeText={setInput} autoFocus/>
+						alert.inputType === 'phone' ? (
+							<PhoneInput value={input} onChangeText={setInput} autoFocus/>
+						) : (
+							<TextInput className="alert-input" type={alert.inputType} value={input} onChangeText={setInput} autoFocus/>
+						)
 					) : null}
 				</div>
 				{renderButtons()}

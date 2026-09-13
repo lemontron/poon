@@ -80,7 +80,7 @@ export const ViewPager = ({
 	frame,
 	lazy = false,
 	titleExtractor = r => r.title || r.name,
-	keyExtractor = r => r._id || r.title || r.name,
+	keyExtractor = r => r._id || r.title || r.name || r._name,
 	ref,
 }) => {
 	// use internal state or external state!

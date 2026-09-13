@@ -4,6 +4,7 @@ import { showAlert } from './overlays/Alert';
 import { globalLoading } from './overlays/GlobalLoading';
 
 export const callMethod = async (methodName, opts = {}, connection = Meteor) => {
+	if (opts.noop) return;
 	if (opts.confirm) {
 		const ok = await showAlert({'title': opts.confirm}, [
 			{_id: 'cancel', name: 'Cancel'},

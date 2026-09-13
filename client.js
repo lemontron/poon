@@ -1,3 +1,5 @@
+export { EventEmitter } from './EventEmitter';
+
 import './client/renderPoon.js';
 import './client/fast-reconnect.js';
 
@@ -34,6 +36,7 @@ export { Layer } from './client/Layer.js';
 export { DrawerLayout } from './client/layouts/DrawerLayout.js';
 export { FabLayout } from './client/layouts/FabLayout.js';
 export { List } from './client/List.js';
+export { ScrollingHorizontalList } from './client/ScrollingHorizontalList.js';
 export { Markdown } from './client/Markdown.js';
 export { NumberInput } from './client/NumberInput.js';
 export { ActionSheet, hideActionSheet, showActionSheet } from './client/overlays/ActionSheet.js';
@@ -70,6 +73,7 @@ export { SegmentedController } from './client/SegmentedController.js';
 export { Select } from './client/Select.js';
 export { Shade } from './client/Shade.js';
 export { SortFilterButton } from './client/SortFilterButton.js';
+export { Slider } from './client/Slider.js';
 export { SpringBoard } from './client/SpringBoard.js';
 export { SpringBoardIcon } from './client/SpringBoardIcon.js';
 export { HStack, Row, Spacer, VStack, ZStack } from './client/Stack.js';

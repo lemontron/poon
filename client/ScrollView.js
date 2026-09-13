@@ -11,6 +11,7 @@ export const ScrollView = ({
 	safePadding,
 	children,
 	padding,
+	maxWidth,
 	pills,
 	stickToBottom,
 	frame,
@@ -77,7 +78,7 @@ export const ScrollView = ({
 	};
 
 	return (
-		<div className={c('scroller-container', className, horizontal ? 'horizontal' : 'vertical', pills && 'pills', frame && 'frame')}>
+		<div className={c('scroller-container', className, horizontal ? 'horizontal' : 'vertical', pills && 'pills', frame && 'frame')} style={{maxWidth}}>
 			{onRefresh ? (
 				<div className="scroller-pull">
 					<PullIndicator pull={pull} ref={spinnerEl}/>

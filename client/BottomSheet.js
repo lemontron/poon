@@ -4,6 +4,7 @@ import { useSize } from './util/size';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
 import { Button, HStack } from 'meteor/poon';
+import { AnimatedValue } from './util/animated';
 
 export const BottomSheet = ({
 	title,
@@ -17,6 +18,7 @@ export const BottomSheet = ({
 	showHandle,
 	showCloseButton,
 }) => {
+	pan = pan || useRef(new AnimatedValue(0)).current;
 	const shadeEl = useRef();
 	const sheetEl = useRef();
 	const {height} = useSize(sheetEl);

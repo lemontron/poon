@@ -1,12 +1,7 @@
 import React, { Children, Fragment, isValidElement } from 'react';
-import { c } from './util';
+import { c, defaultKeyExtractor } from './util';
 import { Loading } from './Suspense.js';
 import { ListReorderContext, useReorder } from './useReorder.js';
-
-const defaultKeyExtractor = (item) => {
-	if (typeof item === 'string') return item;
-	return item._id;
-};
 
 const getListChildren = (children) => Children.toArray(children).flatMap(child => {
 	if (isValidElement(child) && child.type === Fragment) return Children.toArray(child.props.children);

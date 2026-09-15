@@ -1,4 +1,12 @@
-import React, { Children, isValidElement, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+	Children,
+	isValidElement,
+	useEffect,
+	useImperativeHandle,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from 'react';
 import { useAnimatedValue } from './util/animated';
 import { c, createClamp, lerp, toPercent } from './util';
 import { Pan } from './Pan';
@@ -6,6 +14,7 @@ import { Touchable } from './Touchable';
 import { List } from './List';
 import { TouchableRow } from './TouchableRow';
 import { ViewPagerContext } from './ViewPagerContext';
+import { ScrollView } from './ScrollView';
 
 const PagerDot = ({pan, i}) => {
 	const el = useRef();
@@ -275,20 +284,23 @@ export const ViewPager = ({
 			{hasSidebar ? (
 				<div className="pager-content">
 					<div className="card-sidebar" ref={sidebarEl}>
-						<div className="pager-sidebar-accent" ref={sidebarAccentEl}/>
-						<List
-							title={sidebarTitle}
-							items={filteredPages}
-							renderItem={(page, i) => (
-								<TouchableRow
-									key={i}
-									title={titleExtractor(page) || `Page ${i + 1}`}
-									onClick={() => userInteractionChangePage(i)}
-									RightComponent={page.badge ?
-										<div className="pager-tab-badge">{page.badge}</div> : null}
-								/>
-							)}
-						/>
+						<ScrollView flex>
+							<div className="pager-sidebar-accent" ref={sidebarAccentEl}/>
+							<List
+								title={sidebarTitle}
+								items={filteredPages}
+								renderItem={(page, i) => (
+									<TouchableRow
+										key={i}
+										title={titleExtractor(page) || `Page ${i + 1}`}
+										onClick={() => userInteractionChangePage(i)}
+										RightComponent={page.badge ? (
+											<div className="pager-tab-badge">{page.badge}</div>
+										) : null}
+									/>
+								)}
+							/>
+						</ScrollView>
 					</div>
 					{renderScroller()}
 				</div>

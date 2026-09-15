@@ -124,7 +124,7 @@ export const TextInput = ({
 			'type': typeMap[type] || type,
 			'autoComplete': autoCompleteMap[type],
 			'maxLength': maxLength,
-			'className': c('text', disabled && 'disabled', dnt && 'fs-hide', className, frame && 'frame', isTextarea && autoExpand && 'auto-expand'),
+			'className': c('text', disabled && 'disabled', dnt && 'dnt', className, frame && 'frame', isTextarea && autoExpand && 'auto-expand'),
 			'readOnly': disabled,
 			'onChange': changeText,
 			'value': renderValue(value),

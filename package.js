@@ -16,5 +16,6 @@ Package.onUse(api => {
 	api.use('poon-markdown', 'client');
 	api.mainModule('client.js', 'client');
 	api.mainModule('server/head.js', 'server');
+	api.addAssets('assets/service-worker.js', 'server');
 	api.addFiles('poon.css', 'client');
 });

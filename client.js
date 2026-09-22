@@ -2,6 +2,7 @@ export { EventEmitter } from './EventEmitter';
 
 import './client/renderPoon.js';
 import './client/fast-reconnect.js';
+import './client/register-service-worker.js';
 
 export { ActivityIndicator } from './client/ActivityIndicator.js';
 export { Avatar } from './client/Avatar.js';
@@ -33,8 +34,10 @@ export { Image } from './client/Image.js';
 export { ImageUpload } from './client/ImageUpload.js';
 export { Info } from './client/Info.js';
 export { Layer } from './client/Layer.js';
+// Layouts
 export { DrawerLayout } from './client/layouts/DrawerLayout.js';
 export { FabLayout } from './client/layouts/FabLayout.js';
+export { SidebarLayout } from './client/layouts/SidebarLayout.js';
 export { List } from './client/List.js';
 export { ScrollingHorizontalList } from './client/ScrollingHorizontalList.js';
 export { Markdown } from './client/Markdown.js';

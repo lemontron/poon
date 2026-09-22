@@ -15,6 +15,8 @@ const stackProps = (appearance, {
 	distributed,
 	mobileOnly,
 	highlight,
+	collapse,
+	theme,
 	...props
 }) => {
 	const isMobile = useMobile();
@@ -23,6 +25,7 @@ const stackProps = (appearance, {
 		'className': c(
 			'stack',
 			appearance,
+			theme && `theme-${theme}`,
 			frame && 'frame',
 			justify && `justify-${justify}`,
 			align && `align-${align}`,
@@ -32,6 +35,7 @@ const stackProps = (appearance, {
 			safePadding && 'safe',
 			distributed && 'distributed',
 			highlight && 'highlight',
+			collapse && 'collapse',
 			className,
 		),
 		...props,

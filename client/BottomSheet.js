@@ -13,7 +13,7 @@ export const BottomSheet = ({
 	pan,
 	children,
 	onClose,
-	onPress,
+	onClick,
 	showShade = true,
 	showHandle,
 	showCloseButton,
@@ -52,7 +52,7 @@ export const BottomSheet = ({
 					direction="y"
 					ref={sheetEl}
 					className={c('sheet', className)}
-					onClick={onPress}
+					onClick={onClick}
 					onCapture={e => {
 						return (e.direction === 'y');
 					}}

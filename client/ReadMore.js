@@ -5,7 +5,7 @@ import { showAlert } from './overlays/Alert';
 export const ReadMore = ({content}) => {
 	if (!content) return null;
 
-	const showMore = () => showAlert({'message': content});
+	const showMore = () => showAlert(undefined, {'message': content});
 
 	return (
 		<div className="read-more">

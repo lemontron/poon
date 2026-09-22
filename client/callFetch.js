@@ -5,10 +5,12 @@ import { globalLoading } from './overlays/GlobalLoading';
 
 export const callFetch = async (url, opts = {}) => {
 	if (opts.confirm) {
-		const ok = await showAlert({'title': opts.confirm}, [
-			{_id: 'cancel', name: 'Cancel'},
-			{_id: 'confirm', name: 'Confirm'},
-		]);
+		const ok = await showAlert(opts.confirm, {
+			'options': [
+				{_id: 'cancel', name: 'Cancel'},
+				{_id: 'confirm', name: 'Confirm'},
+			],
+		});
 		if (ok !== 'confirm') return;
 	}
 

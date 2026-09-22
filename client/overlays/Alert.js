@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { TextInput } from '../TextInput';
 import { PhoneInput } from '../PhoneInput';
 import { HStack, VStack } from '../Stack';
-import { ScrollView } from '../../client';
+import { ScrollView } from '../ScrollView';
 
 export const ALERT = 'alert';
 export const PROMPT = 'prompt';
@@ -32,7 +32,7 @@ const SingleAlert = ({alert, isLast}) => {
 
 	const renderButton = (option, i) => {
 		const pressButton = () => {
-			if (option.onPress) option.onPress();
+			if (option.onClick) option.onClick();
 			dismissAlert(alert, option._id);
 		};
 		return (
@@ -97,7 +97,8 @@ const SingleAlert = ({alert, isLast}) => {
 						alert.inputType === 'phone' ? (
 							<PhoneInput value={input} onChangeText={setInput} autoFocus/>
 						) : (
-							<TextInput className="alert-input" type={alert.inputType} value={input} onChangeText={setInput} autoFocus/>
+							<TextInput className="alert-input" type={alert.inputType} value={input}
+							           onChangeText={setInput} autoFocus/>
 						)
 					) : null}
 				</div>
@@ -124,14 +125,14 @@ export const Alert = () => {
 	);
 };
 
-export const showAlert = (alert, options) => new Promise(resolve => {
+export const showAlert = (title, opts = {}) => new Promise(resolve => {
 	alertsStore.update([...alertsStore.state, {
 		'key': Random.id(),
 		'callback': resolve,
 		'visible': true,
-		'options': options,
+		'title': title,
 		'type': ALERT,
-		...alert,
+		...opts,
 	}]);
 });
 

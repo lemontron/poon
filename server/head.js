@@ -1,4 +1,5 @@
 export { EventEmitter } from '../EventEmitter';
+export { addServiceWorkerSource } from './service-worker';
 
 import { WebAppInternals } from 'meteor/webapp';
 

@@ -410,7 +410,7 @@ button.touchable, a.touchable {cursor:pointer;}
     padding-right:calc(100% - env(titlebar-area-width, 100%) - env(titlebar-area-x, 0));
 }
 .header-close {padding:0 var(--gutter-width);}
-.header-middle {flex:1; min-width:0; -webkit-app-region:drag; app-region:drag;}
+.header-middle {flex:1; min-width:0;}
 .header-title {font-size:calc(var(--font-size) + 2px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:center; display:flex; align-items:center; justify-content:center; font-family:var(--font-title), sans-serif;}
 .header-subtitle {margin-top:3px;}
 
@@ -532,6 +532,7 @@ button.touchable, a.touchable {cursor:pointer;}
 .alert-backdrop.visible {background:rgba(0, 0, 0, .8);}
 .alert-container {display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0; bottom:0; right:0;}
 .alert {width:var(--alert-width); max-height:300px; background:var(--bg-secondary); transition:all .2s; opacity:0; transform:scale(.9); pointer-events:none; border-radius:var(--radius); display:flex; flex-direction:column; overflow:hidden;}
+.no-max-height {max-height:none;}
 .alert.visible {opacity:1; transform:scale(1); animation:alert .2s; pointer-events:all;}
 
 .alert-top {padding:10px var(--gutter-width); text-align:center; gap:10px; display:flex; flex-direction:column; overflow:auto; flex-shrink:0;}

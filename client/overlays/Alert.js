@@ -87,7 +87,7 @@ const SingleAlert = ({alert, isLast}) => {
 	return (
 		<div className={c('alert-container', isLast && alert.visible && alert.className)}>
 			<div
-				className={c('alert', isLast && alert.visible && 'visible')}
+				className={c('alert', isLast && alert.visible && 'visible', alert.inputType === 'phone' && 'no-max-height')}
 				onClick={e => e.stopPropagation()}
 			>
 				<div className="alert-top">
@@ -95,10 +95,18 @@ const SingleAlert = ({alert, isLast}) => {
 					{alert.message ? <div className="alert-message">{alert.message}</div> : null}
 					{alert.type === PROMPT ? (
 						alert.inputType === 'phone' ? (
-							<PhoneInput value={input} onChangeText={setInput} autoFocus/>
+							<PhoneInput
+								value={input}
+								onChangeText={setInput}
+							/>
 						) : (
-							<TextInput className="alert-input" type={alert.inputType} value={input}
-							           onChangeText={setInput} autoFocus/>
+							<TextInput
+								className="alert-input"
+								type={alert.inputType}
+								value={input}
+								onChangeText={setInput}
+								autoFocus
+							/>
 						)
 					) : null}
 				</div>

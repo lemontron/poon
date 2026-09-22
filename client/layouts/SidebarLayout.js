@@ -12,9 +12,11 @@ export const SidebarLayout = ({
 	const mobile = useMobile();
 
 	if (mobile) return (
-		<ScrollView frame padding>
+		<ScrollView frame>
 			<VStack spacing>
-				<div className="sidebar-layout-sidebar-content" children={SidebarComponent}/>
+				<div className="sidebar-layout-sidebar">
+					<div className="sidebar-layout-sidebar-content" children={SidebarComponent}/>
+				</div>
 				{children}
 			</VStack>
 		</ScrollView>

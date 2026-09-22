@@ -2,9 +2,9 @@ import React from 'react';
 import { VStack } from './Stack';
 import { ActivityIndicator } from './ActivityIndicator';
 
-export const Loading = ({debugMessage}) => (
+export const Loading = ({status}) => (
 	<VStack align="center" justify="center" padding frame>
 		<ActivityIndicator/>
-		{Meteor.isDevelopment ? <div>{debugMessage}</div> : null}
+		{Meteor.isDevelopment ? <div>{status}</div> : null}
 	</VStack>
 );

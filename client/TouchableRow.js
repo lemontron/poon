@@ -130,6 +130,7 @@ export const TouchableRow = ({
 				{LeftButton}
 				<Touchable
 					className="touchable-row-button"
+					disabled={disabled}
 					onClick={onClick}
 					href={href}
 					target={target}
@@ -140,6 +141,7 @@ export const TouchableRow = ({
 				</Touchable>
 				{onPressMore ? (
 					<Touchable
+						disabled={disabled}
 						onClick={onPressMore}
 						children={<Icon icon="more_vert"/>}
 					/>

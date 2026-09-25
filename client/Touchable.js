@@ -20,7 +20,7 @@ export const Touchable = ({
 	elementRef,
 }) => {
 	const [touched, setTouched] = useState(false);
-	const isClickable = (href || onClick);
+	const isClickable = !!(href || onClick) && !disabled;
 	const isMobile = useMobile();
 
 	const clickButton = (e) => {
@@ -57,12 +57,13 @@ export const Touchable = ({
 	if (mobileOnly && !isMobile) return null;
 	return createElement(tagName, {
 		'className': c('touchable', className, touched && 'touched', disableMenu && 'disable-menu', active && 'active', disabled && 'disabled'),
-		'href': href,
-		'onPointerDown': isClickable && touch,
-		'onPointerUp': isClickable && leave,
-		'onPointerLeave': isClickable && leave,
-		'onPointerCancel': isClickable && leave,
-		'onClick': isClickable && clickButton,
+		'href': disabled ? undefined : href,
+		'disabled': tagName === 'button' ? !!disabled : undefined,
+		'onPointerDown': isClickable ? touch : undefined,
+		'onPointerUp': isClickable ? leave : undefined,
+		'onPointerLeave': isClickable ? leave : undefined,
+		'onPointerCancel': isClickable ? leave : undefined,
+		'onClick': isClickable ? clickButton : undefined,
 		'target': target,
 		'draggable': false,
 		'onContextMenu': disableMenu ? e => {

@@ -10,9 +10,10 @@ export const TouchableHighlight = ({
 	className,
 }) => (
 	<Touchable
-		className={c('touchable-highlight', disabled && 'disabled', className)}
+		className={c('touchable-highlight', className)}
 		onClick={onClick}
 		href={href}
 		children={children}
+		disabled={disabled}
 	/>
 );

@@ -219,14 +219,11 @@ i.text-input-clear {font-size:18px;}
 }
 button.touchable, a.touchable {cursor:pointer;}
 .touchable.touched, .touchable.disabled {opacity:.3;}
-.touchable.disabled {pointer-events:none !important;}
+.touchable.disabled, .touchable.disabled * {pointer-events:none;}
 .touchable img {display:block;}
 .touchable.disable-menu {user-select:none;}
 
 /* HIGHLIGHT */
-.touchable-highlight {color:inherit; width:100%;}
-.touchable-highlight.inactive {opacity:.3;}
-.touchable-highlight.disabled {opacity:.3; pointer-events:none;}
 .touchable-highlight.touched {opacity:1; background:var(--subtle);}
 .touchable-highlight.highlight, .touchable-highlight.active {background:var(--subtle);}
 
@@ -295,13 +292,12 @@ button.touchable, a.touchable {cursor:pointer;}
 /* FLEX STACK LAYOUT */
 .frame {height:100%; width:100%; overflow:hidden; flex:1;}
 .spacer {display:flex; flex:1;}
-.stack {display:flex; pointer-events:none !important;}
+.stack {display:flex;}
 .stack:empty {display:none;}
-.stack > * {pointer-events:auto;}
 .stack.v {flex-direction:column;}
 .stack.h {flex-direction:row;}
-.stack.z {position:relative;}
-.stack.z > * {position:absolute; top:0; left:0; right:0; bottom:0;}
+.stack.z {position:relative; pointer-events:none;}
+.stack.z > * {pointer-events:auto; position:absolute; top:0; left:0; right:0; bottom:0;}
 .stack.distributed > * {flex:1; width:100%;}
 .stack.h > .text {min-width:0;}
 .stack.h > .text.select {width:auto; flex:1;}

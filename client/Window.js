@@ -66,7 +66,7 @@ export const Window = ({
 	}, [height]);
 
 	return (
-		<Layer isActive={isVisible} className={c(`layer-${presentation}`, theme && `theme-${theme}`)}>
+		<Layer isActive={isVisible} className={c(`layer-${presentation}`)} theme={theme}>
 			<div className="shade" ref={shadeEl}/>
 			<Pan
 				direction="y"

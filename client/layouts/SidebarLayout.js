@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMobile } from '../util';
 import { ScrollView } from '../ScrollView';
-import { VStack } from '../Stack';
+import { HStack, VStack } from '../Stack';
 
 export const SidebarLayout = ({
 	SidebarComponent,
@@ -23,7 +23,7 @@ export const SidebarLayout = ({
 	);
 
 	return (
-		<div className="sidebar-layout">
+		<HStack frame className="sidebar-layout">
 			{SidebarComponent ? (
 				<div className="sidebar-layout-sidebar">
 					<div className="sidebar-layout-sidebar-content">
@@ -38,6 +38,6 @@ export const SidebarLayout = ({
 				children={children}
 				frame
 			/>
-		</div>
+		</HStack>
 	);
 };

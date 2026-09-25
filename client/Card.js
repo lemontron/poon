@@ -12,6 +12,7 @@ import { HeaderButton } from './HeaderButton';
 import { ErrorBoundary } from './ErrorBoundary';
 
 export const Card = ({
+	presentation = 'card',
 	title,
 	subtitle,
 	children,
@@ -91,13 +92,12 @@ export const Card = ({
 	};
 
 	const renderHeader = () => {
-		if (HeaderComponent === null) return null;
 		if (HeaderComponent) return HeaderComponent;
 		return (
 			<ScreenHeader
 				title={title}
 				subtitle={subtitle}
-				presentation="card"
+				presentation={presentation}
 				SearchComponent={SearchComponent}
 				onClose={close}
 				onBeforeClose={onBeforeClose}
@@ -119,11 +119,7 @@ export const Card = ({
 	};
 
 	return (
-		<Layer
-			isActive={isVisible}
-			className={c(className, theme && `theme-${theme}`)}
-			label={typeof title === 'string' && title}
-		>
+		<Layer isActive={isVisible} className={className} theme={theme}>
 			{ShadeComponent ? <ShadeComponent ref={shadeEl}/> : null}
 			<Pan
 				direction="x"
@@ -134,7 +130,6 @@ export const Card = ({
 				onDragLeave={onDrop && cancelDrag}
 				onDrop={onDrop && drop}
 				onCapture={e => {
-					// if (!allowBack) return;
 					if (disableGestures) return;
 					return (e.direction === 'x' && e.distance > 0);
 				}}

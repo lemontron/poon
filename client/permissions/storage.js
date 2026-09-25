@@ -1,18 +1,9 @@
-export class StoredValue {
-	constructor(key) {
-		this.key = key;
-	}
+import { EJSON } from 'meteor/ejson';
 
-	get() {
-		try {
-			const value = localStorage.getItem(this.key);
-			return value ? JSON.parse(value) : null;
-		} catch (error) {
-			return null;
-		}
-	}
-
-	set(value) {
-		localStorage.setItem(this.key, JSON.stringify(value));
-	}
-}
+export const storage = new Proxy(localStorage, {
+	get: (target, key) => key in target ? EJSON.parse(target[key]) : null,
+	set: (target, key, value) => {
+		target.setItem(key, EJSON.stringify(value));
+		return true;
+	},
+});

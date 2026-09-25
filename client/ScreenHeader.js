@@ -39,6 +39,8 @@ export const ScreenHeader = ({
 		);
 	};
 
+	if (presentation === 'fullscreen') return null;
+
 	return (
 		<Fragment>
 			<div className="header">

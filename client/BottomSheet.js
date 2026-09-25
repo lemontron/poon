@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { c } from './util';
+import { AnimatedValue } from './util/animated';
 import { useSize } from './util/size';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
-import { Button, HStack } from 'meteor/poon';
-import { AnimatedValue } from './util/animated';
+import { HStack } from './Stack';
+import { Button } from './Button';
 
 export const BottomSheet = ({
 	title,
@@ -40,9 +41,7 @@ export const BottomSheet = ({
 		} else { // hide
 			pan.spring(0).then(onClose);
 		}
-	}, [visible, !!height, onClose]);
-
-	const hasHeader = showCloseButton || title;
+	}, [visible, height, onClose]);
 
 	return (
 		<Layer isActive={false}>
@@ -65,7 +64,7 @@ export const BottomSheet = ({
 					}}
 				>
 					{showHandle ? <div className="handle"/> : null}
-					{hasHeader ? (
+					{(showCloseButton || title) ? (
 						<HStack className="sheet-header" align="center" justify="between" padding>
 							<div>{title}</div>
 							{showCloseButton ? <Button icon="close" round color="glass" onClick={close}/> : null}

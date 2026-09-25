@@ -56,7 +56,7 @@ export {
 	DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission,
 } from './client/permissions.js';
 export { Bus, createBus, useBus } from './client/permissions/location.js';
-export { StoredValue } from './client/permissions/storage.js';
+export { storage } from './client/permissions/storage.js';
 export { PermissionDef } from './client/permissions/util.js';
 export { Pill } from './client/Pill.js';
 export { Placeholder } from './client/Placeholder.js';

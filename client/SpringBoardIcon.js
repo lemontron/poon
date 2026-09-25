@@ -3,14 +3,11 @@ import { Icon } from './Icon';
 import { Touchable } from './Touchable';
 import { setRevealOrigin } from './Reveal';
 
-export const SpringBoardIcon = ({title = "Icon", icon = "circle", href, color, ImageComponent, disabled}) => {
-	const frameRef = useRef(null);
+export const SpringBoardIcon = ({title = 'Icon', icon = 'circle', href, color, ImageComponent, disabled}) => {
+	const el = useRef();
 
 	const setOrigin = () => {
-		const frame = frameRef.current;
-		const rect = frame.getBoundingClientRect();
-		const renderedColor = getComputedStyle(frame).backgroundColor;
-		setRevealOrigin(rect, renderedColor);
+		setRevealOrigin(el.current);
 	};
 
 	const renderIcon = () => {
@@ -21,7 +18,7 @@ export const SpringBoardIcon = ({title = "Icon", icon = "circle", href, color, I
 	return (
 		<Touchable href={href} className="springboard-icon" onClick={setOrigin} disabled={disabled}>
 			<div
-				ref={frameRef}
+				ref={el}
 				className="icon-frame"
 				style={{background: color}}
 				children={renderIcon()}

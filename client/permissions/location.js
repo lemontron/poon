@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DENIED, GRANTED, PermissionDef } from './util.js';
-import { StoredValue } from './storage.js';
+import { storage } from './storage.js';
 
 export class Bus {
 	constructor(initState) {
@@ -28,9 +28,7 @@ export const useBus = bus => {
 	return val;
 };
 
-const lastLocation = new StoredValue('lastLocation');
-
-const locationState = createBus(lastLocation.get());
+const locationState = createBus(storage.lastLocation);
 
 const transformLocation = e => ({
 	'type': 'Point',
@@ -68,7 +66,7 @@ const watchLocation = () => {
 	isWatching = true;
 	navigator.geolocation.watchPosition(e => {
 		const loc = transformLocation(e);
-		lastLocation.set(loc);
+		storage.lastLocation = loc;
 		locationState.update(loc);
 	}, error => {
 		isWatching = false;

@@ -27,6 +27,7 @@ export const List = ({
 	grid = false,
 	onReorder,
 	TitleRightComponent,
+	FooterComponent,
 }) => {
 	const {draggingKey, dropTarget, getReorderProps} = useReorder({items, keyExtractor, onReorder});
 
@@ -76,6 +77,7 @@ export const List = ({
 				{showCountFooter ? (
 					<div className="list-footer">{items.length} items</div>
 				) : null}
+				{FooterComponent}
 			</div>
 		</div>
 	);

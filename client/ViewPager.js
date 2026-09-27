@@ -149,8 +149,10 @@ export const ViewPager = ({
 		const first = rows[firstIndex];
 		const second = rows[secondIndex];
 
-		sidebarAccentEl.current.style.transform = `translateY(${lerp(amount, first.offsetTop, second.offsetTop)}px)`;
-		sidebarAccentEl.current.style.height = `${lerp(amount, first.offsetHeight, second.offsetHeight)}px`;
+		if (first && second) {
+			sidebarAccentEl.current.style.transform = `translateY(${lerp(amount, first.offsetTop, second.offsetTop)}px)`;
+			sidebarAccentEl.current.style.height = `${lerp(amount, first.offsetHeight, second.offsetHeight)}px`;
+		}
 	};
 
 	const userInteractionChangePage = (page, flickMs) => {

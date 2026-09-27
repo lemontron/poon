@@ -43,7 +43,7 @@ export { ScrollingHorizontalList } from './client/ScrollingHorizontalList.js';
 export { Markdown } from './client/Markdown.js';
 export { NumberInput } from './client/NumberInput.js';
 export { ActionSheet, hideActionSheet, showActionSheet } from './client/overlays/ActionSheet.js';
-export { Alert, ALERT, PROMPT, showAlert, showPrompt } from './client/overlays/Alert.js';
+export { Alert, ALERT, PROMPT, showAlert, showPrompt, showConfirm } from './client/overlays/Alert.js';
 export { globalLoading, GlobalLoading } from './client/overlays/GlobalLoading.js';
 export { hideModal, Modal, modalState, showModal } from './client/overlays/Modal.js';
 export { showNotification } from './client/overlays/Notifications.js';

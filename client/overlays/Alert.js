@@ -43,6 +43,7 @@ const SingleAlert = ({alert, isLast}) => {
 				title={option.name}
 				disableMenu
 				color={option.color}
+				borderless={option.borderless}
 			/>
 		);
 	};
@@ -153,4 +154,11 @@ export const showPrompt = (alert, options) => new Promise(resolve => {
 		'type': PROMPT,
 		...alert,
 	}]);
+});
+
+export const showConfirm = (title) => showAlert(title, {
+	'options': [
+		{_id: false, name: 'Cancel', borderless: true},
+		{_id: true, name: 'Continue'},
+	],
 });

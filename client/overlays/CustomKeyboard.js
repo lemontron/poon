@@ -1,26 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Touchable } from '../Touchable';
 import { Icon } from '../Icon';
-import { toast } from './Toast';
+import { AnimatedValue } from '../util/animated';
 
 const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
 const selector = '[data-virtual-keyboard="custom"]';
-let audioContext;
 
-const playClick = () => {
-	audioContext ||= new AudioContext();
-	audioContext.resume();
-	const oscillator = audioContext.createOscillator();
-	const gain = audioContext.createGain();
-	const now = audioContext.currentTime;
-	oscillator.type = 'square';
-	oscillator.frequency.value = 600;
-	gain.gain.setValueAtTime(.04, now);
-	gain.gain.exponentialRampToValueAtTime(.001, now + .02);
-	oscillator.connect(gain).connect(audioContext.destination);
-	oscillator.start(now);
-	oscillator.stop(now + .02);
-};
+const keyboardPan = new AnimatedValue(1);
 
 const setValue = (input, value, caret) => {
 	const prototype = input.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
@@ -31,19 +17,31 @@ const setValue = (input, value, caret) => {
 
 const Key = ({children, onClick, className = ''}) => (
 	<Touchable
-		className={`custom-keyboard-key ${className}`}
-		onPointerDown={playClick}
+		className={`keyboard-key ${className}`}
 		onClick={onClick}
 		children={children}
 	/>
 );
 
 export const CustomKeyboard = () => {
+	const el = useRef();
+	const [show, setShow] = useState(false);
 	const [input, setInput] = useState();
 	const [shift, setShift] = useState(false);
 
 	useEffect(() => {
+		keyboardPan.spring(input ? 0 : 1);
+	}, [!input]);
+
+	useEffect(() => {
+		return keyboardPan.on(val => {
+			if (el.current) el.current.style.transform = `translateY(${val * 100}%)`;
+		});
+	}, []);
+
+	useEffect(() => {
 		const focus = e => {
+			setShow(true);
 			setInput(e.target.matches(selector) ? e.target : undefined);
 			setShift(false);
 		};
@@ -53,15 +51,19 @@ export const CustomKeyboard = () => {
 
 		document.addEventListener('focusin', focus);
 		document.addEventListener('focusout', blur);
-		if (document.activeElement.matches(selector)) setInput(document.activeElement);
+
+		if (document.activeElement.matches(selector)) {
+			setShow(true);
+			setInput(document.activeElement);
+		}
+
 		return () => {
 			document.removeEventListener('focusin', focus);
 			document.removeEventListener('focusout', blur);
 		};
 	}, []);
 
-	if (!input) return null;
-	const email = input.type === 'email';
+	const email = (input?.type === 'email');
 
 	const edit = text => {
 		const start = input.selectionStart ?? input.value.length;
@@ -76,33 +78,34 @@ export const CustomKeyboard = () => {
 		setValue(input, `${input.value.slice(0, from)}${input.value.slice(end)}`, from);
 	};
 
-	return (
+	if (show) return (
 		<div
-			className="custom-keyboard"
+			className="keyboard"
 			onPointerDown={e => e.preventDefault()}
+			ref={el}
 		>
 			{email && (
-				<div className="custom-keyboard-row top">
+				<div className="keyboard-row top">
 					{'1234567890'.split('').map(number => (
 						<Key key={number} className="letter" onClick={() => edit(number)}>{number}</Key>
 					))}
 				</div>
 			)}
-			<div className="custom-keyboard-row top">
+			<div className="keyboard-row top">
 				{rows[0].split('').map(letter => (
 					<Key key={letter} className="letter" onClick={() => edit(shift ? letter.toUpperCase() : letter)}>
 						{shift ? letter.toUpperCase() : letter}
 					</Key>
 				))}
 			</div>
-			<div className="custom-keyboard-row middle">
+			<div className="keyboard-row middle">
 				{rows[1].split('').map(letter => (
 					<Key key={letter} className="letter" onClick={() => edit(shift ? letter.toUpperCase() : letter)}>
 						{shift ? letter.toUpperCase() : letter}
 					</Key>
 				))}
 			</div>
-			<div className="custom-keyboard-row bottom">
+			<div className="keyboard-row bottom">
 				<Key className={`shift ${shift ? 'active' : ''}`} onClick={() => setShift(!shift)}>
 					<Icon icon="shift"/>
 				</Key>
@@ -115,7 +118,7 @@ export const CustomKeyboard = () => {
 					<Icon icon="backspace"/>
 				</Key>
 			</div>
-			<div className="custom-keyboard-actions">
+			<div className="keyboard-actions">
 				{email ? ['@', '.', '-', '_', '+', '.com'].map(text => (
 					<Key key={text} className="space" onClick={() => edit(text)}>{text}</Key>
 				)) : <Key className="space" onClick={() => edit(' ')}/>}

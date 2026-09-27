@@ -116,5 +116,5 @@ export const setRevealOrigin = (el) => {
 		'height': rect.height,
 		'color': style.backgroundColor,
 	};
-	console.log(pendingConfig);
+	// console.log(pendingConfig);
 };

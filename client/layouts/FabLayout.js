@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { VStack, ZStack } from '../Stack.js';
 import { Fab } from '../Fab.js';
 
 export const FabLayout = ({FabComponent, icon = 'add', title, href, onClick, disabled, children, pan}) => {
@@ -18,18 +17,12 @@ export const FabLayout = ({FabComponent, icon = 'add', title, href, onClick, dis
 	};
 
 	return (
-		<ZStack frame>
+		<div className="fab-layout">
 			{children}
-			<VStack
-				className="fab-container"
-				align="trailing"
-				justify="trailing"
-				passthrough
-				ref={container}
-			>
+			<div className="fab-container" ref={container}>
 				{FabComponent}
 				{renderFab()}
-			</VStack>
-		</ZStack>
+			</div>
+		</div>
 	);
 };

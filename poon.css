@@ -742,7 +742,7 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 
 /* SIDEBAR LAYOUT */
 .sidebar-layout {display:flex; gap:20px; flex:1;}
-.sidebar-layout-sidebar {flex:0; padding:0 var(--gutter-width) 10px; display:flex; flex-direction:column;}
+.sidebar-layout-sidebar {flex:0; padding:0 var(--gutter-width) 10px; display:flex; flex-direction:column; min-width:300px;}
 .sidebar-layout-sidebar-content {background:var(--subtle); border-radius:var(--radius); flex:1; display:flex; overflow:hidden;}
 .sidebar-layout-main {flex:1;}
 

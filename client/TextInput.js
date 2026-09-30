@@ -17,6 +17,7 @@ const applyTitleCase = (value) => {
 export const TextInput = ({
 	placeholder,
 	value = '',
+	autoComplete,
 	icon,
 	LeftComponent,
 	type = 'text',
@@ -122,7 +123,7 @@ export const TextInput = ({
 
 		return createElement(isTextarea ? 'textarea' : 'input', {
 			'type': typeMap[type] || type,
-			'autoComplete': autoCompleteMap[type],
+			'autoComplete': autoComplete || autoCompleteMap[type],
 			'maxLength': maxLength,
 			'className': c('text', disabled && 'disabled', dnt && 'dnt', className, frame && 'frame', isTextarea && autoExpand && 'auto-expand'),
 			'readOnly': disabled,

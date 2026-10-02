@@ -17,7 +17,7 @@ export const hideActionSheet = () => {
 
 export const ActionSheet = () => {
 	const sheet = useBus(bus);
-	useBackHandler(!!sheet, () => pan.spring(0).then(hideActionSheet));
+	useBackHandler(() => pan.spring(0).then(hideActionSheet), !!sheet);
 
 	const renderOption = (option, i) => {
 		if (option.hidden) return null;

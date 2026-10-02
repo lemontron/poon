@@ -13,6 +13,7 @@ export const Touchable = ({
 	disabled,
 	disableMenu,
 	onPointerDown,
+	onTouchedChange,
 	type = 'button',
 	replaceState,
 	mobileOnly,
@@ -42,11 +43,13 @@ export const Touchable = ({
 	const touch = (e) => {
 		if (e.button && e.button !== 0) return; // If mouse, only process left clicks
 		setTouched(true);
+		if (onTouchedChange) onTouchedChange(true);
 		if (onPointerDown) onPointerDown(e);
 	};
 
 	const leave = () => {
 		setTouched(false);
+		if (onTouchedChange) onTouchedChange(false);
 	};
 
 	// Determine tag name

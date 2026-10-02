@@ -19,6 +19,7 @@ export const Reveal = ({
 	SearchComponent,
 	BackgroundComponent,
 	theme,
+	disableGestures,
 	ref,
 }) => {
 	const layerEl = useRef();
@@ -81,6 +82,7 @@ export const Reveal = ({
 				className="card reveal-content"
 				ref={innerEl}
 				onCapture={(e) => {
+					if (disableGestures) return false;
 					return (e.direction === 'x' && e.distance > 0);
 				}}
 				onMove={(e) => {

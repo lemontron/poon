@@ -15,6 +15,7 @@ import { List } from './List';
 import { TouchableRow } from './TouchableRow';
 import { ViewPagerContext } from './ViewPagerContext';
 import { ScrollView } from './ScrollView';
+import { Icon } from './Icon';
 
 const PagerDot = ({pan, i}) => {
 	const el = useRef();
@@ -56,6 +57,7 @@ const PagerTabTitle = ({page, i, titleExtractor, pan, onClick}) => {
 				ref={titleEl}
 				style={{opacity: getOpacity(pan.value)}}
 			>
+				{/*{page.icon ? <Icon icon={page.icon}/> : null}*/}
 				<label>{titleExtractor(page) || `Page ${i + 1}`}</label>
 				{page.badge ? <div className="pager-tab-badge">{page.badge}</div> : null}
 			</div>
@@ -294,6 +296,7 @@ export const ViewPager = ({
 								renderItem={(page, i) => (
 									<TouchableRow
 										key={i}
+										icon={page.icon}
 										title={titleExtractor(page) || `Page ${i + 1}`}
 										onClick={() => userInteractionChangePage(i)}
 										RightComponent={page.badge ? (

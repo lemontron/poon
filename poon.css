@@ -177,8 +177,10 @@ i.text-input-clear {font-size:18px;}
 .phone-input {display:grid; gap:12px; max-width:360px; width:100%;}
 .phone-input .text-input {height:56px;}
 .phone-input .text-input .text {font-size:28px; text-align:center;}
-.phone-input-keypad {display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;}
-.phone-input-key.btn {height:64px; font-size:28px;}
+
+/* NUMBER PAD */
+.number-pad {display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;}
+.number-pad-key.btn {height:64px; font-size:28px;}
 
 /* DATE INPUT CALENDAR */
 .date-input {display:flex; flex-direction:column; gap:10px;}
@@ -242,7 +244,6 @@ button.touchable, a.touchable {cursor:pointer;}
 
 .touchable-row-button {flex:1; min-width:0; padding:10px 0; text-align:left; color:inherit; display:flex; align-items:center;}
 .touchable-row-button.touched {opacity:1;}
-.touchable-row:has(.touchable-row-button.touched) {background:var(--subtle);}
 .touchable-row.dragging > * {opacity:.3;}
 .touchable-row-drag-handle {flex:0 0 24px; display:flex; align-items:center; justify-content:center; color:var(--muted); cursor:grab; user-select:none; touch-action:none; margin-left:calc(-1 * var(--gutter-width) / 2);}
 .touchable-row-drag-handle:active {cursor:grabbing;}
@@ -278,9 +279,9 @@ button.touchable, a.touchable {cursor:pointer;}
 .btn.loading .btn-inner {opacity:0;}
 .btn-layer {display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0; right:0; bottom:0; gap:10px;}
 .btn-progress {background:var(--color); opacity:.2; transform:translateX(0); transform-origin:left; animation:btnProgress linear forwards;}
+.btn.solid .btn-progress {background:var(--bg-secondary);}
 
-.btn-white {--color:#fff; font-weight:bold;}
-.btn-black {background:#000; color:#fff; border-color:#000;}
+.btn-primary {--color:var(--accent); font-weight:bold;}
 .btn-red {--color:var(--error);}
 .btn.btn-glass {--color:rgba(255, 255, 255, .3); background:var(--color); border:none; color:var(--primary); backdrop-filter:blur(2px);}
 .btn.borderless {border:none;}
@@ -536,6 +537,7 @@ button.touchable, a.touchable {cursor:pointer;}
 
 .alert-top {padding:10px var(--gutter-width); text-align:center; gap:10px; display:flex; flex-direction:column; overflow:auto; flex-shrink:0;}
 .alert-title {font-size:calc(var(--font-size) + 2px); font-weight:bold;}
+.alert-pin-value {min-height:56px; display:flex; align-items:center; justify-content:center; background:var(--subtle); border-radius:calc(var(--radius) / 2); font-size:28px;}
 .alert-bottom {border-top:1px solid var(--subtle);}
 .alert-buttons.horizontal {flex-direction:row;}
 .alert-button {padding:10px; align-items:center; justify-content:center; gap:10px; width:100%; display:flex; background:var(--bg-secondary);}
@@ -593,8 +595,8 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 .tag-container {display:inline-flex; align-items:center; border-radius:11px; overflow:hidden; background:rgba(255, 255, 255, .1); flex-shrink:0;}
 .tag i {font-size:16px;}
 .tag, .ribbon-container {padding:0 8px; display:inline-flex; align-items:center; height:24px; justify-content:center; font-size:calc(var(--font-size) - 3px); color:var(--primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; gap:5px; position:relative; z-index:1;}
-.tag {border-radius:20px; background:var(--muted); border:2px solid transparent; display:flex;}
-.tag-count {height:16px; min-width:16px; border-radius:10px; background:var(--primary); color:#000; text-align:center; font-size:10px; line-height:16px; font-weight:bold; padding:0 4px; margin-right:-5px;}
+.tag {border-radius:20px; background:var(--muted); border:2px solid transparent; display:flex; color:#fff;}
+.tag-count {height:16px; min-width:16px; border-radius:10px; background:var(--primary); color:var(--bg-primary); text-align:center; font-size:10px; line-height:16px; font-weight:bold; padding:0 4px; margin-right:-5px;}
 .tag-meta {padding:0 10px; margin-left:-5px; font-size:10px;}
 .tag-container .activity-indicator {margin:0 5px;}
 .tag-progress {position:absolute; top:0; left:0; height:100%; background:var(--primary); opacity:0.2;}
@@ -711,7 +713,7 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 
     .pager.with-sidebar .card-sidebar {display:flex;}
 }
-.pager .card-sidebar {width:190px;}
+.pager .card-sidebar {width:210px;}
 
 /* CHAT BUBBLES */
 .bubble-user, .bubble-other {padding:10px; background:var(--subtle); border-radius:var(--radius); max-width:90%; position:relative;}

@@ -42,6 +42,7 @@ export { List } from './client/List.js';
 export { ScrollingHorizontalList } from './client/ScrollingHorizontalList.js';
 export { Markdown } from './client/Markdown.js';
 export { NumberInput } from './client/NumberInput.js';
+export { NumberPad } from './client/NumberPad.js';
 export { ActionSheet, hideActionSheet, showActionSheet } from './client/overlays/ActionSheet.js';
 export { Alert, ALERT, PROMPT, showAlert, showPrompt, showConfirm } from './client/overlays/Alert.js';
 export { globalLoading, GlobalLoading } from './client/overlays/GlobalLoading.js';
@@ -56,7 +57,7 @@ export {
 	DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission,
 } from './client/permissions.js';
 export { Bus, createBus, useBus } from './client/permissions/location.js';
-export { storage } from './client/permissions/storage.js';
+export { storage } from './client/util/storage.js';
 export { PermissionDef } from './client/permissions/util.js';
 export { Pill } from './client/Pill.js';
 export { Placeholder } from './client/Placeholder.js';
@@ -109,3 +110,4 @@ export { ValidIcon } from './client/ValidIcon.js';
 export { ViewPager } from './client/ViewPager.js';
 export { Window } from './client/Window.js';
 export { useConnection } from './client/util/connection.js';
+export { useSubscribe } from './client/util/meteor.js';

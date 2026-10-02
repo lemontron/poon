@@ -22,7 +22,7 @@ import { ActivityIndicator } from './ActivityIndicator';
  * @property {boolean} [fullWidth]
  * @property {boolean} [active]
  * @property {string} [target]
- * @property {number} [autoTrigger]
+ * @property {number} [autoTriggerSeconds]
  */
 
 /** @param {ButtonProps} props */
@@ -50,17 +50,17 @@ export const Button = ({
 	borderless,
 	styles,
 	round,
-	autoTrigger,
+	autoTriggerSeconds,
 }) => {
 	const buttonEl = useRef(null);
 
 	useEffect(() => {
-		if (!autoTrigger || disabled || loading) return;
+		if (!autoTriggerSeconds || disabled || loading) return;
 		const handle = setTimeout(() => {
 			buttonEl.current.click();
-		}, (autoTrigger * 1000));
+		}, (autoTriggerSeconds * 1000));
 		return () => clearTimeout(handle);
-	}, [autoTrigger, disabled, loading]);
+	}, [autoTriggerSeconds, disabled, loading]);
 
 	return (
 		<Touchable
@@ -78,10 +78,10 @@ export const Button = ({
 			replaceState={replaceState}
 			elementRef={buttonEl}
 		>
-			{autoTrigger && !disabled && !loading ? (
+			{autoTriggerSeconds && !disabled && !loading ? (
 				<div
 					className="btn-layer btn-progress"
-					style={{animationDuration: `${autoTrigger}s`}}
+					style={{animationDuration: `${autoTriggerSeconds}s`}}
 				/>
 			) : null}
 			{loading ? <div className="btn-layer"><ActivityIndicator color="var(--bg-primary)"/></div> : null}

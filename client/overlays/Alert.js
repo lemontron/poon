@@ -5,6 +5,7 @@ import { c } from '../util';
 import { Button } from '../Button';
 import { TextInput } from '../TextInput';
 import { PhoneInput } from '../PhoneInput';
+import { NumberPad } from '../NumberPad';
 import { HStack, VStack } from '../Stack';
 import { ScrollView } from '../ScrollView';
 
@@ -29,6 +30,7 @@ const dismissAlert = (alert, val) => {
 
 const SingleAlert = ({alert, isLast}) => {
 	const [input, setInput] = useState(alert.value || '');
+	const hasNumberPad = alert.virtualKeyboard === 'number';
 
 	const renderButton = (option, i) => {
 		const pressButton = () => {
@@ -54,9 +56,10 @@ const SingleAlert = ({alert, isLast}) => {
 			<HStack padding className="alert-bottom alert-buttons">
 				<Button
 					active
-					color="white"
+					color="primary"
 					fullWidth
 					title="Done"
+					autoTriggerSeconds={alert.autoTriggerSeconds}
 					onClick={() => dismissAlert(alert, input)}
 				/>
 			</HStack>
@@ -88,7 +91,7 @@ const SingleAlert = ({alert, isLast}) => {
 	return (
 		<div className={c('alert-container', isLast && alert.visible && alert.className)}>
 			<div
-				className={c('alert', isLast && alert.visible && 'visible', alert.inputType === 'phone' && 'no-max-height')}
+				className={c('alert', isLast && alert.visible && 'visible', (alert.inputType === 'phone' || hasNumberPad) && 'no-max-height')}
 				onClick={e => e.stopPropagation()}
 			>
 				<div className="alert-top">
@@ -101,13 +104,25 @@ const SingleAlert = ({alert, isLast}) => {
 								onChangeText={setInput}
 							/>
 						) : (
-							<TextInput
-								className="alert-input"
-								type={alert.inputType}
-								value={input}
-								onChangeText={setInput}
-								autoFocus
-							/>
+							<>
+								{hasNumberPad && alert.inputType === 'password' ? (
+									<div className="alert-pin-value">
+										{'•'.repeat(input.length)}
+									</div>
+								) : (
+									<TextInput
+										className="alert-input"
+										type={alert.inputType}
+										value={input}
+										onChangeText={setInput}
+										autoFocus
+										titleCase={alert.titleCase}
+										virtualKeyboard={hasNumberPad ? 'none' : alert.virtualKeyboard}
+										autoComplete="off"
+									/>
+								)}
+								{hasNumberPad ? <NumberPad value={input} onChangeText={setInput}/> : null}
+							</>
 						)
 					) : null}
 				</div>
@@ -120,7 +135,7 @@ const SingleAlert = ({alert, isLast}) => {
 export const Alert = () => {
 	const alerts = useBus(alertsStore);
 	const last = alerts.filter(alert => alert.visible).pop();
-	useBackHandler(!!last, () => dismissAlert(last));
+	useBackHandler(() => dismissAlert(last), !!last);
 
 	if (alerts.length === 0) return null;
 	return (

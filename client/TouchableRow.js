@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Touchable } from './Touchable';
 import { Icon } from './Icon';
 import { c } from './util';
@@ -31,6 +31,7 @@ export const TouchableRow = ({
 	...props
 }) => {
 	const reorder = useContext(ListReorderContext);
+	const [touched, setTouched] = useState(false);
 	const id = useRef();
 	const bodyEl = useRef();
 	const actionsEl = useRef();
@@ -76,7 +77,7 @@ export const TouchableRow = ({
 
 	return (
 		<div
-			className={c('touchable-highlight touchable-row', SwipeComponent && 'swipeable', disabled && 'disabled', inactive && 'inactive', active && 'active', highlight && 'highlight', caret && 'caret', reorder?.dragging && 'dragging', reorder?.position && `drop-${reorder.position}`)}
+			className={c('touchable-highlight touchable-row', touched && 'touched', SwipeComponent && 'swipeable', disabled && 'disabled', inactive && 'inactive', active && 'active', highlight && 'highlight', caret && 'caret', reorder?.dragging && 'dragging', reorder?.position && `drop-${reorder.position}`)}
 			data-index={reorder?.index}
 		>
 			{SwipeComponent ? (
@@ -130,6 +131,7 @@ export const TouchableRow = ({
 				{LeftButton}
 				<Touchable
 					className="touchable-row-button"
+					onTouchedChange={setTouched}
 					disabled={disabled}
 					onClick={onClick}
 					href={href}

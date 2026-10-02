@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DENIED, GRANTED, PermissionDef } from './util.js';
-import { storage } from './storage.js';
+import { storage } from '../util/storage.js';
 
 export class Bus {
 	constructor(initState) {

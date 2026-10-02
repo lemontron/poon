@@ -41,9 +41,7 @@ export const Card = ({
 	const {width} = useSize(el);
 	const pan = useAnimatedValue(animateIn ? document.body.clientWidth : 0);
 
-	const close = () => pan.spring(width).then(() => {
-		navigation.goBack();
-	});
+	const close = () => navigation.goBack();
 
 	useEffect(() => {
 		if (typeof title === 'string') {

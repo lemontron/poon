@@ -8,6 +8,27 @@ const autoCompleteMap = {code: 'one-time-code', password: 'current-password'};
 const typeMap = {phone: 'tel', code: 'tel', price: 'numeric'};
 const placeholderMap = {search: 'Search'};
 const inputModeMap = {custom: 'none', none: 'none'};
+const defaultPhoneCountry = {prefix: '+1', example: '(XXX) XXX-XXXX'};
+
+const phoneDigits = (value, country) => {
+	let digits = value.replace(/\D/g, '');
+	const prefix = country.prefix.slice(1);
+	const length = country.example.match(/X/g).length;
+	if (digits.startsWith(prefix) && (value.trim().startsWith('+') || digits.length > length)) {
+		digits = digits.slice(prefix.length);
+	}
+	return digits.slice(0, length);
+};
+
+const formatPhone = (digits, country) => {
+	let formatted = '';
+	let index = 0;
+	for (const char of country.example) {
+		if (index === digits.length) break;
+		formatted += char === 'X' ? digits[index++] : char;
+	}
+	return formatted;
+};
 
 const applyTitleCase = (value) => {
 	if (!value) return '';
@@ -53,6 +74,8 @@ export const TextInput = ({
 	const inputRef = ref || localRef;
 	const selectionRef = useRef();
 	const gesture = useRef({}).current;
+	const phoneCountry = type === 'phone' && (countryCode ? countries.find(r => r.code === countryCode) : defaultPhoneCountry);
+	const internationalRef = useRef(type === 'phone' && value.startsWith('+') && !value.startsWith(phoneCountry.prefix));
 
 	useLayoutEffect(() => {
 		const selection = selectionRef.current;
@@ -75,42 +98,58 @@ export const TextInput = ({
 
 	const renderInput = () => {
 		const changeText = (e) => {
-			let value = e.target.value;
+			let text = e.target.value;
 
 			if (isTextarea && autoExpand) {
 				e.target.style.height = 'auto';
 				e.target.style.height = `${e.target.scrollHeight}px`;
 			}
 
-			if (type === 'phone') {
-				value = value.replace(/[^0-9]/g, '');
+			if (type === 'phone' && text.startsWith('+')) {
+				internationalRef.current = true;
+				text = '+' + text.replace(/\D/g, '').slice(0, Math.min(maxLength ?? 15, 15));
+			} else if (type === 'phone') {
+				internationalRef.current = false;
+				let digits = phoneDigits(text, phoneCountry);
+				let start = phoneDigits(text.slice(0, e.target.selectionStart), phoneCountry).length;
+				let end = phoneDigits(text.slice(0, e.target.selectionEnd), phoneCountry).length;
+				const inputType = e.nativeEvent.inputType;
+				if (digits === phoneDigits(value, phoneCountry)) {
+					if (inputType === 'deleteContentBackward' && start) {
+						digits = digits.slice(0, start - 1) + digits.slice(start);
+						start--;
+						end = start;
+					} else if (inputType === 'deleteContentForward') {
+						digits = digits.slice(0, start) + digits.slice(start + 1);
+						end = start;
+					}
+				}
+				if (maxLength) digits = digits.slice(0, maxLength);
+				const formatted = formatPhone(digits, phoneCountry);
+				start = formatPhone(digits.slice(0, start), phoneCountry).length;
+				end = formatPhone(digits.slice(0, end), phoneCountry).length;
+				selectionRef.current = {el: e.target, value: formatted, start, end};
+				e.target.value = formatted;
+				e.target.setSelectionRange(start, end);
+				text = digits ? phoneCountry.prefix + digits : '';
+			} else if (type === 'number' || type === 'price') {
+				text = text.replace(/[^0-9.]/g, '');
 			} else {
-				if (titleCase) value = applyTitleCase(value);
-				if (lowerCase) value = value.toLowerCase();
-				if (maxLength) value = value.slice(0, maxLength);
-				if (type === 'username') value = value.replace(/\s/g, '');
+				if (titleCase) text = applyTitleCase(text);
+				if (lowerCase) text = text.toLowerCase();
+				if (maxLength) text = text.slice(0, maxLength);
+				if (type === 'username') text = text.replace(/\s/g, '');
 			}
-			if (titleCase && e.target.setSelectionRange && e.target.selectionStart !== null) {
-				const end = value.length;
+			if (type !== 'phone' && titleCase && e.target.setSelectionRange && e.target.selectionStart !== null) {
+				const end = text.length;
 				selectionRef.current = {
 					el: e.target,
-					value,
+					value: text,
 					start: Math.min(e.target.selectionStart, end),
 					end: Math.min(e.target.selectionEnd, end),
 				};
 			}
-			onChangeText(value);
-		};
-
-		const renderValue = (value) => {
-			if (type === 'phone' && countryCode) {
-				const country = countries.find(r => r.code === countryCode);
-				const chars = value.split('');
-				return country.example.split('').map(char => {
-					if (chars.length) return (char === 'X') ? chars.shift() : char;
-				}).filter(Boolean).join('');
-			}
-			return value;
+			onChangeText(text);
 		};
 
 		const canScroll = (el, deltaY) => {
@@ -124,11 +163,11 @@ export const TextInput = ({
 		return createElement(isTextarea ? 'textarea' : 'input', {
 			'type': typeMap[type] || type,
 			'autoComplete': autoComplete || autoCompleteMap[type],
-			'maxLength': maxLength,
+			'maxLength': type === 'phone' ? undefined : maxLength,
 			'className': c('text', disabled && 'disabled', dnt && 'dnt', className, frame && 'frame', isTextarea && autoExpand && 'auto-expand'),
 			'readOnly': disabled,
 			'onChange': changeText,
-			'value': renderValue(value),
+			'value': type === 'phone' && !internationalRef.current ? formatPhone(phoneDigits(value, phoneCountry), phoneCountry) : value,
 			'autoCapitalize': (lowerCase || type === 'email' || type === 'password') ? 'none' : undefined,
 			'autoCorrect': (type === 'email' || type === 'password' || lowerCase) ? 'off' : undefined,
 			'spellCheck': !(type === 'email' || type === 'password' || lowerCase),
@@ -198,7 +237,7 @@ export const TextInput = ({
 	return (
 		<div
 			className={c('text-input', isTextarea && 'textarea-input', fullWidth && 'full-width', type === 'search' && 'search')}>
-			{type === 'phone' && renderCountryButton()}
+			{type === 'phone' && !internationalRef.current && renderCountryButton()}
 			{renderIcon()}
 			{renderInput()}
 			{RightComponent}

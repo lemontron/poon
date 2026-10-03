@@ -132,15 +132,17 @@ i.text-input-clear {font-size:18px;}
 .keyboard-row.top {grid-template-columns:repeat(10, minmax(0, 1fr));}
 .keyboard-row.middle {grid-template-columns:repeat(9, minmax(0, 1fr)); max-width:810px;}
 .keyboard-row.bottom {grid-template-columns:1.5fr repeat(7, minmax(0, 1fr)) 1.5fr;}
-.keyboard-actions {display:flex; gap:6px; max-width:500px; margin:auto;}
+.keyboard-actions {display:flex; gap:6px; max-width:900px; margin:auto;}
+.keyboard-actions .mode {flex:0 0 70px;}
+.keyboard-actions .punctuation {flex:0 0 45px;}
 .keyboard-actions .space {flex:1;}
 .touchable.keyboard-key {height:clamp(38px, 6vw, 52px); border-radius:var(--radius); color:var(--primary); font-weight:bold;}
 .touchable.keyboard-key.letter, .touchable.keyboard-key.space {background:var(--bg-secondary);}
 .keyboard-key.shift.active {color:var(--accent);}
 
 /* NUMBER INPUT */
-.number-input {display:flex; align-items:center;}
-.number-input-value {width:30px; text-align:center;}
+.number-input {display:flex; align-items:center; background:var(--accent); border-radius:calc(var(--radius) / 2); height:var(--input-height);}
+.number-input-value {width:30px; text-align:center; color:var(--bg-primary);}
 
 /* SLIDER */
 .slider {appearance:none; -webkit-appearance:none; height:20px; cursor:pointer;}
@@ -530,7 +532,7 @@ button.touchable, a.touchable {cursor:pointer;}
 /* CHECKBOX */
 .toggle-check {height:20px; width:20px; min-width:20px; display:flex; align-items:center; justify-content:center; border:2px solid var(--muted); color:#fff; border-radius:calc(var(--radius) / 2); flex-shrink:0;}
 .toggle-check.active, .toggle-check.undetermined {background-color:var(--accent); border:none; color:var(--bg-primary);}
-.toggle-check .material-symbols {font-size:18px;}
+.toggle-check .material-symbols {font-size:20px; font-weight:600;}
 
 /* CIRCLE CHECK */
 .valid-icon {display:flex; align-items:center; justify-content:center; border-radius:10px; height:20px; width:20px; min-width:20px; background:var(--muted);}
@@ -727,7 +729,7 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 
 /* SIDEBAR LAYOUT */
 .sidebar-layout {display:flex; gap:20px; flex:1;}
-.sidebar-layout-sidebar {flex:0; padding:0 var(--gutter-width) 10px; display:flex; flex-direction:column; min-width:300px;}
+.sidebar-layout-sidebar {flex:none; padding:0 var(--gutter-width) 10px; display:flex; flex-direction:column; min-width:300px;}
 .sidebar-layout-sidebar-content {background:var(--subtle); border-radius:var(--radius); flex:1; display:flex; overflow:hidden;}
 .sidebar-layout-main {flex:1;}
 

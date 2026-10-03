@@ -161,7 +161,7 @@ export const TextInput = ({
 		};
 
 		return createElement(isTextarea ? 'textarea' : 'input', {
-			'type': typeMap[type] || type,
+			'type': virtualKeyboard === 'custom' && type === 'email' ? 'text' : typeMap[type] || type,
 			'autoComplete': autoComplete || autoCompleteMap[type],
 			'maxLength': type === 'phone' ? undefined : maxLength,
 			'className': c('text', disabled && 'disabled', dnt && 'dnt', className, frame && 'frame', isTextarea && autoExpand && 'auto-expand'),
@@ -193,6 +193,7 @@ export const TextInput = ({
 				if (canScroll(e.currentTarget, e.deltaY)) e.stopPropagation();
 			} : undefined,
 			'inputMode': inputModeMap[virtualKeyboard],
+			'data-input-type': type,
 			'data-virtual-keyboard': !disabled && virtualKeyboard,
 		});
 	};

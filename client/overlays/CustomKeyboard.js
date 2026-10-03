@@ -3,7 +3,8 @@ import { Touchable } from '../Touchable';
 import { Icon } from '../Icon';
 import { AnimatedValue } from '../util/animated';
 
-const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+const letterRows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+const symbolRows = ['1234567890', '@#$%&-+()', '*"\':;!?'];
 const selector = '[data-virtual-keyboard="custom"]';
 
 const keyboardPan = new AnimatedValue(1);
@@ -28,6 +29,7 @@ export const CustomKeyboard = () => {
 	const [show, setShow] = useState(false);
 	const [input, setInput] = useState();
 	const [shift, setShift] = useState(false);
+	const [symbols, setSymbols] = useState(false);
 
 	useEffect(() => {
 		keyboardPan.spring(input ? 0 : 1);
@@ -44,6 +46,7 @@ export const CustomKeyboard = () => {
 			setShow(true);
 			setInput(e.target.matches(selector) ? e.target : undefined);
 			setShift(false);
+			setSymbols(false);
 		};
 		const blur = e => {
 			if (e.target.matches(selector) && !e.relatedTarget?.matches(selector)) setInput();
@@ -63,7 +66,8 @@ export const CustomKeyboard = () => {
 		};
 	}, []);
 
-	const email = (input?.type === 'email');
+	const email = (input?.dataset.inputType === 'email');
+	const rows = (symbols ? symbolRows : letterRows).map(row => !symbols && shift ? row.toUpperCase() : row);
 
 	const edit = text => {
 		const start = input.selectionStart ?? input.value.length;
@@ -84,34 +88,29 @@ export const CustomKeyboard = () => {
 			onPointerDown={e => e.preventDefault()}
 			ref={el}
 		>
-			{email && (
-				<div className="keyboard-row top">
-					{'1234567890'.split('').map(number => (
-						<Key key={number} className="letter" onClick={() => edit(number)}>{number}</Key>
-					))}
-				</div>
-			)}
 			<div className="keyboard-row top">
-				{rows[0].split('').map(letter => (
-					<Key key={letter} className="letter" onClick={() => edit(shift ? letter.toUpperCase() : letter)}>
-						{shift ? letter.toUpperCase() : letter}
+				{rows[0].split('').map(char => (
+					<Key key={char} className="letter" onClick={() => edit(char)}>
+						{char}
 					</Key>
 				))}
 			</div>
 			<div className="keyboard-row middle">
-				{rows[1].split('').map(letter => (
-					<Key key={letter} className="letter" onClick={() => edit(shift ? letter.toUpperCase() : letter)}>
-						{shift ? letter.toUpperCase() : letter}
+				{rows[1].split('').map(char => (
+					<Key key={char} className="letter" onClick={() => edit(char)}>
+						{char}
 					</Key>
 				))}
 			</div>
 			<div className="keyboard-row bottom">
-				<Key className={`shift ${shift ? 'active' : ''}`} onClick={() => setShift(!shift)}>
-					<Icon icon="shift"/>
-				</Key>
-				{rows[2].split('').map(letter => (
-					<Key key={letter} className="letter" onClick={() => edit(shift ? letter.toUpperCase() : letter)}>
-						{shift ? letter.toUpperCase() : letter}
+				{symbols ? <Key className="letter" onClick={() => edit('_')}>_</Key> : (
+					<Key className={`shift ${shift ? 'active' : ''}`} onClick={() => setShift(!shift)}>
+						<Icon icon="shift"/>
+					</Key>
+				)}
+				{rows[2].split('').map(char => (
+					<Key key={char} className="letter" onClick={() => edit(char)}>
+						{char}
 					</Key>
 				))}
 				<Key className="backspace" onClick={backspace}>
@@ -119,9 +118,10 @@ export const CustomKeyboard = () => {
 				</Key>
 			</div>
 			<div className="keyboard-actions">
-				{email ? ['@', '.', '-', '_', '+', '.com'].map(text => (
-					<Key key={text} className="space" onClick={() => edit(text)}>{text}</Key>
-				)) : <Key className="space" onClick={() => edit(' ')}/>}
+				<Key className="mode" onClick={() => setSymbols(!symbols)}>{symbols ? 'ABC' : '?123'}</Key>
+				{email ? <Key className="punctuation" onClick={() => edit('@')}>@</Key> : null}
+				<Key className="space" onClick={() => edit(' ')}>Space</Key>
+				<Key className="punctuation" onClick={() => edit('.')}>.</Key>
 			</div>
 		</div>
 	);

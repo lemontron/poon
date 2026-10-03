@@ -44,16 +44,18 @@ export const NumberInput = ({
 				<Button
 					icon="remove"
 					onClick={() => changeValue(-1)}
-					round
 					disabled={!allowUnlimited && minValue !== undefined && currentValue <= minValue}
+					active
+					square
 				/>
 			)}
 			<div className="number-input-value">{value === undefined ? '∞' : value}</div>
 			<Button
 				icon="add"
 				onClick={() => changeValue(1)}
-				round
 				disabled={!allowUnlimited && maxValue !== undefined && currentValue >= maxValue}
+				active
+				square
 			/>
 		</div>
 	);

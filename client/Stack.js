@@ -72,10 +72,10 @@ export const Row = ({
 	return (
 		<div
 			className={c('row', padding && 'padding', inactive && 'inactive', multiLine && 'multi-line', highlight && 'highlight', className)}>
-			{LeftComponent}
 			<div className="row-left">
 				{renderLeftIcon()}
 			</div>
+			{LeftComponent}
 			<div className="row-body">
 				{title ? (
 					<div className="row-header">

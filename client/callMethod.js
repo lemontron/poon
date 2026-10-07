@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { toast } from './overlays/Toast';
-import { showAlert, showConfirm } from './overlays/Alert';
+import { showConfirm, showPrompt } from './overlays/Alert';
 import { globalLoading } from './overlays/GlobalLoading';
 
 export const callMethod = async (methodName, opts = {}, connection = Meteor) => {
@@ -8,6 +8,13 @@ export const callMethod = async (methodName, opts = {}, connection = Meteor) => 
 	if (opts.confirm) {
 		const ok = await showConfirm(opts.confirm);
 		if (!ok) return;
+	}
+	if (opts.requirePin) {
+		const pin = await showPrompt('Enter PIN', {
+			'inputType': 'password',
+			'virtualKeyboard': 'number',
+		});
+		if (pin !== '789191') return;
 	}
 
 	if (opts.onLoading) opts.onLoading(true);

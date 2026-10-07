@@ -1,18 +1,39 @@
 import React, { useEffect, useRef } from 'react';
 import { Fab } from '../Fab.js';
+import { useMobile } from '../util';
 
-export const FabLayout = ({FabComponent, icon = 'add', title, href, onClick, disabled, children, pan}) => {
+export const FabLayout = ({
+	FabComponent,
+	icon = 'add',
+	title,
+	href,
+	onClick,
+	disabled,
+	children,
+	pan,
+	color,
+	pulse,
+}) => {
 	const container = useRef();
+	const mobile = useMobile();
 
 	useEffect(() => {
-		if (pan && container.current) return pan.on(val => {
+		if (mobile && pan && container.current) return pan.on(val => {
 			container.current.style.transform = `translateY(-${val}px)`;
 		});
-	}, [pan]);
+	}, [pan, mobile]);
 
 	const renderFab = () => {
 		if (href || onClick) return (
-			<Fab title={title} icon={icon} href={href} onClick={onClick} disabled={disabled}/>
+			<Fab
+				title={title}
+				icon={icon}
+				href={href}
+				onClick={onClick}
+				disabled={disabled}
+				color={color}
+				pulse={pulse}
+			/>
 		);
 	};
 

@@ -7,6 +7,8 @@ import './client/register-service-worker.js';
 export { ActivityIndicator } from './client/ActivityIndicator.js';
 export { Avatar } from './client/Avatar.js';
 export { Banner } from './client/Banner.js';
+export { Badge } from './client/Badge.js';
+export { BatteryIcon } from './client/BatteryIcon.js';
 export { BottomSheet } from './client/BottomSheet.js';
 export { BreadCrumbs } from './client/BreadCrumbs.js';
 export { Bubble } from './client/Bubble.js';
@@ -22,6 +24,8 @@ export { DateInput } from './client/DateInput.js';
 export { Dropdown } from './client/Dropdown.js';
 export { DropdownItem } from './client/DropdownItem.js';
 export { Emoji } from './client/Emoji.js';
+export { EditorState } from './client/editor-state/EditorState.js';
+export { updateObject } from './update-object.js';
 export { ErrorBoundary } from './client/ErrorBoundary.js';
 export { Fab } from './client/Fab.js';
 export { FilterButton } from './client/FilterButton.js';
@@ -32,6 +36,7 @@ export { HeaderButton } from './client/HeaderButton.js';
 export { Icon } from './client/Icon.js';
 export { Image } from './client/Image.js';
 export { ImageUpload } from './client/ImageUpload.js';
+export { IndicatorDot } from './client/IndicatorDot.js';
 export { Info } from './client/Info.js';
 export { Layer } from './client/Layer.js';
 // Layouts
@@ -56,7 +61,7 @@ export { PhoneInput } from './client/PhoneInput.js';
 export {
 	DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission,
 } from './client/permissions.js';
-export { Bus, createBus, useBus } from './client/permissions/location.js';
+export { Bus, createBus, useBus } from './client/util/bus.js';
 export { storage } from './client/util/storage.js';
 export { PermissionDef } from './client/permissions/util.js';
 export { Pill } from './client/Pill.js';

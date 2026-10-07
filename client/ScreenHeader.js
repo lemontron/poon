@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { Touchable } from './Touchable';
 import { Icon } from './Icon';
+import { HeaderButton } from './HeaderButton';
 
 const closeImage = {'card': 'os:back', 'modal': 'os:close', 'reveal': 'apps'};
 
@@ -31,8 +31,7 @@ export const ScreenHeader = ({
 
 		const closeIcon = closeImage[presentation];
 		if (closeIcon) return (
-			<Touchable
-				className="header-close"
+			<HeaderButton
 				onClick={pressBack}
 				children={<Icon icon={closeIcon}/>}
 			/>

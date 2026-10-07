@@ -1,32 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { DENIED, GRANTED, PermissionDef } from './util.js';
 import { storage } from '../util/storage.js';
-
-export class Bus {
-	constructor(initState) {
-		this.state = initState;
-		this.listeners = [];
-	}
-
-	update = val => {
-		if (this.state === val) return;
-		this.state = val;
-		this.listeners.forEach(fn => fn(val));
-	};
-
-	on = cb => {
-		this.listeners.push(cb);
-		return () => this.listeners = this.listeners.filter(fn => fn !== cb);
-	};
-}
-
-export const createBus = initState => new Bus(initState);
-
-export const useBus = bus => {
-	const [val, setVal] = useState(bus.state);
-	useEffect(() => bus.on(setVal), [bus]);
-	return val;
-};
+import { createBus, useBus } from '../util/bus.js';
 
 const locationState = createBus(storage.lastLocation);
 

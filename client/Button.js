@@ -9,11 +9,12 @@ import { ActivityIndicator } from './ActivityIndicator';
  * @property {string} [className]
  * @property {import('react').ReactNode} [title]
  * @property {(event: any) => void} [onClick]
+ * @property {() => void} [onLongPress]
  * @property {(event: any) => void} [onDown]
  * @property {string} [icon]
  * @property {string} [href]
  * @property {number} [tabIndex]
- * @property {string} [color]
+ * @property {'primary' | 'success' | 'warning' | 'error' | 'glass'} [color]
  * @property {boolean} [disabled]
  * @property {boolean} [download]
  * @property {string} [iconImageUrl]
@@ -30,6 +31,7 @@ export const Button = ({
 	className,
 	title,
 	onClick,
+	onLongPress,
 	onDown,
 	icon,
 	href,
@@ -53,6 +55,9 @@ export const Button = ({
 	autoTriggerSeconds,
 }) => {
 	const buttonEl = useRef(null);
+	const longPress = useRef({timer: null, handled: false});
+
+	useEffect(() => () => clearTimeout(longPress.current.timer), []);
 
 	useEffect(() => {
 		if (!autoTriggerSeconds || disabled || loading) return;
@@ -68,9 +73,23 @@ export const Button = ({
 			type={submit ? 'submit' : 'button'}
 			className={c('btn', active ? 'solid' : 'outline', className, disabled && 'disabled', loading && 'loading', borderless && 'borderless', presentation && `btn-${presentation}`, fullWidth && 'full-width', color && `btn-${color}`, muted && 'muted', square && 'square', round && 'round')}
 			onClick={e => {
+				if (longPress.current.handled) {
+					e.preventDefault();
+					return;
+				}
 				if (download) e.stopPropagation();
 				if (onClick) onClick(e);
 			}}
+			onTouchedChange={onLongPress ? touched => {
+				clearTimeout(longPress.current.timer);
+				if (!touched) return;
+				longPress.current.handled = false;
+				longPress.current.timer = setTimeout(() => {
+					longPress.current.handled = true;
+					onLongPress();
+				}, 700);
+			} : undefined}
+			disableMenu={!!onLongPress}
 			href={href}
 			onTouchStart={onDown}
 			tabIndex={tabIndex}

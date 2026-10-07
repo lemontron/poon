@@ -89,9 +89,9 @@ const SingleAlert = ({alert, isLast}) => {
 	};
 
 	return (
-		<div className={c('alert-container', isLast && alert.visible && alert.className)}>
+		<div className={c('alert-container', alert.className)}>
 			<div
-				className={c('alert', isLast && alert.visible && 'visible', (alert.inputType === 'phone' || hasNumberPad) && 'no-max-height')}
+				className={c('alert', isLast && alert.visible && 'visible', (alert.inputType === 'phone' || hasNumberPad || alert.renderContent) && 'no-max-height')}
 				onClick={e => e.stopPropagation()}
 			>
 				<div className="alert-top">
@@ -126,6 +126,11 @@ const SingleAlert = ({alert, isLast}) => {
 						)
 					) : null}
 				</div>
+				{alert.renderContent ? (
+					<div className="alert-content">
+						{alert.renderContent(value => dismissAlert(alert, value))}
+					</div>
+				) : null}
 				{renderButtons()}
 			</div>
 		</div>
@@ -160,14 +165,14 @@ export const showAlert = (title, opts = {}) => new Promise(resolve => {
 	}]);
 });
 
-export const showPrompt = (alert, options) => new Promise(resolve => {
+export const showPrompt = (title, opts = {}) => new Promise(resolve => {
 	alertsStore.update([...alertsStore.state, {
 		'key': Random.id(),
 		'callback': resolve,
 		'visible': true,
-		'options': options,
+		'title': title,
 		'type': PROMPT,
-		...alert,
+		...opts,
 	}]);
 });
 

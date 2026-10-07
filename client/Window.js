@@ -86,7 +86,7 @@ export const Window = ({
 				{presentation === 'modal' ? (
 					<ScreenHeader
 						title={title}
-						presentation="modal"
+						presentation={presentation}
 						onClose={close}
 						onBeforeClose={onBeforeClose}
 						headerRight={headerRight}

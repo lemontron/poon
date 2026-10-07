@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { c } from './util';
 import { decodeBuffer } from './util/decode';
+import { Badge } from './Badge';
 
 const useBuffer = (buffer) => {
 	const [blob, setBlob] = useState(null);
@@ -27,6 +28,7 @@ export const Image = ({
 	children,
 	round,
 	variant,
+	badge,
 }) => {
 	const [ready, setReady] = useState(false);
 	const blobUrl = useBuffer(buffer);
@@ -59,6 +61,7 @@ export const Image = ({
 			style={{aspectRatio: ar}}
 		>
 			{renderImg()}
+			{badge ? <Badge number={badge}/> : null}
 			{children ? <div className="img-inside">{children}</div> : null}
 		</div>
 	);

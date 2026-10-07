@@ -18,7 +18,7 @@ import { Button, Card, callMethod } from 'meteor/poon';
 
 ## Service Worker
 
-Poon registers and serves `/service-worker.js` for every app. The worker caches the generated Meteor shell and same-origin assets so the app can continue running offline.
+Poon registers and serves `/service-worker.js` for every app. The worker supports optional service worker features such as push notifications, but does not cache app pages or assets.
 
 Server packages can add optional worker behavior with `addServiceWorkerSource`:
 

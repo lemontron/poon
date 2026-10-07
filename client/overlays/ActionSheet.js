@@ -3,6 +3,7 @@ import { createBus, useBackHandler, useBus } from 'meteor/poon-router';
 import { AnimatedValue } from '../util/animated';
 import { TouchableRow } from '../TouchableRow';
 import { BottomSheet } from '../BottomSheet';
+import { Image } from '../Image';
 
 const bus = createBus(null);
 const pan = new AnimatedValue(0);
@@ -33,6 +34,9 @@ export const ActionSheet = () => {
 			<TouchableRow
 				key={i}
 				title={option.name}
+				LeftComponent={option.imageId ? (
+					<Image item={option} variant="thumb"/>
+				) : null}
 				icon={option.icon}
 				onClick={clickOption}
 				disabled={option.disabled}

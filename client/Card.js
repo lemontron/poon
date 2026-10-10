@@ -14,6 +14,7 @@ import { ErrorBoundary } from './ErrorBoundary';
 export const Card = ({
 	presentation = 'card',
 	title,
+	TitleImage,
 	subtitle,
 	children,
 	footer,
@@ -94,6 +95,7 @@ export const Card = ({
 		return (
 			<ScreenHeader
 				title={title}
+				TitleImage={TitleImage}
 				subtitle={subtitle}
 				presentation={presentation}
 				SearchComponent={SearchComponent}

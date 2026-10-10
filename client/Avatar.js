@@ -9,10 +9,11 @@ export const Avatar = ({
 	getUrl = val => val,
 	name,
 	statusColor,
+	size,
 }) => {
 	const url = getUrl(item, variant);
 	return (
-		<div className={c('avatar', className)} title={name}>
+		<div className={c('avatar', className)} title={name} style={{width: size, height: size}}>
 			{url ? (
 				<img draggable={false} src={url} alt={name}/>
 			) : null}

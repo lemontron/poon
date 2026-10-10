@@ -17,7 +17,7 @@ export { Card } from './client/Card.js';
 export { CheckBox, Radio } from './client/CheckBox.js';
 export { ChipsInput } from './client/ChipsInput.js';
 export { callFetch } from './client/callFetch.js';
-export { callMethod } from './client/callMethod.js';
+export { callMethod, useOnline } from './client/callMethod.js';
 export { ConnectionIndicator } from './client/ConnectionIndicator.js';
 export { CornerDialog } from './client/CornerDialog.js';
 export { DateInput } from './client/DateInput.js';

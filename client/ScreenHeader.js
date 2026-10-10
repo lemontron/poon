@@ -6,6 +6,7 @@ const closeImage = {'card': 'os:back', 'modal': 'os:close', 'reveal': 'apps'};
 
 export const ScreenHeader = ({
 	title,
+	TitleImage,
 	subtitle,
 	presentation = 'card',
 	onClose,
@@ -45,7 +46,10 @@ export const ScreenHeader = ({
 			<div className="header">
 				<div className="header-spacer" children={renderHeaderLeft()}/>
 				<div className="header-middle">
-					<div className="header-title">{title}</div>
+					<div className="header-title">
+						{TitleImage ? <div className="header-image">{TitleImage}</div> : null}
+						{title}
+					</div>
 					{subtitle ? <div className="header-subtitle">{subtitle}</div> : null}
 				</div>
 				<div className="header-spacer">{headerRight}</div>

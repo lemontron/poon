@@ -5,6 +5,7 @@ import { HStack, VStack } from '../Stack';
 import { FabLayout } from './FabLayout';
 
 export const SidebarLayout = ({
+	TopComponent,
 	MainComponent,
 	SidebarComponent,
 	BottomComponent,
@@ -17,6 +18,7 @@ export const SidebarLayout = ({
 
 	if (mobile) return (
 		<VStack frame>
+			{TopComponent}
 			<FabLayout FabComponent={FabComponent} pan={pan}>
 				<ScrollView frame>
 					<VStack spacing>
@@ -32,26 +34,29 @@ export const SidebarLayout = ({
 	);
 
 	return (
-		<HStack frame className="sidebar-layout">
-			{SidebarComponent ? (
-				<div className="sidebar-layout-sidebar">
-					<div className="sidebar-layout-sidebar-content">
-						{SidebarComponent}
+		<VStack frame spacing>
+			{TopComponent}
+			<HStack frame className="sidebar-layout">
+				{SidebarComponent ? (
+					<div className="sidebar-layout-sidebar">
+						<div className="sidebar-layout-sidebar-content">
+							{SidebarComponent}
+						</div>
 					</div>
-				</div>
-			) : null}
-			<VStack frame>
-				<FabLayout FabComponent={FabComponent}>
-					<ScrollView
-						className="sidebar-layout-main"
-						onPointerDownCapture={sidebarVisible ? e => e.stopPropagation() : undefined}
-						onClickCapture={sidebarVisible ? onDismissSidebar : undefined}
-						children={MainComponent}
-						frame
-					/>
-				</FabLayout>
-				{BottomComponent}
-			</VStack>
-		</HStack>
+				) : null}
+				<VStack frame>
+					<FabLayout FabComponent={FabComponent}>
+						<ScrollView
+							className="sidebar-layout-main"
+							onPointerDownCapture={sidebarVisible ? e => e.stopPropagation() : undefined}
+							onClickCapture={sidebarVisible ? onDismissSidebar : undefined}
+							children={MainComponent}
+							frame
+						/>
+					</FabLayout>
+					{BottomComponent}
+				</VStack>
+			</HStack>
+		</VStack>
 	);
 };

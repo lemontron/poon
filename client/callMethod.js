@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import { toast } from './overlays/Toast';
 import { showConfirm, showPrompt } from './overlays/Alert';
 import { globalLoading } from './overlays/GlobalLoading';
@@ -39,3 +40,7 @@ export const callMethod = async (methodName, opts = {}, connection = Meteor) => 
 		if (opts.statusMessage) globalLoading(opts.statusMessage, false);
 	}
 };
+
+export const useOnline = () => useTracker(() => {
+	return Meteor.status().connected;
+}, []);

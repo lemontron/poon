@@ -36,7 +36,7 @@ export const Touchable = ({
 		const url = new URL(href, location.href);
 		if (url.hostname === location.hostname) {
 			e.preventDefault();
-			navigation.go(`${url.pathname}${url.search}${url.hash}`, undefined, undefined, {replaceState});
+			navigation.go(`${url.pathname}${url.search}${url.hash}`, {replaceState});
 		}
 	};
 

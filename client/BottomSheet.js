@@ -29,7 +29,8 @@ export const BottomSheet = ({
 	useEffect(() => {
 		if (!height) return;
 		return pan.on(value => {
-			sheetEl.current.style.transform = `translateY(-${value}px)`;
+			const pixelRatio = window.devicePixelRatio;
+			sheetEl.current.style.transform = `translateY(-${Math.round(value * pixelRatio) / pixelRatio}px)`;
 			if (shadeEl.current) shadeEl.current.style.opacity = (value / height);
 		});
 	}, [height]);

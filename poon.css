@@ -486,12 +486,6 @@ button.touchable, a.touchable {cursor:pointer;}
 .list.well .list-body {background:var(--subtle); border-radius:var(--radius); overflow:hidden;}
 .list.well .list-header {border-bottom:none;}
 
-.horizontal-list {min-width:0;}
-.horizontal-list > .list-body > .scroller {display:flex; flex-wrap:nowrap;}
-.horizontal-list-item {box-sizing:border-box; flex:0 0 300px; width:300px; min-width:0;}
-.horizontal-list > .show-separators > .scroller > .horizontal-list-item + .horizontal-list-item {border-inline-start:var(--separator-height) solid var(--subtle);}
-.horizontal-list.well.safe-padding {padding-bottom:var(--safe-area-inset-bottom);}
-
 @media (max-width:699px) {
     .list.grid .list-body {display:block;}
 
@@ -635,13 +629,6 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 
 /* EMOJI */
 .emoji {font-family:"Apple Color Emoji", sans-serif; font-size:24px; line-height:1em;}
-
-/* PILL */
-.pill {padding:0 7px; background:#333; color:rgba(255, 255, 255, .8); border-radius:10px; font-size:10px; text-transform:capitalize; line-height:1.5;}
-
-/* CORNER DIALOG */
-.corner-dialog {position:absolute; bottom:20px; right:20px; background:#111; border-radius:var(--radius);}
-.corner-dialog-title {display:flex; justify-content:space-between; padding:10px; align-items:center;}
 
 /* NOTIFICATION */
 .poon-notifications {padding:10px; font-size:13px;}

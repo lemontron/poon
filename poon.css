@@ -574,10 +574,10 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 .fab-container {display:flex; position:absolute; bottom:0; right:0; padding:0 20px calc(var(--safe-area-inset-bottom) + 20px) 0; gap:10px; justify-content:flex-end; align-items:flex-end; flex-direction:column; pointer-events:none;}
 .fab-container > * {pointer-events:auto;}
 
-.fab {height:54px; border-radius:27px; white-space:nowrap; z-index:2; box-shadow:0 2px 8px rgba(0, 0, 0, .1); font-size:18px; background:transparent; position:relative; display:flex;}
+.fab {height:54px; border-radius:27px; white-space:nowrap; box-shadow:0 2px 8px rgba(0, 0, 0, .1); font-size:18px; background:transparent; position:relative; display:flex;}
 .fab.round {width:54px; padding:0;}
 .fab.inactive {opacity:0.5;}
-.fab-halo {display:none; position:absolute; inset:0; pointer-events:none; z-index:-1; animation:fabPulseFade 1.6s ease-out infinite; will-change:opacity;}
+.fab-halo {display:none; position:absolute; inset:0; pointer-events:none; animation:fabPulseFade 1.6s ease-out infinite; will-change:opacity;}
 .fab.pulse .fab-halo {display:block;}
 /* Expand a filled capsule by 12px without stretching its straight edges sideways. */
 .fab-halo::before, .fab-halo::after, .fab-halo > span {position:absolute; top:0; height:54px; background:var(--color); animation:fabPulse 1.6s ease-out infinite; will-change:transform;}

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { createBus, useBus } from 'meteor/poon-router';
+import { Bus, useBus } from 'meteor/poon-router';
 import { Random } from 'meteor/random';
 import { useAnimatedValue } from '../util/animated';
 import { toPercent } from '../util';
@@ -8,7 +8,7 @@ import { Icon } from '../Icon';
 import { Pan } from '../Pan';
 import { Layer } from '../Layer';
 
-const state = createBus([]);
+const state = new Bus([]);
 
 const Notification = ({
 	notification,

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { DENIED, GRANTED, PermissionDef } from './util.js';
 import { storage } from '../util/storage.js';
-import { createBus, useBus } from '../util/bus.js';
+import { Bus, useBus } from '../util/bus.js';
 
-const locationState = createBus(storage.lastLocation);
+const locationState = new Bus(storage.lastLocation);
 
 const transformLocation = e => ({
 	'type': 'Point',

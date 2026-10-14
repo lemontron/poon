@@ -1,8 +1,8 @@
 import React from 'react';
-import { createBus, useBus } from 'meteor/poon-router';
+import { Bus, useBus } from 'meteor/poon-router';
 import { Layer } from '../Layer';
 
-export const modalState = createBus([]);
+export const modalState = new Bus([]);
 
 const renderModal = (modal) => <Layer key={modal.id} children={modal.children}/>;
 

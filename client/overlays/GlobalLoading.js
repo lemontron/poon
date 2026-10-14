@@ -1,8 +1,8 @@
 import React from 'react';
-import { createBus, useBus } from 'meteor/poon-router';
+import { Bus, useBus } from 'meteor/poon-router';
 import { ActivityIndicator } from '../ActivityIndicator';
 
-const taskBus = createBus([]);
+const taskBus = new Bus([]);
 
 export const GlobalLoading = () => {
 	const tasks = useBus(taskBus);

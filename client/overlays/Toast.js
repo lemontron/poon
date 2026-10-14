@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { createBus, useBus } from 'meteor/poon-router';
+import { Bus, useBus } from 'meteor/poon-router';
 
-const state = createBus();
+const state = new Bus();
 
 export const Toast = () => {
 	const message = useBus(state);

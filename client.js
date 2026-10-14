@@ -59,7 +59,7 @@ export { PhoneInput } from './client/PhoneInput.js';
 export {
 	DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission,
 } from './client/permissions.js';
-export { Bus, createBus, useBus } from './client/util/bus.js';
+export { Bus, useBus } from './client/util/bus.js';
 export { storage } from './client/util/storage.js';
 export { PermissionDef } from './client/permissions/util.js';
 export { Placeholder } from './client/Placeholder.js';

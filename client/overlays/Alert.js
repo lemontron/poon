@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createBus, useBackHandler, useBus } from 'meteor/poon-router';
+import { Bus, useBackHandler, useBus } from 'meteor/poon-router';
 import { Random } from 'meteor/random';
 import { c } from '../util';
 import { Button } from '../Button';
@@ -12,7 +12,7 @@ import { ScrollView } from '../ScrollView';
 export const ALERT = 'alert';
 export const PROMPT = 'prompt';
 
-const alertsStore = createBus([]);
+const alertsStore = new Bus([]);
 
 const dismissAlert = (alert, val) => {
 	// Hide alert
@@ -176,7 +176,8 @@ export const showPrompt = (title, opts = {}) => new Promise(resolve => {
 	}]);
 });
 
-export const showConfirm = (title) => showAlert(title, {
+export const showConfirm = (title, opts = {}) => showAlert(title, {
+	...opts,
 	'options': [
 		{_id: false, name: 'Cancel', borderless: true},
 		{_id: true, name: 'Continue'},

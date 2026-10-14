@@ -16,7 +16,7 @@ export const Fab = ({icon, title, loading, disabled, active, href, detail, onCli
 		{pulse ? <span className="fab-halo" aria-hidden="true"><span/></span> : null}
 		<div className="fab-content">
 			<div className="fab-body">
-				<Icon icon={icon}/>
+				{icon ? <Icon icon={icon}/> : null}
 				{title && <div className="fab-title">{title}</div>}
 			</div>
 			{detail ? <div className="fab-detail">{detail}</div> : null}

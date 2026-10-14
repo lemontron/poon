@@ -1,11 +1,11 @@
 import React from 'react';
-import { createBus, useBackHandler, useBus } from 'meteor/poon-router';
+import { Bus, useBackHandler, useBus } from 'meteor/poon-router';
 import { AnimatedValue } from '../util/animated';
 import { TouchableRow } from '../TouchableRow';
 import { BottomSheet } from '../BottomSheet';
 import { Image } from '../Image';
 
-const bus = createBus(null);
+const bus = new Bus(null);
 const pan = new AnimatedValue(0);
 
 export const showActionSheet = (title, options, callback) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useEffectEvent, useRef } from 'react';
 import { c } from './util';
 import { Icon } from './Icon';
 import { Touchable } from './Touchable';
@@ -9,6 +9,7 @@ import { ActivityIndicator } from './ActivityIndicator';
  * @property {string} [className]
  * @property {import('react').ReactNode} [title]
  * @property {(event: any) => void} [onClick]
+ * @property {() => void} [onAutoTrigger]
  * @property {() => void} [onLongPress]
  * @property {(event: any) => void} [onDown]
  * @property {string} [icon]
@@ -31,6 +32,7 @@ export const Button = ({
 	className,
 	title,
 	onClick,
+	onAutoTrigger,
 	onLongPress,
 	onDown,
 	icon,
@@ -59,11 +61,14 @@ export const Button = ({
 
 	useEffect(() => () => clearTimeout(longPress.current.timer), []);
 
+	const autoTrigger = useEffectEvent(() => {
+		if (onAutoTrigger) onAutoTrigger();
+		else buttonEl.current.click();
+	});
+
 	useEffect(() => {
 		if (!autoTriggerSeconds || disabled || loading) return;
-		const handle = setTimeout(() => {
-			buttonEl.current.click();
-		}, (autoTriggerSeconds * 1000));
+		const handle = setTimeout(autoTrigger, (autoTriggerSeconds * 1000));
 		return () => clearTimeout(handle);
 	}, [autoTriggerSeconds, disabled, loading]);
 

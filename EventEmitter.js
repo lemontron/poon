@@ -6,7 +6,7 @@ export class EventEmitter {
 	on(name, callback) {
 		if (!this.listeners.has(name)) this.listeners.set(name, []);
 		this.listeners.get(name).push(callback);
-		return this;
+		return () => this.off(name, callback);
 	}
 
 	once(name, callback) {

@@ -12,11 +12,15 @@ test('listeners receive arguments and emitter context; removal releases registra
 	const emitter = new EventEmitter();
 	const calls = [];
 	const callback = function(...args) { calls.push([this, args]); };
-	emitter.on('message', callback).emit('message', 'hello', 3);
+	const cleanup = emitter.on('message', callback);
+	emitter.emit('message', 'hello', 3);
 	assert.deepEqual(calls, [[emitter, ['hello', 3]]]);
-	emitter.off('message', callback);
+	cleanup();
+	cleanup();
 	assert.equal(emitter.emit('message'), false);
-	emitter.on('a', callback).on('b', callback).removeAllListeners('a');
+	emitter.on('a', callback);
+	emitter.on('b', callback);
+	emitter.removeAllListeners('a');
 	assert.equal(emitter.emit('a'), false);
 	emitter.removeAllListeners();
 	assert.equal(emitter.emit('b'), false);
@@ -26,8 +30,12 @@ test('once is removable by its original callback and fires once under recursive 
 	const emitter = new EventEmitter();
 	let calls = 0;
 	const callback = () => calls++;
-	emitter.once('cancelled', callback).off('cancelled', callback);
+	const cleanup = emitter.once('cancelled', callback);
+	cleanup();
 	assert.equal(emitter.emit('cancelled'), false);
+	emitter.once('removed', callback);
+	emitter.off('removed', callback);
+	assert.equal(emitter.emit('removed'), false);
 	let nested = false;
 	emitter.on('event', () => {
 		if (nested) return;

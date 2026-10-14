@@ -42,10 +42,16 @@ const SingleAlert = ({alert, isLast}) => {
 				key={i}
 				className={c('alert-button', option.destructive && 'destructive')}
 				onClick={pressButton}
+				onAutoTrigger={option.onAutoTrigger ? () => {
+					option.onAutoTrigger();
+					dismissAlert(alert, option._id);
+				} : undefined}
 				title={option.name}
 				disableMenu
+				disabled={!alert.visible || !isLast}
 				color={option.color}
 				borderless={option.borderless}
+				autoTriggerSeconds={option.autoTriggerSeconds}
 			/>
 		);
 	};

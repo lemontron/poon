@@ -2,8 +2,8 @@ import React, { memo, Fragment } from 'react';
 import { c } from './util';
 
 export const ProgressRing = memo(({
-	color = '#fff',
-	backgroundColor = 'rgba(255,255,255,.3)',
+	color = 'var(--primary)',
+	backgroundColor = 'var(--subtle)',
 	ringWidth = 2,
 	size = 20,
 	percent,

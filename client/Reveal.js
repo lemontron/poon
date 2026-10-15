@@ -12,6 +12,7 @@ export const Reveal = ({
 	presentation = 'reveal',
 	children,
 	title,
+	headerLeft,
 	headerRight,
 	isVisible,
 	animateIn,
@@ -98,6 +99,7 @@ export const Reveal = ({
 					backIcon="apps"
 					title={title}
 					onClose={close}
+					headerLeft={headerLeft}
 					headerRight={headerRight}
 					presentation={presentation}
 					SearchComponent={SearchComponent}

@@ -3,11 +3,11 @@ import { c } from './util';
 import { Touchable } from './Touchable';
 import { Icon } from './Icon';
 
-export const HeaderButton = ({icon, title, badge, children, loading, className, ...props}) => (
+export const HeaderButton = ({icon, title, badge, children, disabled, loading, className, ...props}) => (
 	<Touchable
 		className={c('header-button center', title && 'header-text-button', className)}
 		{...props}
-		disabled={loading}
+		disabled={disabled || loading}
 	>
 		{children}
 		{icon && !title ? <Icon icon={icon}/> : null}

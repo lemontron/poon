@@ -1,36 +1,45 @@
 import { EJSON } from 'meteor/ejson';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Bus, useBus } from '../util/bus.js';
 import { updateObject } from '../../update-object.js';
 
-const identity = doc => doc;
+const identity = (doc = {}) => doc;
 
 export class EditorState {
 	constructor({importFn, exportFn, pathFor}) {
 		this.bus = new Bus(null);
+		this.initialState = null;
 		this.initialDraft = {};
 		this.importFn = importFn || identity;
 		this.exportFn = exportFn || identity;
 		this.pathFor = pathFor;
 	}
 
-	use = () => {
-		const state = useBus(this.bus);
-		const draft = state ? this.export(state) : null;
-		return [state, EJSON.equals(this.initialDraft, draft) ? null : draft];
-	};
+	use = () => useBus(this.bus);
 
-	useInit(doc) {
+	useInit(doc, onChange) {
+		const initialState = useMemo(() => EJSON.clone(this.importFn(doc || undefined)), [JSON.stringify(doc || undefined)]);
+		const state = this.use();
+		const draft = useMemo(() => {
+			if (!state) return null;
+			const draft = this.export(state);
+			return doc && EJSON.equals(this.initialDraft, draft) ? null : draft;
+		}, [state, Boolean(doc)]);
+		useEffect(() => () => this.reset(), [doc ? doc._id : undefined]);
 		useEffect(() => {
-			if (doc) {
-				const state = EJSON.clone(this.importFn(doc));
-				this.initialDraft = this.export(state);
-				this.bus.update(state);
+			const current = this.bus.state;
+			const incomingDraft = this.export(initialState);
+			if (current && this.initialState && !EJSON.equals(current, this.initialState)) {
+				if (!incomingDraft || !EJSON.equals(this.export(current), incomingDraft)) return;
 			}
-			return () => this.reset();
-		}, [JSON.stringify(doc)]);
-
-		return this.use();
+			this.initialState = initialState;
+			this.initialDraft = incomingDraft;
+			this.bus.update(initialState);
+		}, [initialState, state]);
+		useEffect(() => {
+			if (onChange) onChange(draft);
+		}, [draft, onChange]);
+		return state || initialState;
 	}
 
 	update = (modifier) => this.updateWhere({}, modifier);
@@ -56,5 +65,9 @@ export class EditorState {
 
 	path = (doc, prefix) => this.pathFor(doc, prefix);
 
-	reset = () => this.bus.update(null);
+	reset = () => {
+		this.initialState = null;
+		this.initialDraft = {};
+		this.bus.update(null);
+	};
 }

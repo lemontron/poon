@@ -5,7 +5,7 @@ import { ActivityIndicator } from './ActivityIndicator';
 import { c } from './util';
 
 const autoCompleteMap = {code: 'one-time-code', password: 'current-password'};
-const typeMap = {phone: 'tel', code: 'tel', price: 'numeric'};
+const typeMap = {phone: 'tel', ein: 'tel', code: 'tel', price: 'numeric'};
 const placeholderMap = {search: 'Search'};
 const inputModeMap = {custom: 'none', none: 'none'};
 const defaultPhoneCountry = {prefix: '+1', example: '(XXX) XXX-XXXX'};
@@ -29,6 +29,9 @@ const formatPhone = (digits, country) => {
 	}
 	return formatted;
 };
+
+const einDigits = value => value.replace(/\D/g, '').slice(0, 9);
+const formatEin = digits => digits.length > 2 ? `${digits.slice(0, 2)}-${digits.slice(2)}` : digits;
 
 const applyTitleCase = (value) => {
 	if (!value) return '';
@@ -57,6 +60,7 @@ export const TextInput = ({
 	RightComponent,
 	countryCode,
 	lowerCase,
+	upperCase,
 	min,
 	max,
 	onPressCountry,
@@ -132,11 +136,33 @@ export const TextInput = ({
 				e.target.value = formatted;
 				e.target.setSelectionRange(start, end);
 				text = digits ? phoneCountry.prefix + digits : '';
+			} else if (type === 'ein') {
+				let digits = einDigits(text);
+				let start = einDigits(text.slice(0, e.target.selectionStart)).length;
+				let end = einDigits(text.slice(0, e.target.selectionEnd)).length;
+				if (digits === einDigits(value)) {
+					if (e.nativeEvent.inputType === 'deleteContentBackward' && start) {
+						digits = digits.slice(0, start - 1) + digits.slice(start);
+						start--;
+						end = start;
+					} else if (e.nativeEvent.inputType === 'deleteContentForward') {
+						digits = digits.slice(0, start) + digits.slice(start + 1);
+						end = start;
+					}
+				}
+				const formatted = formatEin(digits);
+				start = formatEin(digits.slice(0, start)).length;
+				end = formatEin(digits.slice(0, end)).length;
+				selectionRef.current = {el: e.target, value: formatted, start, end};
+				e.target.value = formatted;
+				e.target.setSelectionRange(start, end);
+				text = digits;
 			} else if (type === 'number' || type === 'price') {
 				text = text.replace(/[^0-9.]/g, '');
 			} else {
 				if (titleCase) text = applyTitleCase(text);
 				if (lowerCase) text = text.toLowerCase();
+				if (upperCase) text = text.toUpperCase();
 				if (maxLength) text = text.slice(0, maxLength);
 				if (type === 'username') text = text.replace(/\s/g, '');
 			}
@@ -163,11 +189,11 @@ export const TextInput = ({
 		return createElement(isTextarea ? 'textarea' : 'input', {
 			'type': virtualKeyboard === 'custom' && type === 'email' ? 'text' : typeMap[type] || type,
 			'autoComplete': autoComplete || autoCompleteMap[type],
-			'maxLength': type === 'phone' ? undefined : maxLength,
+			'maxLength': type === 'phone' || type === 'ein' ? undefined : maxLength,
 			'className': c('text', disabled && 'disabled', dnt && 'dnt', className, frame && 'frame', isTextarea && autoExpand && 'auto-expand'),
 			'readOnly': disabled,
 			'onChange': changeText,
-			'value': type === 'phone' && !internationalRef.current ? formatPhone(phoneDigits(value, phoneCountry), phoneCountry) : value,
+			'value': type === 'ein' ? formatEin(einDigits(value)) : type === 'phone' && !internationalRef.current ? formatPhone(phoneDigits(value, phoneCountry), phoneCountry) : value,
 			'autoCapitalize': (lowerCase || type === 'email' || type === 'password') ? 'none' : undefined,
 			'autoCorrect': (type === 'email' || type === 'password' || lowerCase) ? 'off' : undefined,
 			'spellCheck': !(type === 'email' || type === 'password' || lowerCase),

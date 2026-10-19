@@ -42,6 +42,7 @@ export const ActionSheet = () => {
 				disabled={option.disabled}
 				target={option.target}
 				href={option.href}
+				replaceState={option.replaceState}
 			/>
 		);
 	};

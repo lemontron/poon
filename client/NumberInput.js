@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from './Button.js';
+import { c } from './util';
 
 export const NumberInput = ({
 	value,
@@ -8,7 +9,7 @@ export const NumberInput = ({
 	minValue,
 	maxValue,
 	allowUnlimited,
-	incrementOnly,
+	disabled,
 }) => {
 	let currentValue = value;
 	if (value === undefined) currentValue = 0;
@@ -39,16 +40,14 @@ export const NumberInput = ({
 	};
 
 	return (
-		<div className="number-input">
-			{incrementOnly ? null : (
-				<Button
-					icon="remove"
-					onClick={() => changeValue(-1)}
-					disabled={!allowUnlimited && minValue !== undefined && currentValue <= minValue}
-					active
-					square
-				/>
-			)}
+		<div className={c('number-input', disabled && 'disabled')}>
+			<Button
+				icon="remove"
+				onClick={() => changeValue(-1)}
+				disabled={!allowUnlimited && minValue !== undefined && currentValue <= minValue}
+				active
+				square
+			/>
 			<div className="number-input-value">{value === undefined ? '∞' : value}</div>
 			<Button
 				icon="add"

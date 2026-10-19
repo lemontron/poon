@@ -75,6 +75,7 @@ export const Button = ({
 	return (
 		<Touchable
 			styles={styles}
+			disabled={disabled || loading}
 			type={submit ? 'submit' : 'button'}
 			className={c('btn', active ? 'solid' : 'outline', className, disabled && 'disabled', loading && 'loading', borderless && 'borderless', presentation && `btn-${presentation}`, fullWidth && 'full-width', color && `btn-${color}`, muted && 'muted', square && 'square', round && 'round')}
 			onClick={e => {

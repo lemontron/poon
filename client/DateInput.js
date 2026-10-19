@@ -86,12 +86,16 @@ export const DateInput = ({
 				<Button
 					icon="chevron_left"
 					onClick={() => changeMonth(-1)}
+					square
+					borderless
 				/>
-				<div className="date-input-title">{monthLabel}</div>
+				<div>{monthLabel}</div>
 				<Button
 					icon="chevron_right"
 					onClick={() => changeMonth(1)}
 					disabled={isNextMonthFuture}
+					square
+					borderless
 				/>
 			</div>
 			<div className="date-input-grid">
@@ -117,6 +121,7 @@ export const DateInput = ({
 							title={date.getDate()}
 							muted={!isCurrentMonth}
 							disabled={isFuture}
+							borderless
 						/>
 					);
 				})}

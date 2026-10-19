@@ -144,7 +144,9 @@ i.text-input-clear {font-size:18px;}
 
 /* NUMBER INPUT */
 .number-input {display:flex; align-items:center; background:var(--accent); border-radius:calc(var(--radius) / 2); height:var(--input-height);}
+.number-input.disabled {opacity:.3; pointer-events:none;}
 .number-input-value {text-align:center; color:var(--bg-primary);}
+
 
 /* SLIDER */
 .slider {appearance:none; -webkit-appearance:none; height:20px; cursor:pointer;}
@@ -170,9 +172,8 @@ i.text-input-clear {font-size:18px;}
 .number-pad-key.btn {height:64px; font-size:28px;}
 
 /* DATE INPUT CALENDAR */
-.date-input {display:flex; flex-direction:column; gap:10px;}
+.date-input {display:flex; flex-direction:column; gap:10px; width:100%;}
 .date-input-top {display:flex; align-items:center; justify-content:space-between; gap:10px;}
-.date-input-title {font-weight:bold;}
 .date-input-grid {display:grid; grid-template-columns:repeat(7, 1fr); gap:6px;}
 .date-input-weekday {text-align:center; font-size:11px;}
 

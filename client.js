@@ -1,4 +1,4 @@
-export { EventEmitter } from './EventEmitter';
+export { EventEmitter } from './imports/EventEmitter';
 
 import './client/renderPoon.js';
 import './client/fast-reconnect.js';
@@ -24,7 +24,7 @@ export { Dropdown } from './client/Dropdown.js';
 export { DropdownItem } from './client/DropdownItem.js';
 export { Emoji } from './client/Emoji.js';
 export { EditorState } from './client/editor-state/EditorState.js';
-export { updateObject } from './update-object.js';
+export { updateObject } from './imports/update-object.js';
 export { ErrorBoundary } from './client/ErrorBoundary.js';
 export { Fab } from './client/Fab.js';
 export { FilterButton } from './client/FilterButton.js';

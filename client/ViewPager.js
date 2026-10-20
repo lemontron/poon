@@ -15,7 +15,6 @@ import { List } from './List';
 import { TouchableRow } from './TouchableRow';
 import { ViewPagerContext } from './ViewPagerContext';
 import { ScrollView } from './ScrollView';
-import { Icon } from './Icon';
 
 const PagerDot = ({pan, i}) => {
 	const el = useRef();
@@ -287,7 +286,7 @@ export const ViewPager = ({
 			) : null}
 			{hasSidebar ? (
 				<div className="pager-content">
-					<div className="card-sidebar" ref={sidebarEl}>
+					<div className="sidebar" ref={sidebarEl}>
 						<ScrollView flex>
 							<div className="pager-sidebar-accent" ref={sidebarAccentEl}/>
 							<List

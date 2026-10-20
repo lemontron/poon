@@ -11,5 +11,5 @@ export const Shade = ({ref}) => {
 		},
 	}));
 
-	return <div className="shade shade-card" ref={el}/>;
+	return <div className="shade" ref={el}/>;
 };

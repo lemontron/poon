@@ -1,7 +1,7 @@
 import { EJSON } from 'meteor/ejson';
 import { useEffect, useMemo } from 'react';
 import { Bus, useBus } from '../util/bus.js';
-import { updateObject } from '../../update-object.js';
+import { updateObject } from '../../imports/update-object.js';
 
 const identity = (doc = {}) => doc;
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { useSize } from './util/size';
@@ -8,7 +8,6 @@ import { Placeholder } from './Placeholder';
 import { Shade } from './Shade';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
-import { HeaderButton } from './HeaderButton';
 import { ErrorBoundary } from './ErrorBoundary';
 
 export const Card = ({
@@ -21,8 +20,6 @@ export const Card = ({
 	headerLeft,
 	headerRight,
 	SearchComponent,
-	SidebarComponent,
-	showSidebar,
 	disableGestures,
 	onDrop,
 	isVisible,
@@ -37,7 +34,6 @@ export const Card = ({
 }) => {
 	el = el || useRef();
 	const [dropping, setDropping] = useState(false);
-	const [sidebarVisible, setSidebarVisible] = useState(false);
 	const shadeEl = useRef();
 	const {width} = useSize(el);
 	const pan = useAnimatedValue(animateIn ? document.body.clientWidth : 0);
@@ -78,12 +74,6 @@ export const Card = ({
 		setDropping(false);
 	};
 
-	const dismissSidebar = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setSidebarVisible(false);
-	};
-
 	const drop = (e) => {
 		e.preventDefault();
 		setDropping(false);
@@ -101,29 +91,18 @@ export const Card = ({
 				SearchComponent={SearchComponent}
 				onClose={close}
 				onBeforeClose={onBeforeClose}
-				headerRight={
-					<Fragment>
-						{headerRight}
-						{SidebarComponent && showSidebar === 'always' ? (
-							<HeaderButton
-								className="card-sidebar-toggle"
-								icon={sidebarVisible ? 'close' : 'sort'}
-								onClick={() => setSidebarVisible(!sidebarVisible)}
-							/>
-						) : null}
-					</Fragment>
-				}
+				headerRight={headerRight}
 				headerLeft={headerLeft}
 			/>
 		);
 	};
 
 	return (
-		<Layer isActive={isVisible} className={className} theme={theme}>
+		<Layer isActive={isVisible} theme={theme}>
 			{ShadeComponent ? <ShadeComponent ref={shadeEl}/> : null}
 			<Pan
 				direction="x"
-				className={c('card', animateIn && 'animate')}
+				className={c('card', className, animateIn && 'animate')}
 				ref={el}
 				onDragOver={onDrop && dragOver}
 				onDragEnter={onDrop && startDrag}
@@ -143,22 +122,8 @@ export const Card = ({
 			>
 				{BackgroundComponent}
 				{renderHeader()}
-				<div className="card-content">
-					{SidebarComponent ? (
-						<div
-							className={c('card-sidebar card-main-sidebar', sidebarVisible && 'visible')}
-							children={SidebarComponent}
-						/>
-					) : null}
-					<div
-						className="card-body"
-						onPointerDownCapture={sidebarVisible ? e => e.stopPropagation() : undefined}
-						onClickCapture={sidebarVisible ? dismissSidebar : undefined}
-					>
-						<ErrorBoundary>
-							{children}
-						</ErrorBoundary>
-					</div>
+				<div className="card-body">
+					<ErrorBoundary children={children}/>
 				</div>
 				{footer}
 				{dropping ? (

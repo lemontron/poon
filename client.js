@@ -86,7 +86,7 @@ export { HStack, Row, Spacer, VStack, ZStack } from './client/Stack.js';
 export { Loading } from './client/Suspense.js';
 export { Tag } from './client/Tag.js';
 export { TextInput } from './client/TextInput.js';
-export { Timeline } from './client/Timeline.js';
+export { Timeline, TimelineItem } from './client/Timeline.js';
 export { Toggle } from './client/Toggle.js';
 export { ToggleRow } from './client/ToggleRow.js';
 export { Touchable } from './client/Touchable.js';

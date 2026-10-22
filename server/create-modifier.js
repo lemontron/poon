@@ -1,3 +1,5 @@
+import { DiffSequence } from 'meteor/diff-sequence';
+
 export const createModifier = (doc, original) => {
 	const modifier = {$set: {}, $unset: {}};
 	const fields = DiffSequence.makeChangedFields(doc, original);

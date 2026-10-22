@@ -411,7 +411,8 @@ button.touchable, a.touchable {cursor:pointer;}
 
 /* HEADER BUTTONS */
 .header-spacer {min-width:var(--header-height); display:flex; justify-content:center; align-items:center;}
-.header-button {display:flex; font-size:16px; color:var(--primary); min-width:var(--header-height); height:var(--header-height); position:relative; justify-content:center; align-items:center; gap:3px;}
+.header-button {display:flex; font-size:16px; color:var(--primary); min-width:40px; height:40px; position:relative; justify-content:center; align-items:center; gap:3px;}
+.header-button:hover {background:var(--bg-secondary); border-radius:8px;}
 .header-text-button {padding:0 6px;}
 .header-text-button .header-button-title {display:flex; align-items:center; height:36px; padding:0 14px; border-radius:18px; background:var(--primary); color:var(--bg-primary); white-space:nowrap;}
 .header-button .avatar {height:24px; width:24px;}
@@ -712,8 +713,11 @@ i.filter-button-caret {margin:0 -4px; font-size:18px;}
 
 @media (min-width:800px) {
     .sidebar {display:flex; flex-direction:column; width:280px; overflow:hidden; margin:0 var(--gutter-width) 10px; background:var(--subtle); border-radius:var(--radius);}
+
     .pager .sidebar {width:210px;}
+
     .pager.with-sidebar > .pager-tabs {display:none;}
+
     .pager.with-sidebar .sidebar {display:flex;}
 }
 

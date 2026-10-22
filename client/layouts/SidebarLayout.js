@@ -13,6 +13,7 @@ export const SidebarLayout = ({
 	sidebarVisible = true,
 	onDismissSidebar,
 	pan,
+	showSidebar = 'desktop',
 }) => {
 	const mobile = useMobile();
 
@@ -22,9 +23,11 @@ export const SidebarLayout = ({
 			<FabLayout FabComponent={FabComponent} pan={pan}>
 				<ScrollView frame>
 					<VStack spacing>
-						<div className="sidebar-layout-sidebar">
-							<div className="sidebar-layout-sidebar-content" children={SidebarComponent}/>
-						</div>
+						{showSidebar === 'always' ? (
+							<div className="sidebar-layout-sidebar">
+								<div className="sidebar-layout-sidebar-content" children={SidebarComponent}/>
+							</div>
+						) : null}
 						{MainComponent}
 					</VStack>
 				</ScrollView>

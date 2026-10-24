@@ -28,6 +28,8 @@ export const Reveal = ({
 	const layerEl = useRef();
 	const innerEl = useRef();
 	const [sidebarEl, setSidebarEl] = useState(null);
+	const [showSidebar, setShowSidebar] = useState(false);
+	const [sidebarContentEl, setSidebarContentEl] = useState(null);
 	const pan = useAnimatedValue(animateIn ? 0 : 1);
 
 	const config = useMemo(() => { // consume pending config
@@ -98,9 +100,9 @@ export const Reveal = ({
 				}}
 			>
 				{BackgroundComponent}
-				<CardSidebarContext.Provider value={sidebarEl}>
+				<CardSidebarContext.Provider value={{sidebarEl, sidebarContentEl, setSidebarContentEl, showSidebar, setShowSidebar}}>
 					<div className="card-layout">
-						<div className="card-sidebar" ref={setSidebarEl}/>
+						<div className={c('card-sidebar', showSidebar && 'visible')} ref={setSidebarEl}/>
 						<div className="card-main">
 							<ScreenHeader
 								backIcon="apps"

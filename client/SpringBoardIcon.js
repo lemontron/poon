@@ -19,8 +19,8 @@ export const SpringBoardIcon = ({title = 'Icon', icon = 'circle', href, color, I
 		<Touchable href={href} className="springboard-icon" onClick={setOrigin} disabled={disabled}>
 			<div
 				ref={el}
-				className="icon-frame"
-				style={{background: color}}
+				className="icon-frame sheen"
+				style={{backgroundColor: color}}
 				children={renderIcon()}
 			/>
 			<div className="springboard-icon-name">{title}</div>

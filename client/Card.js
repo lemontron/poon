@@ -39,6 +39,8 @@ export const Card = ({
 	el = el || useRef();
 	const [dropping, setDropping] = useState(false);
 	const [sidebarEl, setSidebarEl] = useState(null);
+	const [showSidebar, setShowSidebar] = useState(false);
+	const [sidebarContentEl, setSidebarContentEl] = useState(null);
 	const shadeEl = useRef();
 	const {width} = useSize(el);
 	const pan = useAnimatedValue(animateIn ? document.body.clientWidth : 0);
@@ -129,9 +131,9 @@ export const Card = ({
 				}}
 			>
 				{BackgroundComponent}
-				<CardSidebarContext.Provider value={sidebarEl}>
+				<CardSidebarContext.Provider value={{sidebarEl, sidebarContentEl, setSidebarContentEl, showSidebar, setShowSidebar}}>
 					<div className="card-layout">
-						<div className="card-sidebar" ref={setSidebarEl}/>
+						<div className={c('card-sidebar', showSidebar && 'visible')} ref={setSidebarEl}/>
 						<div className="card-main">
 							{renderHeader()}
 							<div className="card-body">

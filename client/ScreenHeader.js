@@ -3,6 +3,7 @@ import { Icon } from './Icon';
 import { HeaderButton } from './HeaderButton';
 import { HeaderSecondaryContext } from './HeaderSecondary';
 import { Dropdown } from './Dropdown';
+import { CardSidebarContext } from './CardSidebarContext';
 
 const closeImage = {'card': 'os:back', 'window': 'os:close', 'reveal': 'os:back'};
 
@@ -21,6 +22,7 @@ export const ScreenHeader = ({
 	MenuComponent,
 }) => {
 	const [, setSecondaryEl] = useContext(HeaderSecondaryContext);
+	const sidebar = useContext(CardSidebarContext);
 
 	const pressBack = async (e) => {
 		e.stopPropagation();
@@ -71,8 +73,15 @@ export const ScreenHeader = ({
 		<Fragment>
 			<div className="header">
 				<div className="header-spacer">
+					{renderCloseButton()}
 					{headerLeft}
-					{presentation !== 'window' && renderCloseButton()}
+					{sidebar && sidebar.sidebarContentEl ? (
+						<HeaderButton
+							icon="side_navigation"
+							onClick={() => sidebar.setShowSidebar(visible => !visible)}
+							className="hide-desktop"
+						/>
+					) : null}
 				</div>
 				<div className="header-middle">
 					{renderHeaderMiddle()}
@@ -81,7 +90,6 @@ export const ScreenHeader = ({
 				<div className="header-spacer">
 					<div className="header-secondary" ref={setSecondaryEl}/>
 					{headerRight}
-					{presentation === 'window' && renderCloseButton()}
 				</div>
 			</div>
 			{SearchComponent ? (

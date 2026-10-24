@@ -40,7 +40,7 @@ const SingleAlert = ({alert, isLast}) => {
 		return (
 			<Button
 				key={i}
-				className={c('alert-button', option.destructive && 'destructive')}
+				className="alert-button"
 				onClick={pressButton}
 				onAutoTrigger={option.onAutoTrigger ? () => {
 					option.onAutoTrigger();
@@ -52,6 +52,7 @@ const SingleAlert = ({alert, isLast}) => {
 				color={option.color}
 				borderless={option.borderless}
 				autoTriggerSeconds={option.autoTriggerSeconds}
+				destructive={option.destructive}
 			/>
 		);
 	};
@@ -185,7 +186,7 @@ export const showPrompt = (title, opts = {}) => new Promise(resolve => {
 export const showConfirm = (title, opts = {}) => showAlert(title, {
 	...opts,
 	'options': [
-		{_id: false, name: 'Cancel', borderless: true},
-		{_id: true, name: 'Continue'},
+		{_id: false, name: 'Cancel'},
+		{_id: true, name: 'Continue', destructive: true},
 	],
 });

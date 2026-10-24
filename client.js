@@ -32,6 +32,7 @@ export { FormGroup } from './client/FormGroup.js';
 export { FullScreen } from './client/FullScreen.js';
 export { GalleryItem } from './client/GalleryItem.js';
 export { HeaderButton } from './client/HeaderButton.js';
+export { HeaderSecondary } from './client/HeaderSecondary.js';
 export { Icon } from './client/Icon.js';
 export { Image } from './client/Image.js';
 export { ImageUpload } from './client/ImageUpload.js';

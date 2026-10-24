@@ -12,10 +12,11 @@ export const Window = ({
 	children,
 	title,
 	headerRight,
+	headerLeft,
 	onClose,
 	onBeforeClose,
 	isVisible,
-	presentation = 'modal',
+	presentation = 'window',
 	className,
 	theme,
 	SearchComponent,
@@ -83,16 +84,15 @@ export const Window = ({
 					pan.spring(e.size);
 				}}
 			>
-				{presentation === 'modal' ? (
-					<ScreenHeader
-						title={title}
-						presentation={presentation}
-						onClose={close}
-						onBeforeClose={onBeforeClose}
-						headerRight={headerRight}
-						SearchComponent={SearchComponent}
-					/>
-				) : null}
+				<ScreenHeader
+					title={title}
+					presentation={presentation}
+					onClose={close}
+					onBeforeClose={onBeforeClose}
+					headerLeft={headerLeft}
+					headerRight={headerRight}
+					SearchComponent={SearchComponent}
+				/>
 				<div className="card-body">
 					<ErrorBoundary>
 						{children}

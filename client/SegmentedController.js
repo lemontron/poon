@@ -21,7 +21,7 @@ const SegmentedItem = ({item, isLast, active, onChange, index, ref}) => (
 	</Fragment>
 );
 
-export const SegmentedController = ({options, value, onChange, fullWidth}) => {
+export const SegmentedController = ({options, value, onChange, fullWidth, glass}) => {
 	const refs = useRef([]);
 	const indicator = useRef();
 	const index = options.findIndex(item => item._id === value);
@@ -47,8 +47,8 @@ export const SegmentedController = ({options, value, onChange, fullWidth}) => {
 	}, [index, layoutKey]);
 
 	return (
-		<div className={c('segmented', fullWidth && 'full-width')}>
-			<div className="segmented-indicator" ref={indicator}/>
+		<div className={c('segmented', fullWidth && 'full-width', glass && 'glass')}>
+			<div className={c('segmented-indicator', glass && 'glass')} ref={indicator}/>
 			{options.map((item, i) => (
 				<SegmentedItem
 					key={item._id}

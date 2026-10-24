@@ -24,11 +24,7 @@ export const Dropdown = ({position, button, children}) => {
 
 	return (
 		<span className="dropdown">
-			<div
-				children={button}
-				className="dropdown-button"
-				onClick={() => setVisible(true)}
-			/>
+			<div children={button} onClick={() => setVisible(true)}/>
 			<div
 				className={c('dropdown-content', position || 'top-right', visible ? 'visible' : 'hidden')}
 				children={children}

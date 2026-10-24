@@ -8,13 +8,14 @@ import React, {
 	useState,
 } from 'react';
 import { useAnimatedValue } from './util/animated';
-import { c, createClamp, lerp, toPercent } from './util';
+import { c, createClamp, lerp, toPercent, useMobile } from './util';
 import { Pan } from './Pan';
 import { Touchable } from './Touchable';
 import { List } from './List';
 import { TouchableRow } from './TouchableRow';
 import { ViewPagerContext } from './ViewPagerContext';
 import { ScrollView } from './ScrollView';
+import { SegmentedController } from './SegmentedController';
 
 const PagerDot = ({pan, i}) => {
 	const el = useRef();
@@ -86,6 +87,7 @@ export const ViewPager = ({
 	showDots = false,
 	showButtons = false,
 	showSidebar,
+	showFloating = false,
 	sidebarTitle,
 	frame,
 	lazy = false,
@@ -113,6 +115,7 @@ export const ViewPager = ({
 	});
 	const filteredPages = [...pages, ...childPages].filter(r => !r.isHidden);
 	const [internalPage, setInternalPage] = useState(page);
+	const isMobile = useMobile();
 
 	const pan = useAnimatedValue(page); // The page index
 	const overscroll = useAnimatedValue(0);
@@ -128,7 +131,8 @@ export const ViewPager = ({
 
 	const hasTitles = filteredPages.some(titleExtractor);
 	const showTitles = (hasTitles && filteredPages.length > 1);
-	const hasSidebar = (showSidebar && hasTitles);
+	const hasSidebar = (showSidebar && hasTitles && (showSidebar === 'always' || !isMobile));
+	const hasFloating = (showFloating && showTitles && !hasSidebar);
 	const lazyWindow = lazy === true ? 1 : typeof lazy === 'number' ? lazy : Infinity;
 
 	const shouldRenderPage = i => Math.abs(i - internalPage) <= lazyWindow;
@@ -200,7 +204,7 @@ export const ViewPager = ({
 			off();
 			ro.disconnect();
 		};
-	}, [vertical, gap, lastIndex]);
+	}, [vertical, gap, lastIndex, hasSidebar]);
 
 	useEffect(() => {
 		requestAnimationFrame(() => renderSidebarAccent(pan.value));
@@ -270,7 +274,7 @@ export const ViewPager = ({
 	return (
 		<div
 			className={c('pager', vertical ? 'vertical' : 'horizontal', hasSidebar && 'with-sidebar', showSidebar === 'always' && 'show-sidebar-always', frame && 'frame', className)}>
-			{showTitles ? (
+			{showTitles && !hasFloating ? (
 				<div className="pager-tabs" ref={tabsEl}>
 					{filteredPages.map((page, i) => (
 						<PagerTabTitle
@@ -309,6 +313,16 @@ export const ViewPager = ({
 					{renderScroller()}
 				</div>
 			) : renderScroller()}
+			{hasFloating ? (
+				<div className="pager-floating">
+					<SegmentedController
+						glass
+						options={filteredPages.map((page, i) => ({_id: i, name: titleExtractor(page) || `Page ${i + 1}`, badge: page.badge}))}
+						value={internalPage}
+						onChange={userInteractionChangePage}
+					/>
+				</div>
+			) : null}
 			{showDots ? (
 				<div
 					className="pager-dots"

@@ -1,18 +1,18 @@
 import React from 'react';
-import { Touchable } from './Touchable';
-import { Icon } from './Icon';
+import { HeaderButton } from './HeaderButton';
+import { Dropdown } from './Dropdown';
+import { DropdownItem } from './DropdownItem';
 
-export const SortFilterButton = ({
-	title,
-	label = 'Sort by',
-	disabled,
-	onClick,
-}) => (
-	<Touchable className="sort-filter" onClick={onClick} disabled={disabled}>
-		<div>
-			<span className="sort-filter-label">{label} </span>
-			<span className="sort-filter-value">{title}</span>
-		</div>
-		<Icon icon="swap_vert" size={18}/>
-	</Touchable>
-);
+export const SortFilterButton = ({value, disabled, options, onChange}) => {
+	return (
+		<Dropdown button={<HeaderButton icon="swap_vert" disabled={disabled}/>}>
+			{options.options.map(option => (
+				<DropdownItem
+					title={option.name}
+					checked={value === option._id}
+					onClick={() => onChange(option._id)}
+				/>
+			))}
+		</Dropdown>
+	);
+};

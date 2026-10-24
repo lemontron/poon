@@ -9,10 +9,12 @@ import { Shade } from './Shade';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
 import { ErrorBoundary } from './ErrorBoundary';
+import { CardSidebarContext } from './CardSidebarContext';
 
 export const Card = ({
 	presentation = 'card',
 	title,
+	TitleComponent,
 	TitleImage,
 	subtitle,
 	children,
@@ -30,10 +32,13 @@ export const Card = ({
 	className,
 	theme,
 	onBeforeClose,
+	disableBack,
+	MenuComponent,
 	ref: el,
 }) => {
 	el = el || useRef();
 	const [dropping, setDropping] = useState(false);
+	const [sidebarEl, setSidebarEl] = useState(null);
 	const shadeEl = useRef();
 	const {width} = useSize(el);
 	const pan = useAnimatedValue(animateIn ? document.body.clientWidth : 0);
@@ -86,6 +91,7 @@ export const Card = ({
 			<ScreenHeader
 				title={title}
 				TitleImage={TitleImage}
+				TitleComponent={TitleComponent}
 				subtitle={subtitle}
 				presentation={presentation}
 				SearchComponent={SearchComponent}
@@ -93,6 +99,8 @@ export const Card = ({
 				onBeforeClose={onBeforeClose}
 				headerRight={headerRight}
 				headerLeft={headerLeft}
+				disableBack={disableBack}
+				MenuComponent={MenuComponent}
 			/>
 		);
 	};
@@ -121,11 +129,18 @@ export const Card = ({
 				}}
 			>
 				{BackgroundComponent}
-				{renderHeader()}
-				<div className="card-body">
-					<ErrorBoundary children={children}/>
-				</div>
-				{footer}
+				<CardSidebarContext.Provider value={sidebarEl}>
+					<div className="card-layout">
+						<div className="card-sidebar" ref={setSidebarEl}/>
+						<div className="card-main">
+							{renderHeader()}
+							<div className="card-body">
+								<ErrorBoundary children={children}/>
+							</div>
+							{footer}
+						</div>
+					</div>
+				</CardSidebarContext.Provider>
 				{dropping ? (
 					<Placeholder className="drop-zone" icon="upload" title="Upload"/>
 				) : null}

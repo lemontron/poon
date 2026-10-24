@@ -3,6 +3,7 @@ import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { ScreenHeader } from './ScreenHeader';
 import { ScrollView } from './ScrollView';
+import { HeaderSecondaryProvider } from './HeaderSecondary';
 
 export const FullScreen = ({
 	title,
@@ -26,16 +27,18 @@ export const FullScreen = ({
 	}, []);
 
 	return (
-		<div className="fullscreen" ref={el}>
-			<ScreenHeader
-				title={title}
-				presentation="full"
-				onClose={close}
-				headerRight={headerRight}
-				SearchComponent={SearchComponent}
-			/>
-			<ScrollView className="card-body">{children}</ScrollView>
-			{footer}
-		</div>
+		<HeaderSecondaryProvider>
+			<div className="fullscreen" ref={el}>
+				<ScreenHeader
+					title={title}
+					presentation="full"
+					onClose={close}
+					headerRight={headerRight}
+					SearchComponent={SearchComponent}
+				/>
+				<ScrollView className="card-body">{children}</ScrollView>
+				{footer}
+			</div>
+		</HeaderSecondaryProvider>
 	);
 };

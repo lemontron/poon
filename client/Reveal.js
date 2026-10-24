@@ -1,10 +1,11 @@
-import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { c, clamp, lerp } from './util';
 import { ScreenHeader } from './ScreenHeader';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
+import { CardSidebarContext } from './CardSidebarContext';
 
 let pendingConfig = {};
 
@@ -18,6 +19,7 @@ export const Reveal = ({
 	animateIn,
 	className,
 	SearchComponent,
+	MenuComponent,
 	BackgroundComponent,
 	theme,
 	disableGestures,
@@ -25,6 +27,7 @@ export const Reveal = ({
 }) => {
 	const layerEl = useRef();
 	const innerEl = useRef();
+	const [sidebarEl, setSidebarEl] = useState(null);
 	const pan = useAnimatedValue(animateIn ? 0 : 1);
 
 	const config = useMemo(() => { // consume pending config
@@ -95,16 +98,24 @@ export const Reveal = ({
 				}}
 			>
 				{BackgroundComponent}
-				<ScreenHeader
-					backIcon="apps"
-					title={title}
-					onClose={close}
-					headerLeft={headerLeft}
-					headerRight={headerRight}
-					presentation={presentation}
-					SearchComponent={SearchComponent}
-				/>
-				<div className="card-body" children={children}/>
+				<CardSidebarContext.Provider value={sidebarEl}>
+					<div className="card-layout">
+						<div className="card-sidebar" ref={setSidebarEl}/>
+						<div className="card-main">
+							<ScreenHeader
+								backIcon="apps"
+								title={title}
+								onClose={close}
+								headerLeft={headerLeft}
+								headerRight={headerRight}
+								presentation={presentation}
+								SearchComponent={SearchComponent}
+								MenuComponent={MenuComponent}
+							/>
+							<div className="card-body" children={children}/>
+						</div>
+					</div>
+				</CardSidebarContext.Provider>
 			</Pan>
 		</Layer>
 	);

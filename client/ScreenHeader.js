@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Icon } from './Icon';
 import { HeaderButton } from './HeaderButton';
+import { HeaderSecondaryContext } from './HeaderSecondary';
+import { Dropdown } from './Dropdown';
 
-const closeImage = {'card': 'os:back', 'modal': 'os:close', 'reveal': 'apps'};
+const closeImage = {'card': 'os:back', 'window': 'os:close', 'reveal': 'os:back'};
 
 export const ScreenHeader = ({
 	title,
+	TitleComponent,
 	TitleImage,
 	subtitle,
 	presentation = 'card',
@@ -14,7 +17,11 @@ export const ScreenHeader = ({
 	headerLeft,
 	SearchComponent,
 	onBeforeClose,
+	disableBack,
+	MenuComponent,
 }) => {
+	const [, setSecondaryEl] = useContext(HeaderSecondaryContext);
+
 	const pressBack = async (e) => {
 		e.stopPropagation();
 		e.preventDefault();
@@ -27,9 +34,8 @@ export const ScreenHeader = ({
 		}
 	};
 
-	const renderHeaderLeft = () => {
-		if (headerLeft) return headerLeft; // Prefer custom headerLeft
-
+	const renderCloseButton = () => {
+		if (disableBack) return null;
 		const closeIcon = closeImage[presentation];
 		if (closeIcon) return (
 			<HeaderButton
@@ -41,18 +47,42 @@ export const ScreenHeader = ({
 
 	if (presentation === 'fullscreen') return null;
 
+	const renderTitle = () => (
+		<div className="header-title">
+			{TitleImage ? <div className="header-image">{TitleImage}</div> : null}
+			{TitleComponent || title}
+			{MenuComponent ? <Icon icon="arrow_drop_down" size={20}/> : null}
+		</div>
+	);
+
+	const renderHeaderMiddle = () => {
+		if (TitleComponent) return TitleComponent;
+		if (MenuComponent) return (
+			<Dropdown
+				position="top-left"
+				button={renderTitle()}
+				children={MenuComponent}
+			/>
+		);
+		return renderTitle();
+	};
+
 	return (
 		<Fragment>
 			<div className="header">
-				<div className="header-spacer" children={renderHeaderLeft()}/>
-				<div className="header-middle">
-					<div className="header-title">
-						{TitleImage ? <div className="header-image">{TitleImage}</div> : null}
-						{title}
-					</div>
-					{subtitle ? <div className="header-subtitle">{subtitle}</div> : null}
+				<div className="header-spacer">
+					{headerLeft}
+					{presentation !== 'window' && renderCloseButton()}
 				</div>
-				<div className="header-spacer">{headerRight}</div>
+				<div className="header-middle">
+					{renderHeaderMiddle()}
+					{subtitle ? <div className="header-subtitle meta">{subtitle}</div> : null}
+				</div>
+				<div className="header-spacer">
+					<div className="header-secondary" ref={setSecondaryEl}/>
+					{headerRight}
+					{presentation === 'window' && renderCloseButton()}
+				</div>
 			</div>
 			{SearchComponent ? (
 				<div className="header-search" children={SearchComponent}/>

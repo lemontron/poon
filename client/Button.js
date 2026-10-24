@@ -55,6 +55,7 @@ export const Button = ({
 	styles,
 	round,
 	autoTriggerSeconds,
+	destructive,
 }) => {
 	const buttonEl = useRef(null);
 	const longPress = useRef({timer: null, handled: false});
@@ -77,7 +78,7 @@ export const Button = ({
 			styles={styles}
 			disabled={disabled || loading}
 			type={submit ? 'submit' : 'button'}
-			className={c('btn', active ? 'solid' : 'outline', className, disabled && 'disabled', loading && 'loading', borderless && 'borderless', presentation && `btn-${presentation}`, fullWidth && 'full-width', color && `btn-${color}`, muted && 'muted', square && 'square', round && 'round')}
+			className={c('btn', active ? 'solid' : 'outline', className, disabled && 'disabled', loading && 'loading', borderless && 'borderless', presentation && `btn-${presentation}`, fullWidth && 'full-width', color && `btn-${color}`, muted && 'muted', square && 'square', round && 'round', destructive && 'destructive')}
 			onClick={e => {
 				if (longPress.current.handled) {
 					e.preventDefault();

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { showActionSheet } from '../overlays/ActionSheet.js';
 
 export class Options {
 	constructor(title = '', options = []) {
@@ -25,8 +24,7 @@ export class Options {
 	useOptions = (defaultId) => {
 		const [id, setId] = useState(defaultId || this.options[0]._id);
 		const selected = this.options.find(r => r._id === id);
-		const change = () => showActionSheet(this.title, this.options, setId);
-		return [selected, change];
+		return [selected, setId];
 	};
 }
 

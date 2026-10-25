@@ -15,7 +15,6 @@ export const Card = ({
 	presentation = 'card',
 	title,
 	TitleComponent,
-	TitleImage,
 	subtitle,
 	children,
 	footer,
@@ -92,7 +91,6 @@ export const Card = ({
 		return (
 			<ScreenHeader
 				title={title}
-				TitleImage={TitleImage}
 				TitleComponent={TitleComponent}
 				subtitle={subtitle}
 				presentation={presentation}

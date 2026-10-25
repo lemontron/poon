@@ -3,7 +3,17 @@ import { Touchable } from './Touchable';
 import { Icon } from './Icon';
 import { c } from './util';
 
-export const DropdownItem = ({title, checked, icon, target, onClick, href, replaceState, disabled, active}) => (
+export const DropdownItem = ({
+	title,
+	checked,
+	icon,
+	target,
+	onClick,
+	href,
+	replaceState,
+	disabled,
+	active,
+}) => (
 	<Touchable
 		className={c('dropdown-item', icon === 'delete' && 'destructive')}
 		onClick={onClick}

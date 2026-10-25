@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useRef } from 'react';
 import { Touchable } from './Touchable';
 import { useAnimatedValue } from './util/animated';
 import { c } from './util';
+import { Options } from './util/options';
 
 const SegmentedItem = ({item, isLast, active, onChange, index, ref}) => (
 	<Fragment>
@@ -22,6 +23,7 @@ const SegmentedItem = ({item, isLast, active, onChange, index, ref}) => (
 );
 
 export const SegmentedController = ({options, value, onChange, fullWidth, glass}) => {
+	if (options instanceof Options) options = options.options;
 	const refs = useRef([]);
 	const indicator = useRef();
 	const index = options.findIndex(item => item._id === value);

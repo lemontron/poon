@@ -69,10 +69,13 @@ export const Touchable = ({
 		'onClick': isClickable ? clickButton : undefined,
 		'target': target,
 		'draggable': false,
-		'onContextMenu': disableMenu ? e => {
-			e.preventDefault();
+		'onContextMenu': e => {
+			if (disableMenu) e.preventDefault();
+			// const el = document.getElementById('context-menu');
+			// el.style.top = e.pageY + 'px';
+			// el.style.left = e.pageX + 'px';
 			return false;
-		} : undefined,
+		},
 		'style': style,
 		'type': type,
 		'ref': elementRef || ref,

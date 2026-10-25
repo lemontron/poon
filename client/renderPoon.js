@@ -10,6 +10,7 @@ const App = () => (
 		<Stack mode="stack"/>
 		<PoonOverlays/>
 		<MeteorIndicator/>
+		{/*<div id="context-menu" className="dropdown-content visible"/>*/}
 	</Fragment>
 );
 

@@ -10,7 +10,6 @@ const closeImage = {'card': 'os:back', 'window': 'os:close', 'reveal': 'os:back'
 export const ScreenHeader = ({
 	title,
 	TitleComponent,
-	TitleImage,
 	subtitle,
 	presentation = 'card',
 	onClose,
@@ -51,9 +50,8 @@ export const ScreenHeader = ({
 
 	const renderTitle = () => (
 		<div className="header-title">
-			{TitleImage ? <div className="header-image">{TitleImage}</div> : null}
 			{TitleComponent || title}
-			{MenuComponent ? <Icon icon="arrow_drop_down" size={20}/> : null}
+			{MenuComponent ? <Icon icon="arrow_drop_down_circle"/> : null}
 		</div>
 	);
 
@@ -75,13 +73,6 @@ export const ScreenHeader = ({
 				<div className="header-spacer">
 					{renderCloseButton()}
 					{headerLeft}
-					{sidebar && sidebar.sidebarContentEl ? (
-						<HeaderButton
-							icon="side_navigation"
-							onClick={() => sidebar.setShowSidebar(visible => !visible)}
-							className="hide-desktop"
-						/>
-					) : null}
 				</div>
 				<div className="header-middle">
 					{renderHeaderMiddle()}
@@ -90,6 +81,13 @@ export const ScreenHeader = ({
 				<div className="header-spacer">
 					<div className="header-secondary" ref={setSecondaryEl}/>
 					{headerRight}
+					{sidebar && sidebar.sidebarContentEl ? (
+						<HeaderButton
+							icon="side_navigation"
+							onClick={() => sidebar.setShowSidebar(visible => !visible)}
+							className="hide-desktop"
+						/>
+					) : null}
 				</div>
 			</div>
 			{SearchComponent ? (

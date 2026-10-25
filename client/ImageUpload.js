@@ -32,7 +32,7 @@ export const ImageUpload = ({
 	loading,
 	multiSelect = false,
 	callbackDataUrl = false,
-	aspectRatio,
+	ar,
 }) => {
 	const inputRef = useRef();
 	const [dropping, setDropping] = useState(false);
@@ -80,7 +80,7 @@ export const ImageUpload = ({
 				setDropping(false);
 				emitFiles(e.dataTransfer?.files);
 			}}
-			style={{'aspectRatio': aspectRatio}}
+			style={{'ar': ar}}
 		>
 			<input
 				ref={inputRef}

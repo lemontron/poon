@@ -5,7 +5,6 @@ import { useMobile } from '../util';
 import { ScrollView } from '../ScrollView';
 import { HStack, VStack } from '../Stack';
 import { FabLayout } from './FabLayout';
-import { HeaderButton } from '../HeaderButton';
 
 export const SidebarLayout = ({
 	TopComponent,
@@ -18,6 +17,7 @@ export const SidebarLayout = ({
 	pan,
 	showSidebar = 'desktop',
 	testRootSidebar,
+	sidebarTheme,
 }) => {
 	const mobile = useMobile();
 	const sidebar = useContext(CardSidebarContext);
@@ -25,23 +25,19 @@ export const SidebarLayout = ({
 	if (mobile) {
 		const renderSidebar = () => {
 			if (showSidebar === 'always') return (
-				<div className="sidebar-layout-sidebar sheen" children={SidebarComponent}/>
+				<VStack
+					theme={sidebarTheme}
+					className="sidebar-layout-sidebar"
+					children={SidebarComponent}
+				/>
 			);
-
-			const content = (
-				<div
-					className="sidebar-layout-sidebar sheen"
+			if (testRootSidebar && sidebar && sidebar.sidebarEl) return createPortal((
+				<VStack
+					className="sidebar-layout-sidebar"
 					ref={testRootSidebar && sidebar && sidebar.sidebarEl ? sidebar.setSidebarContentEl : undefined}
-				>
-					{testRootSidebar && sidebar && sidebar.sidebarEl ? (
-						<HStack justify="leading">
-							<HeaderButton icon="close" onClick={() => sidebar.setShowSidebar(false)}/>
-						</HStack>
-					) : null}
-					{SidebarComponent}
-				</div>
-			);
-			if (testRootSidebar && sidebar && sidebar.sidebarEl) return createPortal(content, sidebar.sidebarEl);
+					children={SidebarComponent}
+				/>
+			), sidebar.sidebarEl);
 		};
 
 		return (
@@ -62,8 +58,9 @@ export const SidebarLayout = ({
 
 	const renderSidebar = () => {
 		const content = (
-			<div
-				className="sidebar-layout-sidebar sheen"
+			<VStack
+				theme={sidebarTheme}
+				className="sidebar-layout-sidebar"
 				ref={testRootSidebar && sidebar && sidebar.sidebarEl ? sidebar.setSidebarContentEl : undefined}
 				children={SidebarComponent}
 			/>

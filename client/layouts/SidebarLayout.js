@@ -12,8 +12,6 @@ export const SidebarLayout = ({
 	SidebarComponent,
 	BottomComponent,
 	FabComponent,
-	sidebarVisible = true,
-	onDismissSidebar,
 	pan,
 	showSidebar = 'desktop',
 	testRootSidebar,
@@ -45,7 +43,7 @@ export const SidebarLayout = ({
 				{TopComponent}
 				<FabLayout FabComponent={FabComponent} pan={pan}>
 					<ScrollView frame>
-						<VStack spacing>
+						<VStack spacing frame>
 							{SidebarComponent && renderSidebar()}
 							{MainComponent}
 						</VStack>

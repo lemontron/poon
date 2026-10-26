@@ -40,11 +40,6 @@ input:-webkit-autofill::first-line, input:-webkit-autofill {font-family:inherit 
 }
 
 .safe-padding {padding-bottom:var(--safe-area-inset-bottom);}
-.sheen {
-    border-top:1px solid rgba(255, 255, 255, .05); border-bottom:1px solid rgba(255, 255, 255, .05);
-    background-image:linear-gradient(rgba(255, 255, 255, .02), transparent, rgba(255, 255, 255, .02));
-    box-shadow:0 0 1px rgba(0, 0, 0, .1);
-}
 
 @media (min-width:640px) {
     .hide-desktop {display:none !important;}
@@ -434,7 +429,7 @@ button.touchable, a.touchable {cursor:default;}
 
 /* HEADER BUTTONS */
 .header-spacer {display:flex; justify-content:center; align-items:center; min-width:40px;}
-.header-secondary {display:flex; align-items:center; gap:10px;}
+.header-secondary {display:flex; align-items:center; gap:10px; margin-right:10px;}
 .header-secondary:empty {display:none;}
 .header-button {display:flex; font-size:16px; color:var(--primary); min-width:40px; height:36px; position:relative; justify-content:center; align-items:center; gap:3px; padding:0 calc(var(--gutter-width) / 2); border-radius:18px;}
 .header-button.round {min-width:36px; height:36px; padding:0; background-color:var(--accent); color:var(--bg-primary);}

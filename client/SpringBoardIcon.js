@@ -15,7 +15,7 @@ export const SpringBoardIcon = ({title = 'Icon', icon = 'circle', href, color, I
 			{IconComponent || (
 				<div
 					ref={el}
-					className="icon-frame sheen"
+					className="icon-frame"
 					style={{backgroundColor: color}}
 					children={<Icon icon={icon}/>}
 				/>

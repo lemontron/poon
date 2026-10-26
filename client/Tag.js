@@ -27,7 +27,7 @@ export const Tag = memo(({
 	};
 	return (
 		<div className="tag-container">
-			<div className="tag sheen" style={{backgroundColor: fg}}>
+			<div className="tag" style={{backgroundColor: fg}}>
 				{icon ? <Icon icon={icon}/> : null}
 				{tag}
 				{renderCount()}

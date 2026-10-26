@@ -76,13 +76,7 @@ export const SidebarLayout = ({
 				{SidebarComponent && renderSidebar()}
 				<VStack frame>
 					<FabLayout FabComponent={FabComponent}>
-						<ScrollView
-							className="sidebar-layout-main"
-							onPointerDownCapture={sidebarVisible ? e => e.stopPropagation() : undefined}
-							onClickCapture={sidebarVisible ? onDismissSidebar : undefined}
-							children={MainComponent}
-							frame
-						/>
+						{MainComponent}
 					</FabLayout>
 					{BottomComponent}
 				</VStack>

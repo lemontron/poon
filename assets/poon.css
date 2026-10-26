@@ -787,9 +787,9 @@ button.touchable, a.touchable {cursor:default;}
 
 /* SIDEBAR LAYOUT */
 .sidebar-layout {display:flex; gap:20px; flex:1;}
-.sidebar-layout .sidebar-layout-sidebar {margin-left:var(--gutter-width); border-radius:var(--radius); background-color:var(--subtle);}
-.sidebar-layout-sidebar {display:flex; flex-direction:column; background:var(--bg-secondary);}
-.sidebar-layout-main {flex:1;}
+.sidebar-layout-sidebar {display:flex; flex-direction:column;}
+.sidebar-layout .sidebar-layout-sidebar {margin-left:var(--gutter-width); border-radius:var(--radius); background:var(--subtle);}
+.card-sidebar .sidebar-layout-sidebar {background-color:var(--bg-secondary);}
 
 @media (min-width:640px) {
     .sidebar-layout-sidebar {height:100%; min-width:300px;}

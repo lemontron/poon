@@ -541,11 +541,10 @@ button.touchable, a.touchable {cursor:default;}
 .segmented.glass, .segmented.glass .segmented-indicator {box-shadow:0 2px 8px rgba(0, 0, 0, .1);}
 
 /* BREADCRUMBS */
-.breadcrumbs {white-space:nowrap; background:#323; height:36px;}
-.breadcrumbs .touchable {color:#fff;}
+.breadcrumbs {white-space:nowrap; height:36px; background:var(--subtle);}
+.breadcrumbs .touchable {color:var(--primary);}
 .breadcrumbs .scroller {padding:0 var(--gutter-width); display:flex; gap:5px; align-items:center;}
 .breadcrumbs .material-symbols {font-size:16px;}
-.breadcrumbs span {color:#545;}
 
 /* GALLERY */
 .gallery-item {flex:1; height:100%; display:flex; align-items:center; justify-content:center;}

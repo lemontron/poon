@@ -61,7 +61,7 @@ export const Image = ({
 			style={{aspectRatio: ar}}
 		>
 			{renderImg()}
-			{badge ? <Badge number={badge}/> : null}
+			{badge ? <Badge badge={badge}/> : null}
 			{children ? <div className="img-inside">{children}</div> : null}
 		</div>
 	);

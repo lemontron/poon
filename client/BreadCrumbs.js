@@ -19,7 +19,7 @@ export const BreadCrumbs = ({root = '/', path, crumbs}) => {
 	const renderCrumb = (crumb, i) => (
 		<Fragment key={crumb.name + '_' + i}>
 			<Touchable href={crumb.href} children={crumb.name}/>
-			{i < crumbs.length - 1 ? <span> / </span> : null}
+			{i < crumbs.length - 1 ? <Icon icon="arrow_right" color="var(--muted)"/> : null}
 		</Fragment>
 	);
 
@@ -29,7 +29,7 @@ export const BreadCrumbs = ({root = '/', path, crumbs}) => {
 				href={root}
 				children={<Icon icon="home"/>}
 			/>
-			<span> / </span>
+			<Icon icon="arrow_right" color="var(--muted)"/>
 			{crumbs.map(renderCrumb)}
 		</ScrollView>
 	);

@@ -3,7 +3,6 @@ import { Icon } from './Icon';
 import { HeaderButton } from './HeaderButton';
 import { HeaderSecondaryContext } from './HeaderSecondary';
 import { Dropdown } from './Dropdown';
-import { CardSidebarContext } from './CardSidebarContext';
 
 const closeImage = {'card': 'os:back', 'window': 'os:close', 'reveal': 'os:back'};
 
@@ -19,9 +18,9 @@ export const ScreenHeader = ({
 	onBeforeClose,
 	disableBack,
 	MenuComponent,
+	onToggleSidebar,
 }) => {
 	const [, setSecondaryEl] = useContext(HeaderSecondaryContext);
-	const sidebar = useContext(CardSidebarContext);
 
 	const pressBack = async (e) => {
 		e.stopPropagation();
@@ -81,10 +80,10 @@ export const ScreenHeader = ({
 				<div className="header-spacer">
 					<div className="header-secondary" ref={setSecondaryEl}/>
 					{headerRight}
-					{sidebar && sidebar.sidebarContentEl ? (
+					{onToggleSidebar ? (
 						<HeaderButton
 							icon="side_navigation"
-							onClick={() => sidebar.setShowSidebar(visible => !visible)}
+							onClick={onToggleSidebar}
 							className="hide-desktop"
 						/>
 					) : null}

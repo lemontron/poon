@@ -2,11 +2,10 @@ import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { useSize } from './util/size';
-import { ScreenHeader } from './ScreenHeader';
+import { CardLayout } from './CardLayout';
 import { Pan } from './Pan';
 import { c } from './util';
 import { Layer } from './Layer';
-import { ErrorBoundary } from './ErrorBoundary';
 
 export const Window = ({
 	children,
@@ -20,6 +19,7 @@ export const Window = ({
 	className,
 	theme,
 	SearchComponent,
+	SidebarComponent,
 	ref,
 }) => {
 	const shadeEl = useRef();
@@ -50,19 +50,12 @@ export const Window = ({
 	}, [isVisible, height]);
 
 	useEffect(() => {
-		// const cards = document.querySelectorAll('.card, .window');
 		return pan.on(value => {
-			// const percent = (value / height);
 			if (el.current) el.current.style.transform = `translateY(-${value}px)`;
 			if (shadeEl.current) {
 				shadeEl.current.style.display = value ? 'block' : 'none';
 				shadeEl.current.style.opacity = (value / height);
 			}
-			// [...cards].filter(r => r !== el.current).forEach((el, i, all) => {
-			// 	console.log('Index:', i, 'Class:', el.className, 'Depth:');
-			// 	const depthScale = (all.length - i) * .04;
-			// 	el.parentElement.style.transform = `scale(${1 - ((percent * 0.04) + (depthScale * percent))})`;
-			// });
 		});
 	}, [height]);
 
@@ -84,7 +77,7 @@ export const Window = ({
 					pan.spring(e.size);
 				}}
 			>
-				<ScreenHeader
+				<CardLayout
 					title={title}
 					presentation={presentation}
 					onClose={close}
@@ -92,12 +85,9 @@ export const Window = ({
 					headerLeft={headerLeft}
 					headerRight={headerRight}
 					SearchComponent={SearchComponent}
+					SidebarComponent={SidebarComponent}
+					children={children}
 				/>
-				<div className="card-body">
-					<ErrorBoundary>
-						{children}
-					</ErrorBoundary>
-				</div>
 			</Pan>
 		</Layer>
 	);

@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import { createPortal } from 'react-dom';
-import { CardSidebarContext } from '../CardSidebarContext';
+import React from 'react';
 import { useMobile } from '../util';
 import { ScrollView } from '../ScrollView';
 import { HStack, VStack } from '../Stack';
@@ -14,11 +12,9 @@ export const SidebarLayout = ({
 	FabComponent,
 	pan,
 	showSidebar = 'desktop',
-	testRootSidebar,
 	sidebarTheme,
 }) => {
 	const mobile = useMobile();
-	const sidebar = useContext(CardSidebarContext);
 
 	if (mobile) {
 		const renderSidebar = () => {
@@ -29,13 +25,6 @@ export const SidebarLayout = ({
 					children={SidebarComponent}
 				/>
 			);
-			if (testRootSidebar && sidebar && sidebar.sidebarEl) return createPortal((
-				<VStack
-					className="sidebar-layout-sidebar"
-					ref={testRootSidebar && sidebar && sidebar.sidebarEl ? sidebar.setSidebarContentEl : undefined}
-					children={SidebarComponent}
-				/>
-			), sidebar.sidebarEl);
 		};
 
 		return (
@@ -54,18 +43,13 @@ export const SidebarLayout = ({
 		);
 	}
 
-	const renderSidebar = () => {
-		const content = (
-			<VStack
-				theme={sidebarTheme}
-				className="sidebar-layout-sidebar"
-				ref={testRootSidebar && sidebar && sidebar.sidebarEl ? sidebar.setSidebarContentEl : undefined}
-				children={SidebarComponent}
-			/>
-		);
-		if (!testRootSidebar) return content;
-		if (sidebar && sidebar.sidebarEl) return createPortal(content, sidebar.sidebarEl);
-	};
+	const renderSidebar = () => (
+		<VStack
+			theme={sidebarTheme}
+			className="sidebar-layout-sidebar"
+			children={SidebarComponent}
+		/>
+	);
 
 	return (
 		<VStack frame spacing>

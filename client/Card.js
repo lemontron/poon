@@ -3,13 +3,11 @@ import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { useSize } from './util/size';
 import { c } from './util';
-import { ScreenHeader } from './ScreenHeader';
+import { CardLayout } from './CardLayout';
 import { Placeholder } from './Placeholder';
 import { Shade } from './Shade';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
-import { ErrorBoundary } from './ErrorBoundary';
-import { CardSidebarContext } from './CardSidebarContext';
 
 export const Card = ({
 	presentation = 'card',
@@ -17,7 +15,6 @@ export const Card = ({
 	TitleComponent,
 	subtitle,
 	children,
-	footer,
 	headerLeft,
 	headerRight,
 	SearchComponent,
@@ -28,6 +25,7 @@ export const Card = ({
 	ShadeComponent = Shade,
 	BackgroundComponent,
 	HeaderComponent,
+	SidebarComponent,
 	className,
 	theme,
 	onBeforeClose,
@@ -37,9 +35,6 @@ export const Card = ({
 }) => {
 	el = el || useRef();
 	const [dropping, setDropping] = useState(false);
-	const [sidebarEl, setSidebarEl] = useState(null);
-	const [showSidebar, setShowSidebar] = useState(false);
-	const [sidebarContentEl, setSidebarContentEl] = useState(null);
 	const shadeEl = useRef();
 	const {width} = useSize(el);
 	const pan = useAnimatedValue(animateIn ? document.body.clientWidth : 0);
@@ -64,7 +59,7 @@ export const Card = ({
 	useEffect(() => {
 		return pan.on(value => {
 			if (el.current) el.current.style.transform = `translateX(${value}px)`;
-			if (shadeEl.current) shadeEl.current.progress(value, width);
+			if (shadeEl.current) shadeEl.current.progress(1 - (value / width));
 		});
 	}, [width]);
 
@@ -84,25 +79,6 @@ export const Card = ({
 		e.preventDefault();
 		setDropping(false);
 		onDrop(e);
-	};
-
-	const renderHeader = () => {
-		if (HeaderComponent) return HeaderComponent;
-		return (
-			<ScreenHeader
-				title={title}
-				TitleComponent={TitleComponent}
-				subtitle={subtitle}
-				presentation={presentation}
-				SearchComponent={SearchComponent}
-				onClose={close}
-				onBeforeClose={onBeforeClose}
-				headerRight={headerRight}
-				headerLeft={headerLeft}
-				disableBack={disableBack}
-				MenuComponent={MenuComponent}
-			/>
-		);
 	};
 
 	return (
@@ -129,18 +105,22 @@ export const Card = ({
 				}}
 			>
 				{BackgroundComponent}
-				<CardSidebarContext.Provider value={{sidebarEl, sidebarContentEl, setSidebarContentEl, showSidebar, setShowSidebar}}>
-					<div className="card-layout">
-						<div className={c('card-sidebar', showSidebar && 'visible')} ref={setSidebarEl}/>
-						<div className="card-main">
-							{renderHeader()}
-							<div className="card-body">
-								<ErrorBoundary children={children}/>
-							</div>
-							{footer}
-						</div>
-					</div>
-				</CardSidebarContext.Provider>
+				<CardLayout
+					title={title}
+					TitleComponent={TitleComponent}
+					subtitle={subtitle}
+					presentation={presentation}
+					SearchComponent={SearchComponent}
+					onClose={close}
+					onBeforeClose={onBeforeClose}
+					headerRight={headerRight}
+					headerLeft={headerLeft}
+					disableBack={disableBack}
+					MenuComponent={MenuComponent}
+					HeaderComponent={HeaderComponent}
+					SidebarComponent={SidebarComponent}
+					children={children}
+				/>
 				{dropping ? (
 					<Placeholder className="drop-zone" icon="upload" title="Upload"/>
 				) : null}

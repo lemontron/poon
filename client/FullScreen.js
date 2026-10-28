@@ -8,7 +8,6 @@ import { HeaderSecondaryProvider } from './HeaderSecondary';
 export const FullScreen = ({
 	title,
 	children,
-	footer,
 	headerRight,
 	SearchComponent,
 }) => {
@@ -37,7 +36,6 @@ export const FullScreen = ({
 					SearchComponent={SearchComponent}
 				/>
 				<ScrollView className="card-body">{children}</ScrollView>
-				{footer}
 			</div>
 		</HeaderSecondaryProvider>
 	);

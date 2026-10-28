@@ -30,6 +30,7 @@ export class Options {
 
 export const normalizeOptions = (options) => {
 	if (Array.isArray(options)) return options;
+	if (options.options) return options.options;
 	if (typeof options === 'object') return Object.keys(options).map(key => ({'_id': key, 'name': options[key]}));
 	throw new TypeError('options must be an array of objects with _id as a string, or a object of key/value pairs');
 };

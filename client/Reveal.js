@@ -1,11 +1,10 @@
-import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { navigation } from 'meteor/poon-router';
 import { useAnimatedValue } from './util/animated';
 import { c, clamp, lerp } from './util';
-import { ScreenHeader } from './ScreenHeader';
+import { CardLayout } from './CardLayout';
 import { Pan } from './Pan';
 import { Layer } from './Layer';
-import { CardSidebarContext } from './CardSidebarContext';
 
 let pendingConfig = {};
 
@@ -21,15 +20,13 @@ export const Reveal = ({
 	SearchComponent,
 	MenuComponent,
 	BackgroundComponent,
+	SidebarComponent,
 	theme,
 	disableGestures,
 	ref,
 }) => {
 	const layerEl = useRef();
 	const innerEl = useRef();
-	const [sidebarEl, setSidebarEl] = useState(null);
-	const [showSidebar, setShowSidebar] = useState(false);
-	const [sidebarContentEl, setSidebarContentEl] = useState(null);
 	const pan = useAnimatedValue(animateIn ? 0 : 1);
 
 	const config = useMemo(() => { // consume pending config
@@ -100,24 +97,17 @@ export const Reveal = ({
 				}}
 			>
 				{BackgroundComponent}
-				<CardSidebarContext.Provider value={{sidebarEl, sidebarContentEl, setSidebarContentEl, showSidebar, setShowSidebar}}>
-					<div className="card-layout">
-						<div className={c('card-sidebar', showSidebar && 'visible')} ref={setSidebarEl}/>
-						<div className="card-main">
-							<ScreenHeader
-								backIcon="apps"
-								title={title}
-								onClose={close}
-								headerLeft={headerLeft}
-								headerRight={headerRight}
-								presentation={presentation}
-								SearchComponent={SearchComponent}
-								MenuComponent={MenuComponent}
-							/>
-							<div className="card-body" children={children}/>
-						</div>
-					</div>
-				</CardSidebarContext.Provider>
+				<CardLayout
+					title={title}
+					onClose={close}
+					headerLeft={headerLeft}
+					headerRight={headerRight}
+					presentation={presentation}
+					SearchComponent={SearchComponent}
+					MenuComponent={MenuComponent}
+					SidebarComponent={SidebarComponent}
+					children={children}
+				/>
 			</Pan>
 		</Layer>
 	);

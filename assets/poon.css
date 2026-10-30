@@ -370,7 +370,7 @@ button.touchable, a.touchable {cursor:default;}
 .handle {position:absolute; top:5px; left:50%; margin-left:-20px; width:40px; height:4px; border-radius:5px; background:#999;}
 
 /* DIFFERENT STACK TYPES */
-.layer {position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden;}
+.layer {position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; color:var(--primary);}
 .layer-inactive {pointer-events:none;}
 
 /* BLACK OUT */

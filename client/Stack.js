@@ -1,9 +1,9 @@
 import React from 'react';
-import { c, useMobile } from './util';
+import { c } from './util';
 import { Touchable } from './Touchable';
 import { Icon } from './Icon';
 
-const stackProps = (appearance, {
+const createStack = (appearance, {
 	justify,
 	frame,
 	align,
@@ -13,38 +13,34 @@ const stackProps = (appearance, {
 	padding,
 	safePadding,
 	distributed,
-	mobileOnly,
 	highlight,
 	collapse,
 	theme,
 	...props
 }) => {
-	const isMobile = useMobile();
-	if (mobileOnly && !isMobile) return null;
-	return {
-		'className': c(
-			'stack',
-			appearance,
-			theme && `theme-${theme}`,
-			frame && 'frame',
-			justify && `justify-${justify}`,
-			align && `align-${align}`,
-			passthrough && 'passthrough',
-			padding && (typeof padding === 'string' ? `padding-${padding}` : 'padding'),
-			spacing && 'spacing',
-			safePadding && 'safe',
-			distributed && 'distributed',
-			highlight && 'highlight',
-			collapse && 'collapse',
-			className,
-		),
-		...props,
-	};
+	const stackClassName = c(
+		'stack',
+		appearance,
+		theme && `theme-${theme}`,
+		frame && 'frame',
+		justify && `justify-${justify}`,
+		align && `align-${align}`,
+		passthrough && 'passthrough',
+		padding && (typeof padding === 'string' ? `padding-${padding}` : 'padding'),
+		spacing && 'spacing',
+		safePadding && 'safe',
+		distributed && 'distributed',
+		highlight && 'highlight',
+		collapse && 'collapse',
+		className,
+	);
+
+	return <div className={stackClassName} {...props}/>;
 };
 
-export const VStack = (props) => (<div {...stackProps('v', props)}/>);
-export const HStack = (props) => (<div {...stackProps('h', props)}/>);
-export const ZStack = (props) => (<div {...stackProps('z', props)}/>);
+export const VStack = (props) => createStack('v', props);
+export const HStack = (props) => createStack('h', props);
+export const ZStack = (props) => createStack('z', props);
 
 export const Spacer = () => (<div className="spacer"/>);
 

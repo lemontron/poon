@@ -1,6 +1,6 @@
 import { createElement, useState } from 'react';
 import { navigation } from 'meteor/poon-router';
-import { c, useMobile } from './util';
+import { c } from './util';
 
 export const Touchable = ({
 	href,
@@ -16,13 +16,11 @@ export const Touchable = ({
 	onTouchedChange,
 	type = 'button',
 	replaceState,
-	mobileOnly,
 	ref,
 	elementRef,
 }) => {
 	const [touched, setTouched] = useState(false);
 	const isClickable = !!(href || onClick) && !disabled;
-	const isMobile = useMobile();
 
 	const clickButton = (e) => {
 		if (onClick) {
@@ -57,7 +55,6 @@ export const Touchable = ({
 	if (onClick) tagName = 'button';
 	if (href) tagName = 'a';
 
-	if (mobileOnly && !isMobile) return null;
 	return createElement(tagName, {
 		'className': c('touchable', className, touched && 'touched', disableMenu && 'disable-menu', active && 'active', disabled && 'disabled'),
 		'href': disabled ? undefined : href,

@@ -10,6 +10,7 @@ Package.onUse(api => {
 	api.use('minimongo');
 	api.use('random', 'client');
 	api.use('meteor');
+	api.use('localstorage', 'client');
 	api.use('modules');
 	api.use('webapp', 'server');
 	api.use('react-meteor-data@4.0.1', 'client');

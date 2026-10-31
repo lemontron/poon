@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 export const GRANTED = 'granted';
 export const PENDING = 'pending';
 export const DENIED = 'denied';
@@ -6,7 +8,7 @@ export class PermissionDef {
 	constructor(name, {askAsync, checkAsync, getConfigAsync}) {
 		this.name = name;
 		this.localStorageKey = `userDeclinedPermission[${this.name}]`;
-		this.status = localStorage.getItem(this.localStorageKey) ? DENIED : PENDING;
+		this.status = Meteor._localStorage.getItem(this.localStorageKey) ? DENIED : PENDING;
 		this._askAsync = askAsync;
 		this._checkAsync = checkAsync;
 		this.getConfigAsync = getConfigAsync;
@@ -14,7 +16,7 @@ export class PermissionDef {
 	}
 
 	_updateStatus = val => {
-		if (val === GRANTED) localStorage.removeItem(this.localStorageKey);
+		if (val === GRANTED) Meteor._localStorage.removeItem(this.localStorageKey);
 		if (this.status === val) return;
 		this.status = val;
 		this.listeners.forEach(fn => fn(val));
@@ -26,7 +28,7 @@ export class PermissionDef {
 	};
 
 	checkAsync = async () => {
-		const dismissed = localStorage.getItem(this.localStorageKey);
+		const dismissed = Meteor._localStorage.getItem(this.localStorageKey);
 		if (dismissed) return DENIED;
 
 		const status = await this._checkAsync();
@@ -44,7 +46,7 @@ export class PermissionDef {
 	};
 
 	userDecline = () => {
-		localStorage.setItem(this.localStorageKey, 'true');
+		Meteor._localStorage.setItem(this.localStorageKey, 'true');
 		this._updateStatus(DENIED);
 	};
 }

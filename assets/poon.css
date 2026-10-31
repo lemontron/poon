@@ -774,6 +774,7 @@ button.touchable, a.touchable {cursor:default;}
 .bubble-content tr:nth-child(odd) td {background:rgba(0, 0, 0, .2);}
 
 /* PAGE TITLE */
+.page-title {width:100%;}
 .page-title .img {height:100px; width:100px;}
 .page-title h1 {font-size:calc(var(--font-size) + 4px);}
 .page-title h2 {color:var(--accent); font-size:inherit;}

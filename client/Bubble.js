@@ -6,7 +6,7 @@ export const Bubble = ({role, text, date, disabled, ButtonsComponent, HeaderComp
 	<VStack
 		disabled={disabled}
 		align={role === 'user' ? 'trailing' : 'leading'}
-		padding="horizontal"
+		gutter
 		spacing
 	>
 		<div className={`bubble-content bubble-${role}`}>

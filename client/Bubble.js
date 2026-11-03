@@ -9,7 +9,7 @@ export const Bubble = ({role, text, date, disabled, ButtonsComponent, HeaderComp
 		gutter
 		spacing
 	>
-		<div className={`bubble-content bubble-${role}`}>
+		<div className={`bubble-content bubble-${role === 'user' ? 'user' : 'other'}`}>
 			{HeaderComponent}
 			<Markdown content={text}/>
 			{(date && role !== 'assistant') ? <div className="bubble-timestamp">{date.toLocaleString()}</div> : null}

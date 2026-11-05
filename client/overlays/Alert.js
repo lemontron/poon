@@ -15,6 +15,8 @@ export const PROMPT = 'prompt';
 const alertsStore = new Bus([]);
 
 const dismissAlert = (alert, val) => {
+	if (!alert || !alert.visible) return;
+
 	// Hide alert
 	alertsStore.update(alertsStore.state.map(a => {
 		if (a === alert) a.visible = false;

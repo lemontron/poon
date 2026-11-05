@@ -3,10 +3,14 @@ import { useMobile } from '../util';
 import { ScrollView } from '../ScrollView';
 import { HStack, VStack } from '../Stack';
 import { FabLayout } from './FabLayout';
+import { Placeholder } from '../Placeholder';
+import { Loading } from '../Suspense';
 
 export const SidebarLayout = ({
+	loading,
 	TopComponent,
 	MainComponent,
+	placeholder,
 	SidebarComponent,
 	BottomComponent,
 	FabComponent,
@@ -15,6 +19,11 @@ export const SidebarLayout = ({
 	sidebarTheme,
 }) => {
 	const mobile = useMobile();
+
+	const renderPlacholder = () => {
+		if (loading) return <Loading/>;
+		return <Placeholder title={placeholder || 'No Content'}/>;
+	};
 
 	if (mobile) {
 		const renderSidebar = () => {
@@ -31,10 +40,10 @@ export const SidebarLayout = ({
 			<VStack frame>
 				{TopComponent}
 				<FabLayout FabComponent={FabComponent} pan={pan}>
-					<ScrollView frame>
-						<VStack spacing frame>
+					<ScrollView frame safePadding>
+						<VStack spacing>
 							{SidebarComponent && renderSidebar()}
-							{MainComponent}
+							{MainComponent || renderPlacholder()}
 						</VStack>
 					</ScrollView>
 				</FabLayout>
@@ -58,7 +67,9 @@ export const SidebarLayout = ({
 				{SidebarComponent && renderSidebar()}
 				<VStack frame>
 					<FabLayout FabComponent={FabComponent}>
-						{MainComponent}
+						{MainComponent ? (
+							<ScrollView frame children={MainComponent}/>
+						) : renderPlacholder()}
 					</FabLayout>
 					{BottomComponent}
 				</VStack>

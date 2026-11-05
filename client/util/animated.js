@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useLayoutEffect, useMemo } from 'react';
 import { easeOutCubic } from './';
 
 export class AnimatedValue {
@@ -57,6 +57,11 @@ export class AnimatedValue {
 
 AnimatedValue.defaultAnimationDuration = 300;
 
-export const useAnimatedValue = (initialValue) => useMemo(() => {
-	return new AnimatedValue(initialValue);
-}, []);
+export const useAnimatedValue = (initialValue) => {
+	const value = useMemo(() => new AnimatedValue(initialValue), []);
+
+	// Stop queued frames before DOM refs detach and passive listeners unsubscribe.
+	useLayoutEffect(() => () => value.end(), [value]);
+
+	return value;
+};

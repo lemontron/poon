@@ -38,6 +38,7 @@ export { Image } from './client/Image.js';
 export { ImageUpload } from './client/ImageUpload.js';
 export { IndicatorDot } from './client/IndicatorDot.js';
 export { Info } from './client/Info.js';
+export { Keyboard } from './client/Keyboard.js';
 export { Layer } from './client/Layer.js';
 // Layouts
 export { DrawerLayout } from './client/layouts/DrawerLayout.js';

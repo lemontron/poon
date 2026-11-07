@@ -44,7 +44,7 @@ export const VStack = (props) => createStack('v', props);
 export const HStack = (props) => createStack('h', props);
 export const ZStack = (props) => createStack('z', props);
 
-export const Spacer = () => (<div className="spacer"/>);
+export const Spacer = ({height}) => (<div style={{height}} className={height ? null : 'spacer'}/>);
 
 export const Row = ({
 	title,

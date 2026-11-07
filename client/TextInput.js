@@ -3,8 +3,9 @@ import { Icon } from './Icon';
 import { Touchable } from './Touchable';
 import { ActivityIndicator } from './ActivityIndicator';
 import { c } from './util';
+import { applyTextCase } from './util/text-case';
 
-const autoCompleteMap = {code: 'one-time-code', password: 'current-password'};
+const autoCompleteMap = {code: 'one-time-code', password: 'current-password', name: 'given-name'};
 const typeMap = {phone: 'tel', ein: 'tel', code: 'tel', price: 'numeric'};
 const placeholderMap = {search: 'Search'};
 const inputModeMap = {custom: 'none', none: 'none'};
@@ -32,11 +33,6 @@ const formatPhone = (digits, country) => {
 
 const einDigits = value => value.replace(/\D/g, '').slice(0, 9);
 const formatEin = digits => digits.length > 2 ? `${digits.slice(0, 2)}-${digits.slice(2)}` : digits;
-
-const applyTitleCase = (value) => {
-	if (!value) return '';
-	return value.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-};
 
 export const TextInput = ({
 	placeholder,
@@ -74,6 +70,7 @@ export const TextInput = ({
 	virtualKeyboard,
 	ref,
 }) => {
+	const textCase = upperCase ? 'upper' : lowerCase ? 'lower' : titleCase ? 'title' : undefined;
 	const isTextarea = (type === 'textarea' || rows);
 	const localRef = useRef();
 	const inputRef = ref || localRef;
@@ -161,9 +158,7 @@ export const TextInput = ({
 			} else if (type === 'number' || type === 'price') {
 				text = text.replace(/[^0-9.]/g, '');
 			} else {
-				if (titleCase) text = applyTitleCase(text);
-				if (lowerCase) text = text.toLowerCase();
-				if (upperCase) text = text.toUpperCase();
+				text = applyTextCase(text, textCase);
 				if (maxLength) text = text.slice(0, maxLength);
 				if (type === 'username') text = text.replace(/\s/g, '');
 			}
@@ -222,6 +217,7 @@ export const TextInput = ({
 			} : undefined,
 			'inputMode': inputModeMap[virtualKeyboard],
 			'data-input-type': type,
+			'data-text-case': textCase,
 			'data-virtual-keyboard': !disabled && virtualKeyboard,
 		});
 	};

@@ -4,7 +4,7 @@ import { c } from './util';
 import { Icon } from './Icon';
 import { ActivityIndicator } from './ActivityIndicator';
 
-export const Fab = ({icon, title, loading, disabled, active, href, detail, onClick, color, pulse}) => (
+export const Fab = ({icon, title, loading, disabled, active, href, replaceState, detail, onClick, color, pulse}) => (
 	<Touchable
 		className={c('fab', !title && 'round', loading && 'loading', color && `fab-${color}`, pulse && !disabled && !loading && 'pulse')}
 		loading={loading}
@@ -12,6 +12,7 @@ export const Fab = ({icon, title, loading, disabled, active, href, detail, onCli
 		active={active}
 		onClick={onClick}
 		href={href}
+		replaceState={replaceState}
 	>
 		{pulse ? <span className="fab-halo" aria-hidden="true"><span/></span> : null}
 		<div className="fab-content">

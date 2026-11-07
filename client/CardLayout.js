@@ -31,7 +31,9 @@ export const CardLayout = ({children, HeaderComponent, SidebarComponent, ...head
 				if (e.flick === 1) return setShowSidebar(false);
 				pan.spring(1);
 			}}
-			children={<VStack className="sidebar-layout-sidebar" children={SidebarComponent}/>}
+			children={
+				<VStack className="sidebar-layout-sidebar frame" children={SidebarComponent}/>
+			}
 		/>
 	);
 

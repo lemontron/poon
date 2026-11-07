@@ -57,6 +57,7 @@ export const Row = ({
 	RightComponent,
 	onPressMore,
 	padding,
+	gutter,
 	multiLine,
 	children,
 	highlight,
@@ -69,7 +70,7 @@ export const Row = ({
 
 	return (
 		<div
-			className={c('row', padding && 'padding', inactive && 'inactive', multiLine && 'multi-line', highlight && 'highlight', className)}>
+			className={c('row', gutter && 'gutter', padding && 'padding', inactive && 'inactive', multiLine && 'multi-line', highlight && 'highlight', className)}>
 			<div className="row-left">
 				{renderLeftIcon()}
 			</div>

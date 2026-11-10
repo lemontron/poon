@@ -76,6 +76,7 @@ const ViewPagerPage = ({children}) => children;
 
 export const ViewPager = ({
 	pages = [],
+	theme,
 	children,
 	renderPage,
 	vertical,
@@ -273,7 +274,7 @@ export const ViewPager = ({
 
 	return (
 		<div
-			className={c('pager', vertical ? 'vertical' : 'horizontal', hasSidebar && 'with-sidebar', showSidebar === 'always' && 'show-sidebar-always', frame && 'frame', className)}>
+			className={c('pager', vertical ? 'vertical' : 'horizontal', hasSidebar && 'with-sidebar', showSidebar === 'always' && 'show-sidebar-always', frame && 'frame', theme && `theme-${theme}`, className)}>
 			{showTitles && !hasFloating ? (
 				<div className="pager-tabs" ref={tabsEl}>
 					{filteredPages.map((page, i) => (
@@ -317,7 +318,11 @@ export const ViewPager = ({
 				<div className="pager-floating">
 					<SegmentedController
 						glass
-						options={filteredPages.map((page, i) => ({_id: i, name: titleExtractor(page) || `Page ${i + 1}`, badge: page.badge}))}
+						options={filteredPages.map((page, i) => ({
+							_id: i,
+							name: titleExtractor(page) || `Page ${i + 1}`,
+							badge: page.badge,
+						}))}
 						value={internalPage}
 						onChange={userInteractionChangePage}
 					/>

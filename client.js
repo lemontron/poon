@@ -62,7 +62,7 @@ export {
 	DENIED, gpsLocation, GRANTED, PENDING, pushNotifications, useLocation, usePermission,
 } from './client/permissions.js';
 export { Bus, useBus } from './client/util/bus.js';
-export { storage } from './client/util/storage.js';
+export { Storage } from './client/util/storage.js';
 export { PermissionDef } from './client/permissions/util.js';
 export { Placeholder } from './client/Placeholder.js';
 export { PoonOverlays } from './client/PoonOverlays.js';

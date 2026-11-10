@@ -1,13 +1,25 @@
 import { EJSON } from 'meteor/ejson';
 import { Meteor } from 'meteor/meteor';
 
-export const storage = new Proxy(Meteor._localStorage, {
+const decode = value => {
+	try {
+		return EJSON.parse(value);
+	} catch (err) {
+		return value;
+	}
+};
+
+const encode = value => {
+	if (typeof value !== 'string') value = EJSON.stringify(value);
+	return value;
+};
+
+export const Storage = new Proxy(Meteor._localStorage, {
 	get: (target, key) => {
-		const value = target.getItem(key);
-		return value === null ? null : EJSON.parse(value);
+		return decode(target.getItem(key));
 	},
 	set: (target, key, value) => {
-		target.setItem(key, EJSON.stringify(value));
+		target.setItem(key, encode(value));
 		return true;
 	},
 });

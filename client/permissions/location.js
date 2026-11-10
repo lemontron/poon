@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { DENIED, GRANTED, PermissionDef } from './util.js';
-import { storage } from '../util/storage.js';
+import { Storage } from '../util/storage.js';
 import { Bus, useBus } from '../util/bus.js';
 
-const locationState = new Bus(storage.lastLocation);
+const locationState = new Bus(Storage.lastLocation);
 
 const transformLocation = e => ({
 	'type': 'Point',
@@ -41,7 +41,7 @@ const watchLocation = () => {
 	isWatching = true;
 	navigator.geolocation.watchPosition(e => {
 		const loc = transformLocation(e);
-		storage.lastLocation = loc;
+		Storage.lastLocation = loc;
 		locationState.update(loc);
 	}, error => {
 		isWatching = false;

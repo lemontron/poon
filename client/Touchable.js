@@ -68,9 +68,6 @@ export const Touchable = ({
 		'draggable': false,
 		'onContextMenu': e => {
 			if (disableMenu) e.preventDefault();
-			// const el = document.getElementById('context-menu');
-			// el.style.top = e.pageY + 'px';
-			// el.style.left = e.pageX + 'px';
 			return false;
 		},
 		'style': style,

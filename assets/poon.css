@@ -142,7 +142,7 @@ i.text-input-clear {font-size:18px;}
 .keyboard-actions .mode {flex:0 0 70px;}
 .keyboard-actions .punctuation {flex:0 0 45px;}
 .keyboard-actions .space {flex:1;}
-.touchable.keyboard-key {height:clamp(38px, 6vw, 52px); border-radius:var(--radius); color:var(--primary); font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight:bold; align-items:center; justify-content:center;}
+.touchable.keyboard-key {height:clamp(38px, 6vw, 52px); border-radius:var(--radius); color:var(--primary); align-items:center; justify-content:center;}
 .touchable.keyboard-key.letter, .touchable.keyboard-key.space {background:var(--bg-secondary);}
 .keyboard-key.shift.active {color:var(--accent);}
 .keyboard-actions .keyboard-key.submit {flex:0 0 auto; padding:0 5px; gap:8px; background:var(--accent); color:var(--bg-primary);}

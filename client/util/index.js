@@ -38,10 +38,10 @@ export const lerp = (val, v0, v1) => {
 export const isIOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g);
 
 export const useMobile = () => {
-	const [mobile, setMobile] = useState(window.innerWidth < 800);
+	const [mobile, setMobile] = useState(window.innerWidth < 640);
 
 	useEffect(() => {
-		const resize = () => setMobile(window.innerWidth < 800);
+		const resize = () => setMobile(window.innerWidth < 640);
 		window.addEventListener('resize', resize);
 		return () => window.removeEventListener('resize', resize);
 	}, []);

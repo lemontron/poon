@@ -230,14 +230,14 @@ button.touchable {display:flex;}
 .touchable-row.swipeable {overflow:hidden;}
 .touchable-row.caret .touchable-row-body {padding-right:calc(var(--gutter-width) / 2);}
 .touchable-row-body {display:flex; align-items:center; justify-content:space-between; padding:0 var(--gutter-width); gap:10px; position:relative; will-change:transform; min-height:44px; min-width:0;}
-.touchable-row-swipe-actions {position:absolute; top:0; right:0; bottom:0; width:0; overflow:hidden; display:flex; justify-content:flex-end; align-items:stretch; -webkit-mask-image:linear-gradient(to right, transparent, #000 10px); mask-image:linear-gradient(to right, transparent, #000 10px);}
-.touchable-row-swipe-actions-inner {display:flex; align-items:stretch; flex:0 0 auto; padding:5px var(--gutter-width);}
+.touchable-row-swipe-actions {position:absolute; top:0; right:0; bottom:0; width:0; overflow:hidden; display:flex; justify-content:flex-end; align-items:stretch;}
+.touchable-row-swipe-actions-inner {display:flex; align-items:stretch; flex:0 0 auto; padding:5px var(--gutter-width); align-items:center;}
 
 @media (min-width:600px) {
     .touchable-row-swipe-actions-inner {padding-left:0;}
 }
 
-.touchable-row-swipe-actions .btn {height:100%; border:none; color:var(--primary); background:transparent; padding:0 5px;}
+.touchable-row-swipe-actions .btn {padding:0 5px;}
 
 .touchable-row-button {flex:1; min-width:0; padding:10px 0; text-align:left; color:inherit; display:flex; align-items:center;}
 .touchable-row-button.touched {opacity:1;}

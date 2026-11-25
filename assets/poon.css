@@ -251,7 +251,7 @@ button.touchable {display:flex;}
 /* META */
 .meta {color:var(--muted);}
 .meta:empty {display:none;}
-.meta i {font-size:16px;}
+.strike {color:var(--error); text-decoration:line-through;}
 
 /* AVATAR */
 .avatar {background:#000; position:relative; aspect-ratio:1; border-radius:100%;}
@@ -684,7 +684,7 @@ button.touchable {display:flex;}
 .img-inside {display:flex; align-items:center; justify-content:center;}
 .img.round .img-real {border-radius:var(--radius);}
 
-.img .badge {position:absolute; right:-7px; bottom:-6px; display:flex; align-items:center; justify-content:center; min-width:16px; height:16px; padding:0 4px; border-radius:50%; background:var(--error); color:#fff; font-size:12px; font-weight:bold; line-height:1; box-shadow:0 0 2px rgba(0, 0, 0, .5);}
+.img .badge {position:absolute; right:-7px; bottom:-6px; display:flex; align-items:center; justify-content:center; min-width:16px; height:16px; padding:0 4px; border-radius:8px; background:var(--error); color:#fff; font-size:12px; font-weight:bold; line-height:1; box-shadow:0 0 2px rgba(0, 0, 0, .5);}
 
 .form-group {width:100%;}
 .form-group-top {margin-bottom:5px;}

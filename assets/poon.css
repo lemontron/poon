@@ -270,6 +270,7 @@ button.touchable {display:flex;}
 }
 .btn.destructive {background:rgba(255, 255, 255, .1); color:var(--error);}
 .btn.borderless {border:none; background:none; color:var(--color);}
+.btn.solid {background:var(--color); color:var(--bg-primary);}
 .btn.loading, .btn.disabled {opacity:.3; pointer-events:none;}
 .btn.square {width:var(--input-height); padding:0; flex:0 0 var(--input-height);}
 .btn.round {height:26px; width:26px; border-radius:50%; padding:0;}
